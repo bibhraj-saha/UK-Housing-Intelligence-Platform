@@ -4,14 +4,54 @@ An end-to-end Data Engineering and Data Science project designed to analyze the 
 
 ## Technology Stack
 
-- Python
-- Pandas
-- AWS S3
-- Snowflake
-- dbt
-- Power BI
-- Scikit-learn
-- GitHub
+### Data Engineering
+
+* Python
+* Pandas
+* AWS S3
+* Snowflake
+* dbt
+* GitHub
+
+### Analytics
+
+* Power BI
+
+### Data Science
+
+* Scikit-learn
+* XGBoost
+
+### Data Governance
+
+* Data Quality Validation (Python)
+* dbt Tests
+* Metadata Management
+* Data Catalog
+* Data Lineage Documentation
+
+## Data Governance
+
+The platform incorporates data governance practices throughout the data lifecycle, including:
+
+* Data quality validation
+* Metadata management
+* Data lineage tracking
+* Data cataloging
+* Auditability and traceability
+
+Governance controls will be implemented using Python validation rules, Snowflake metadata columns, dbt tests, and project documentation.
+
+## Documentation
+
+* Project Scope
+* Business Questions
+* Data Sources
+* Architecture
+* Data Governance
+* Data Catalog
+* Data Lineage
+* Roadmap
 
 ## Current Status
 

@@ -11,35 +11,52 @@
 
 ## Layer 2 - Ingestion
 
-Python Scripts
+- Python ETL
 
 ↓
 
-## Layer 3 - Storage
+## Layer 3 - Data Quality
 
-AWS S3
-
-↓
-
-## Layer 4 - Data Warehouse
-
-Snowflake
+- Validation Rules
+- Data Profiling
+- Rejected Records Handling
 
 ↓
 
-## Layer 5 - Transformation
+## Layer 4 - Storage
 
-dbt
-
-↓
-
-## Layer 6 - Analytics
-
-Power BI
+- AWS S3
 
 ↓
 
-## Layer 7 - Machine Learning
+## Layer 5 - Data Warehouse
 
-Scikit-learn
-XGBoost
+- Snowflake
+
+↓
+
+## Layer 6 - Transformation
+
+- dbt
+
+↓
+
+## Layer 7 - Governance
+
+- Data Catalog
+- Data Lineage
+- Metadata Management
+- Audit Tracking
+
+↓
+
+## Layer 8 - Analytics
+
+- Power BI
+
+↓
+
+## Layer 9 - Machine Learning
+
+- Scikit-Learn
+- XGBoost

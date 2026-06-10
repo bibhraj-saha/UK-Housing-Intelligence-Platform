@@ -2,6 +2,10 @@
 
 An end-to-end Data Engineering and Data Science project designed to analyze the UK housing market.
 
+## Architecture Diagram
+
+![UK Housing Intelligence Platform Architecture](docs/architecture_diagram.png)
+
 ## Technology Stack
 
 ### Data Engineering

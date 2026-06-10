@@ -1,8 +1,6 @@
 # Data Directory
 
-Datasets are not stored in GitHub due to size limitations.
-
-Required datasets:
+Datasets are intentionally excluded from GitHub due to size limitations.
 
 ## Land Registry
 
@@ -16,7 +14,7 @@ Files:
 - pp-2025.csv
 - pp-2026.csv
 
-## ONS
+## ONS Earnings
 
 Location:
 data/external/ons
@@ -29,7 +27,13 @@ ASHE Table 8 Earnings Dataset
 Location:
 data/external/crime
 
+Dataset:
+UK Police Street Crime Data
+
 ## Postcode Lookup
 
 Location:
 data/reference/postcodes
+
+Dataset:
+ONS Postcode Directory (February 2026)

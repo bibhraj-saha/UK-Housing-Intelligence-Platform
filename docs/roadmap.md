@@ -12,7 +12,7 @@ Activities:
 - Create data governance documentation
 
 Status:
-In Progress
+Completed
 
 ---
 
@@ -27,7 +27,7 @@ Activities:
 - Document source metadata
 
 Status:
-Pending
+Completed
 
 ---
 
@@ -42,7 +42,7 @@ Activities:
 - Create initial data profiling reports
 
 Status:
-Pending
+Next
 
 ---
 

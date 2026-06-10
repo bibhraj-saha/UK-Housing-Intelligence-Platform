@@ -4,5 +4,5 @@
 |----------|---------|---------|---------|
 | UK Land Registry | Downloaded | Available | Property Transactions |
 | ONS Income Data | Downloaded | Available | Affordability Analysis |
-| Crime Data | Pending | Not Downloaded | Housing Factors |
-| Postcode Lookup | Pending | Not Downloaded | Geographic Mapping |
+| Crime Data | Downloaded | Available | Housing Factors |
+| Postcode Lookup | Downloaded | Available | Geographic Mapping |

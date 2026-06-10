@@ -39,3 +39,20 @@ Affordability Analysis
 
 Storage Location:
 data/external/ons
+
+## UK Police Crime Data
+
+Owner:
+UK Police
+
+Refresh Frequency:
+Monthly
+
+Data Type:
+Crime Statistics
+
+Purpose:
+Crime impact analysis and machine learning feature generation
+
+Storage Location:
+data/external/crime

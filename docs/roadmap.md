@@ -41,8 +41,15 @@ Activities:
 - Identify data quality issues
 - Create initial data profiling reports
 
+Deliverables:
+- House Price EDA
+- Crime EDA
+- Data Quality Assessment
+- Visualisations
+- Dataset Profiles
+
 Status:
-Next
+Completed
 
 ---
 
@@ -58,7 +65,7 @@ Activities:
 - Implement data quality checks
 
 Status:
-Pending
+Next
 
 ---
 

@@ -59,4 +59,26 @@ Governance controls will be implemented using Python validation rules, Snowflake
 
 ## Current Status
 
-Phase 1 - Planning & Design
+Phase 3 Completed
+
+## Phase 3 - Exploratory Data Analysis
+
+Completed exploratory analysis of:
+
+- UK Land Registry property transactions (2023-2026)
+- UK Police crime data (April 2026)
+
+### Key Outputs
+
+- Property price distributions
+- County-level housing analysis
+- Property type analysis
+- Crime category analysis
+- Police force analysis
+- Data quality assessment
+
+### Visualisations
+
+See:
+
+outputs/plots/

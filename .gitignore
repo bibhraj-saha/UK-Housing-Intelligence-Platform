@@ -6,4 +6,7 @@ __pycache__/
 # Raw datasets
 data/raw/
 data/external/
-data/reference/
+data/reference/.DS_Store
+
+# Large postcode directory
+data/reference/postcodes/*.csv

@@ -44,7 +44,16 @@ Deliverables:
 
 Cloud Storage (AWS S3)
 
-Status: Next
+Status: Completed
+
+Deliverables:
+- Affordability Analytics
+- Crime Analytics
+- Growth Analytics
+- Investment Analytics
+- Housing Intelligence Index
+- Area Rankings
+- Percentile Rankings
 
 ## Phase 6
 

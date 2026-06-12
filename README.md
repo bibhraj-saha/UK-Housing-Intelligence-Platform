@@ -57,6 +57,22 @@ Governance controls will be implemented using Python validation rules, Snowflake
 * Data Lineage
 * Roadmap
 
+## External Data Sources
+
+The following datasets are not stored in this repository because of their size:
+
+- ONS Postcode Directory
+- UK House Price Data
+- UK Crime Data
+
+Place downloaded datasets in:
+
+data/reference/
+data/external/
+data/raw/
+
+See the data acquisition instructions below for download links.
+
 ## Current Status
 
 Phase 3 Completed

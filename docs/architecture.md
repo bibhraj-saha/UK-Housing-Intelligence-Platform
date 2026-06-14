@@ -2,10 +2,15 @@
 
 ## Layer 1 - Data Sources
 
+Current Sources:
 - UK Land Registry
 - ONS Earnings Data
 - Crime Data
 - ONS Postcode Directory
+
+Planned Sources:
+- Registers of Scotland
+- Northern Ireland House Price Data
 
 ↓
 

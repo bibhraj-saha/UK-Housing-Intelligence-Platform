@@ -61,6 +61,18 @@ The platform should:
 
 ---
 
+## Current Scope
+
+England and Wales
+
+---
+
+## Future Scope
+
+Scotland and Northern Ireland integration for full UK coverage.
+
+---
+
 ## Governance Objectives
 
 The platform will implement:

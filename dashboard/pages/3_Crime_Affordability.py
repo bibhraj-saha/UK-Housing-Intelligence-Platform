@@ -67,7 +67,7 @@ df = df[
 # PAGE HEADER
 # =====================================================
 
-st.title("🛡️ Crime & Affordability")
+st.title("Crime & Affordability")
 
 st.markdown(
     """
@@ -240,6 +240,9 @@ st.dataframe(
     best_areas[
         [
             "lsoa_code",
+            "local_authority",
+            "region",
+            "country",
             "crime_score",
             "affordability_score",
             "investment_score",

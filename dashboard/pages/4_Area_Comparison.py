@@ -1,9 +1,10 @@
 import streamlit as st
 import pandas as pd
+import plotly.graph_objects as go
 
 from utils.data_loader import load_housing_data
-
 from utils.styles import apply_global_styling
+
 
 st.set_page_config(
     page_title="Area Comparison",
@@ -19,7 +20,7 @@ st.sidebar.markdown(
 
 df = load_housing_data()
 
-st.title("⚖️ Area Comparison")
+st.title("Area Comparison")
 
 st.markdown(
     """
@@ -73,6 +74,46 @@ area2_df = (
 )
 
 # =====================================================
+# AREA DETAILS
+# =====================================================
+
+st.subheader(
+    "Area Details"
+)
+
+c1, c2 = st.columns(2)
+
+with c1:
+
+    st.info(
+        f"""
+LSOA: {area1_df['lsoa_code']}
+
+Local Authority: {area1_df['local_authority']}
+
+Region: {area1_df['region']}
+
+Country: {area1_df['country']}
+"""
+    )
+
+with c2:
+
+    st.info(
+        f"""
+LSOA: {area2_df['lsoa_code']}
+
+Local Authority: {area2_df['local_authority']}
+
+Region: {area2_df['region']}
+
+Country: {area2_df['country']}
+"""
+    )
+
+st.divider()
+
+# =====================================================
 # COMPARISON TABLE
 # =====================================================
 
@@ -108,28 +149,151 @@ comparison = pd.DataFrame(
     }
 )
 
-st.subheader("Comparison Results")
+st.subheader(
+    "Comparison Results"
+)
 
 st.dataframe(
     comparison,
     use_container_width=True
 )
 
+st.divider()
+
 # =====================================================
-# WINNER SUMMARY
+# RADAR CHART
 # =====================================================
 
-st.subheader("Quick Summary")
+st.subheader(
+    "Performance Comparison"
+)
 
-if (
+categories = [
+    "Crime Score",
+    "Affordability",
+    "Growth",
+    "Investment",
+    "Housing Intelligence"
+]
+
+area1_values = [
+    area1_df["crime_score"],
+    area1_df["affordability_score"],
+    area1_df["growth_score"],
+    area1_df["investment_score"],
     area1_df["housing_intelligence_index"]
-    >
+]
+
+area2_values = [
+    area2_df["crime_score"],
+    area2_df["affordability_score"],
+    area2_df["growth_score"],
+    area2_df["investment_score"],
     area2_df["housing_intelligence_index"]
-):
-    st.success(
-        f"{area_1} has the higher Housing Intelligence Index."
+]
+
+fig = go.Figure()
+
+fig.add_trace(
+    go.Scatterpolar(
+        r=area1_values,
+        theta=categories,
+        fill="toself",
+        name=area_1
     )
-else:
-    st.success(
-        f"{area_2} has the higher Housing Intelligence Index."
+)
+
+fig.add_trace(
+    go.Scatterpolar(
+        r=area2_values,
+        theta=categories,
+        fill="toself",
+        name=area_2
     )
+)
+
+fig.update_layout(
+    template="plotly_dark",
+    height=600,
+    polar=dict(
+        radialaxis=dict(
+            visible=True
+        )
+    )
+)
+
+st.plotly_chart(
+    fig,
+    use_container_width=True
+)
+
+st.divider()
+
+# =====================================================
+# QUICK SUMMARY
+# =====================================================
+
+st.subheader(
+    "Quick Summary"
+)
+
+winner_count = {
+    area_1: 0,
+    area_2: 0
+}
+
+metrics = [
+    (
+        "housing_intelligence_index",
+        True
+    ),
+    (
+        "investment_score",
+        True
+    ),
+    (
+        "growth_score",
+        True
+    ),
+    (
+        "affordability_score",
+        True
+    ),
+    (
+        "crime_score",
+        False
+    )
+]
+
+for metric, higher_is_better in metrics:
+
+    if higher_is_better:
+
+        if area1_df[metric] > area2_df[metric]:
+            winner_count[area_1] += 1
+        else:
+            winner_count[area_2] += 1
+
+    else:
+
+        if area1_df[metric] < area2_df[metric]:
+            winner_count[area_1] += 1
+        else:
+            winner_count[area_2] += 1
+
+winner = max(
+    winner_count,
+    key=winner_count.get
+)
+
+st.success(
+    f"""
+Overall Winner: {winner}
+
+Comparison Score
+
+{area_1}: {winner_count[area_1]}
+
+{area_2}: {winner_count[area_2]}
+"""
+)

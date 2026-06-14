@@ -23,6 +23,24 @@ The platform provides:
 * Area Comparison Tools
 * Interactive Dashboard
 
+## Current Geographic Coverage
+
+The current version of the UK Housing Intelligence Platform covers:
+
+- England
+- Wales
+
+The platform currently leverages HM Land Registry, UK Police Crime Data, ONS Geography Data, and ONS Earnings (ASHE) Data.
+
+## Future Expansion
+
+Future releases will incorporate:
+
+- Scotland property data
+- Northern Ireland property data
+- UK-wide geographic harmonisation
+- Full UK Housing Intelligence coverage
+
 ## Dashboard Screenshots
 
 ## Home

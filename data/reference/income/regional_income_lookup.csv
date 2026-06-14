@@ -1,0 +1,11 @@
+region,region_code,median_weekly_income,mean_weekly_income,estimated_annual_income
+North East ,E12000001,577.9,656.0,30050.8
+North West ,E12000002,615.9,709.6,32026.8
+Yorkshire and The Humber ,E12000003,600.0,684.8,31200.0
+East Midlands ,E12000004,605.9,695.3,31506.8
+West Midlands ,E12000005,619.7,704.8,32224.4
+East ,E12000006,670.8,798.1,34881.6
+London ,E12000007,767.4,959.0,39904.799999999996
+South East ,E12000008,678.0,818.8,35256.0
+South West ,E12000009,613.6,696.3,31907.2
+Wales  ,W92000004,601.8,671.0,31293.6

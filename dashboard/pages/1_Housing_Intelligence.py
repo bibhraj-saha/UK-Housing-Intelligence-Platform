@@ -73,7 +73,7 @@ top_area = (
 # PAGE HEADER
 # =====================================================
 
-st.title("📊 Housing Intelligence")
+st.title("Housing Intelligence")
 
 st.markdown(
     """
@@ -93,12 +93,16 @@ col1.metric(
     f"{len(df):,}"
 )
 
+elite_areas = (
+    df["housing_intelligence_index"]
+    >=
+    df["housing_intelligence_index"]
+    .quantile(0.90)
+).sum()
+
 col2.metric(
-    "Highest Score",
-    round(
-        df["housing_intelligence_index"].max(),
-        2
-    )
+    "Elite Areas",
+    f"{elite_areas:,}"
 )
 
 col3.metric(
@@ -162,6 +166,9 @@ st.dataframe(
     top_20[
         [
             "lsoa_code",
+            "local_authority",
+            "region",
+            "country",
             "housing_intelligence_index",
             "investment_score",
             "area_rank"
@@ -193,6 +200,9 @@ st.dataframe(
     bottom_20[
         [
             "lsoa_code",
+            "local_authority",
+            "region",
+            "country",
             "housing_intelligence_index",
             "investment_score",
             "area_rank"

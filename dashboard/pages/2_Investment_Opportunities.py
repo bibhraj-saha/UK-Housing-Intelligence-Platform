@@ -59,7 +59,7 @@ df = df[
     )
 ]
 
-st.title("💰 Investment Opportunities")
+st.title("Investment Opportunities")
 
 st.markdown(
     """
@@ -72,38 +72,48 @@ st.markdown(
 # KPI SECTION
 # =====================================================
 
+elite_investment_areas = (
+    df["investment_score"]
+    >=
+    df["investment_score"].quantile(0.90)
+).sum()
+
+high_growth_areas = (
+    df["growth_score"]
+    >=
+    df["growth_score"].quantile(0.90)
+).sum()
+
+average_investment = round(
+    df["investment_score"].mean(),
+    2
+)
+
+average_price = round(
+    df["average_price"].mean(),
+    0
+)
+
 col1, col2, col3, col4 = st.columns(4)
 
 col1.metric(
     "Average Investment Score",
-    round(
-        df["investment_score"].mean(),
-        2
-    )
+    average_investment
 )
 
 col2.metric(
-    "Highest Investment Score",
-    round(
-        df["investment_score"].max(),
-        2
-    )
+    "Elite Investment Areas",
+    f"{elite_investment_areas:,}"
 )
 
 col3.metric(
-    "Average Growth Score",
-    round(
-        df["growth_score"].mean(),
-        2
-    )
+    "High Growth Areas",
+    f"{high_growth_areas:,}"
 )
 
 col4.metric(
-    "Highest Growth Score",
-    round(
-        df["growth_score"].max(),
-        2
-    )
+    "Average House Price (£)",
+    f"{average_price:,.0f}"
 )
 
 st.divider()
@@ -156,6 +166,8 @@ st.dataframe(
     top_investment[
         [
             "lsoa_code",
+            "local_authority",
+            "region",
             "investment_score",
             "growth_score",
             "housing_intelligence_index",
@@ -180,7 +192,9 @@ fig = px.scatter(
     x="growth_score",
     y="investment_score",
     hover_data=[
-        "lsoa_code"
+        "lsoa_code",
+        "local_authority",
+        "region"
     ],
     title="Investment Potential vs Growth Potential"
 )
@@ -218,6 +232,8 @@ st.dataframe(
     opportunity_areas[
         [
             "lsoa_code",
+            "local_authority",
+            "region",
             "investment_opportunity_score",
             "investment_score",
             "growth_score",

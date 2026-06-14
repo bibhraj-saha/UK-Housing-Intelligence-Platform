@@ -27,28 +27,28 @@ The platform provides:
 
 ## Home
 
-![Home] (docs/screenshots/Home.png)
+![Home](docs/screenshots/Home.png)
 
 ## Housing Intelligence
 
-![Housing_Intelligence_1] (docs/screenshots/Housing_Intelligence_1.png)
-![Housing_Intelligence_2] (docs/screenshots/Housing_Intelligence_2.png)
+![Housing_Intelligence_1](docs/screenshots/Housing_Intelligence_1.png)
+![Housing_Intelligence_2](docs/screenshots/Housing_Intelligence_2.png)
 
 ## Investment Opportunities
 
-![Investment_Opportunities_1] (docs/screenshots/Investment_Opportunities_1.png)
-![Investment_Opportunities_2] (docs/screenshots/Investment_Opportunities_2.png)
+![Investment_Opportunities_1](docs/screenshots/Investment_Opportunities_1.png)
+![Investment_Opportunities_2](docs/screenshots/Investment_Opportunities_2.png)
 
 ## Crime & Affordability
 
-![Crime_Affordability_1] (docs/screenshots/Crime_Affordability_1.png)
-![Crime_Affordability_2] (docs/screenshots/Crime_Affordability_2.png)
-![Crime_Affordability_3] (docs/screenshots/Crime_Affordability_3.png)
-![Crime_Affordability_4] (docs/screenshots/Crime_Affordability_4.png)
+![Crime_Affordability_1](docs/screenshots/Crime_Affordability_1.png)
+![Crime_Affordability_2](docs/screenshots/Crime_Affordability_2.png)
+![Crime_Affordability_3](docs/screenshots/Crime_Affordability_3.png)
+![Crime_Affordability_4](docs/screenshots/Crime_Affordability_4.png)
 
 ## Area Comparision
 
-![Area_Comparision] (docs/screenshots/Area_Comparision.png)
+![Area_Comparision](docs/screenshots/Area_Comparision.png)
 
 ## Technology Stack
 

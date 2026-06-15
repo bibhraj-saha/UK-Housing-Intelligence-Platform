@@ -2,12 +2,22 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
+from utils.styles import apply_global_styling
+
 st.set_page_config(
     page_title="Market Trends",
     layout="wide"
 )
 
+apply_global_styling()
+
 st.title("Market Trends")
+
+st.markdown(
+    """
+    Explore historical housing prices, transaction activity, and market growth trends over time.
+    """
+)
 
 @st.cache_data
 def load_data():
@@ -188,6 +198,21 @@ c5.metric(
     "Transactions",
     f"{latest_transactions:,.0f}"
 )
+
+with st.expander("KPI Guide"):
+    st.markdown(
+        """
+        **Latest Avg Price** – Most recent average property price available.
+
+        **Avg YoY Growth** – Average year-over-year property price growth.
+
+        **Top Growth Region** – Region with the highest recorded annual growth.
+
+        **Top Growth LA** – Local Authority with the highest annual growth.
+
+        **Transactions** – Latest monthly transaction volume.
+        """
+    )
 
 st.divider()
 

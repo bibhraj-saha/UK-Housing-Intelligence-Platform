@@ -166,6 +166,19 @@ c4.metric(
     else "-"
 )
 
+with st.expander("KPI Guide"):
+    st.markdown(
+        """
+        **Matching Areas** – Areas meeting your selected criteria.
+
+        **Regions Found** – Number of regions containing matching opportunities.
+
+        **Average Investment** – Average Investment Score of matching areas.
+
+        **Average Price (£)** – Average property price of matching areas.
+        """
+    )
+
 st.divider()
 
 # =====================================================

@@ -2,12 +2,22 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
+from utils.styles import apply_global_styling
+
 st.set_page_config(
     page_title="Location Intelligence",
     layout="wide"
 )
 
+apply_global_styling()
+
 st.title("Location Intelligence")
+
+st.markdown(
+    """
+    Evaluate school, healthcare, and transport accessibility to identify the most connected locations.
+    """
+)
 
 @st.cache_data
 def load_data():
@@ -136,6 +146,21 @@ c5.metric(
     "Transport Assets",
     f"{int(df['transport_stop_count'].sum()):,}"
 )
+
+with st.expander("KPI Guide"):
+    st.markdown(
+        """
+        **Highest Score** – Best Location Intelligence score identified.
+
+        **Average Score** – Mean Location Intelligence score.
+
+        **Schools** – Total schools represented in selected areas.
+
+        **Healthcare Sites** – Total healthcare facilities represented.
+
+        **Transport Assets** – Total transport assets accessible within selected areas.
+        """
+    )
 
 st.divider()
 

@@ -104,6 +104,19 @@ col4.metric(
     avg_index
 )
 
+with st.expander("KPI Guide"):
+    st.markdown(
+        """
+        **Average House Price** – Mean property price across all analysed UK LSOAs.
+
+        **Average Crime** – Average crime level across analysed areas.
+
+        **Investment Score** – Composite score measuring investment attractiveness.
+
+        **Housing Index** – Overall housing intelligence score combining multiple housing market indicators.
+        """
+    )
+    
 st.divider()
 
 st.subheader("Platform Overview")

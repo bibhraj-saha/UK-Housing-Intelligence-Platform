@@ -130,6 +130,19 @@ col4.metric(
     f"{ideal_areas:,}"
 )
 
+with st.expander("KPI Guide"):
+    st.markdown(
+        """
+        **Average Crime Score** – Average crime performance across selected areas.
+
+        **Average Affordability** – Average affordability score across selected areas.
+
+        **Low Crime Areas** – Areas with Crime Scores of 75 or higher.
+
+        **Low Crime + High Affordability** – Areas scoring at least 75 in both crime and affordability.
+        """
+    )
+
 st.divider()
 
 # =====================================================

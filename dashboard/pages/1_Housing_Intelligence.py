@@ -118,6 +118,19 @@ col4.metric(
     top_area["lsoa_code"]
 )
 
+with st.expander("KPI Guide"):
+    st.markdown(
+        """
+        **Areas Analysed** – Number of LSOAs currently included after filtering.
+
+        **Elite Areas** – Areas in the top 10% of Housing Intelligence scores.
+
+        **Average Score** – Mean Housing Intelligence score of the current selection.
+
+        **Top Ranked LSOA** – Highest ranked area within the filtered dataset.
+        """
+    )
+
 st.divider()
 
 # =====================================================

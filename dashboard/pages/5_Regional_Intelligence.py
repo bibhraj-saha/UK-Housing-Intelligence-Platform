@@ -17,6 +17,12 @@ apply_global_styling()
 
 st.title("Regional Intelligence")
 
+st.markdown(
+    """
+    Compare housing market performance, affordability, and investment potential across UK regions.
+    """
+)
+
 # ==========================================
 # LOAD DATA
 # ==========================================
@@ -66,6 +72,19 @@ with col4:
     "Elite Areas",
     f"{top_10_areas:,}"
 )
+    
+with st.expander("KPI Guide"):
+    st.markdown(
+        """
+        **Region Leader** – Region with the highest Housing Intelligence score.
+
+        **Regions Analysed** – Number of UK regions included.
+
+        **Areas Represented** – Total LSOAs represented across all regions.
+
+        **Elite Areas** – Areas falling within the national top 10%.
+        """
+    )    
 
 # ==========================================
 # REGIONAL RANKINGS

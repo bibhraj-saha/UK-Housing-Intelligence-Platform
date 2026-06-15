@@ -116,6 +116,19 @@ col4.metric(
     f"{average_price:,.0f}"
 )
 
+with st.expander("KPI Guide"):
+    st.markdown(
+        """
+        **Average Investment Score** – Average investment attractiveness across filtered areas.
+
+        **Elite Investment Areas** – Areas in the top 10% of Investment Scores.
+
+        **High Growth Areas** – Areas in the top 10% of Growth Scores.
+
+        **Average House Price (£)** – Mean property price across filtered areas.
+        """
+    )
+
 st.divider()
 
 # =====================================================

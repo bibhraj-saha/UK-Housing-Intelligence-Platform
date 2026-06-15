@@ -75,6 +75,19 @@ col4.metric(
     avg_score
 )
 
+with st.expander("KPI Guide"):
+    st.markdown(
+        """
+        **Mapped Areas** – Total LSOAs displayed on the map.
+
+        **Regions Represented** – Number of regions represented.
+
+        **Elite Areas** – Areas within the top 10% Housing Intelligence scores.
+
+        **Average Intelligence** – Mean Housing Intelligence score of all mapped areas.
+        """
+    )
+
 st.divider()
 
 # =====================================================

@@ -2,12 +2,22 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
+from utils.styles import apply_global_styling
+
 st.set_page_config(
     page_title="Income Intelligence",
     layout="wide"
 )
 
+apply_global_styling()
+
 st.title("Income Intelligence")
+
+st.markdown(
+    """
+    Analyze income levels, affordability, and purchasing power across UK housing markets.
+    """
+)
 
 @st.cache_data
 def load_data():
@@ -98,6 +108,21 @@ with col5:
     st.metric(
         "Areas",
         f"{len(df):,}"
+    )
+
+with st.expander("KPI Guide"):
+    st.markdown(
+        """
+        **Median Income** – Middle annual income value across selected areas.
+
+        **Average Income** – Mean annual income across selected areas.
+
+        **Best Affordability** – Lowest Price-to-Income ratio found.
+
+        **Most Affordable Score** – Highest affordability score identified.
+
+        **Areas** – Number of areas currently analysed.
+        """
     )
 
 st.divider()

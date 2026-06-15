@@ -110,7 +110,6 @@ Region: {area2_df['region']}
 Country: {area2_df['country']}
 """
     )
-
 st.divider()
 
 # =====================================================
@@ -157,6 +156,25 @@ st.dataframe(
     comparison,
     use_container_width=True
 )
+
+with st.expander("Comparison Metrics Guide"):
+    st.markdown(
+        """
+        **Average Price** – Average property price.
+
+        **Crime Score** – Relative crime performance score.
+
+        **Affordability Score** – Housing affordability measure.
+
+        **Growth Score** – Property market growth potential.
+
+        **Investment Score** – Overall investment attractiveness.
+
+        **Housing Intelligence Index** – Composite housing intelligence metric.
+
+        **Area Rank** – National ranking among analysed LSOAs.
+        """
+    )
 
 st.divider()
 

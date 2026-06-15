@@ -6,17 +6,26 @@ england = pd.read_csv(
     "data/external/schools/edubasealldata20260615.csv",
     encoding="cp1252",
     low_memory=False,
-    usecols=[
-        "EstablishmentName",
-        "PhaseOfEducation (name)",
-        "NumberOfPupils",
-        "LSOA (code)",
-        "EstablishmentStatus (name)"
+   usecols=[
+    "EstablishmentName",
+    "PhaseOfEducation (name)",
+    "TypeOfEstablishment (name)",
+    "NumberOfPupils",
+    "LSOA (code)",
+    "EstablishmentStatus (name)"
     ]
 )
 
+excluded_types = [
+    "British schools overseas",
+    "Offshore schools",
+    "Service children's education"
+]
+
 england = england[
-    england["EstablishmentStatus (name)"] == "Open"
+    (england["EstablishmentStatus (name)"] == "Open")
+    &
+    (~england["TypeOfEstablishment (name)"].isin(excluded_types))
 ].copy()
 
 england = england.rename(

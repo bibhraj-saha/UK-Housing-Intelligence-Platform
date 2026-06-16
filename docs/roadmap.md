@@ -109,7 +109,7 @@ Deliverables:
 
 Data Enrichment
 
-Status: In Progress
+Status: Completed
 
 Deliverables:
 - Geography Enrichment
@@ -131,7 +131,7 @@ Deliverables:
 
 Cloud Data Lake Platform (AWS S3 / IAM)
 
-Status: Pending
+Status: In Progress
 
 Deliverables:
 - AWS Account Setup

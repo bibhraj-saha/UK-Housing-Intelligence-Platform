@@ -43,30 +43,15 @@ Future releases will incorporate:
 
 ## Dashboard Screenshots
 
-## Home
+![Housing_Intelligence_Map](docs/screenshots/Housing_Intelligence_Map.png)
 
-![Home](docs/screenshots/Home.png)
+![Income_Intelligence_2](docs/screenshots/Income_Intelligence_2.png)
 
-## Housing Intelligence
+![Area_Comparision_2](docs/screenshots/Area_Comparision_2.png)
 
-![Housing_Intelligence_1](docs/screenshots/Housing_Intelligence_1.png)
-![Housing_Intelligence_2](docs/screenshots/Housing_Intelligence_2.png)
+For all dashboard screenshots, see:
 
-## Investment Opportunities
-
-![Investment_Opportunities_1](docs/screenshots/Investment_Opportunities_1.png)
-![Investment_Opportunities_2](docs/screenshots/Investment_Opportunities_2.png)
-
-## Crime & Affordability
-
-![Crime_Affordability_1](docs/screenshots/Crime_Affordability_1.png)
-![Crime_Affordability_2](docs/screenshots/Crime_Affordability_2.png)
-![Crime_Affordability_3](docs/screenshots/Crime_Affordability_3.png)
-![Crime_Affordability_4](docs/screenshots/Crime_Affordability_4.png)
-
-## Area Comparision
-
-![Area_Comparision](docs/screenshots/Area_Comparision.png)
+[Dashboard Gallery](docs/dashboard-gallery.md)
 
 ## Technology Stack
 

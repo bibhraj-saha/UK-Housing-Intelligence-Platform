@@ -57,28 +57,59 @@ st.subheader("Platform Highlights")
 
 col1, col2 = st.columns(2)
 
+col1, col2 = st.columns(2)
+
 with col1:
     st.info(
         f"""
-        Analysing **{len(df):,} UK LSOAs**
-        using housing intelligence,
-        investment, affordability,
-        crime and deprivation metrics.
+### Platform Coverage
+
+• Analysing **{len(df):,} UK LSOAs**
+
+• **11 Interactive Dashboards**
+
+• Housing Intelligence & Investment Analytics
+
+• Crime, Affordability & Income Intelligence
+
+• Schools, Healthcare & Transport Accessibility
+
+• Historical Market Trends & Regional Analytics
+
+• Coverage Across England & Wales
         """
     )
 
 with col2:
     st.success(
         """
-        Interactive dashboards available:
+### Interactive Dashboards
 
-        • Housing Intelligence
+**Core Intelligence**
 
-        • Investment Opportunities
+• Housing Intelligence
 
-        • Crime & Affordability
+• Investment Opportunities
 
-        • Area Comparison
+• Crime & Affordability
+
+• Area Comparison
+
+**Regional & Geographic**
+
+• Regional Intelligence
+
+• Housing Intelligence Map
+
+• Opportunity Explorer
+
+**Advanced Analytics**
+
+• Income Intelligence
+
+• Market Trends
+
+• Location Intelligence
         """
     )
 

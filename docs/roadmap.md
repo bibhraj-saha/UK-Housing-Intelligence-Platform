@@ -131,7 +131,7 @@ Deliverables:
 
 Cloud Data Lake Platform (AWS S3 / IAM)
 
-Status: In Progress
+Status: Completed
 
 Deliverables:
 - AWS Account Setup
@@ -147,7 +147,7 @@ Deliverables:
 
 Data Warehouse & Transformation (Snowflake / dbt)
 
-Status: Pending
+Status: In Progress
 
 Deliverables:
 - Snowflake Setup

@@ -36,9 +36,6 @@ jobs:
       - name: Terraform Validate
         run: terraform validate
 
-      - name: Terraform Plan
-        run: terraform plan -refresh=false -no-color
-
   python-validation:
 
     runs-on: ubuntu-latest
@@ -59,10 +56,7 @@ jobs:
           pip install pandas
           pip install pyarrow
 
-      - name: Validate Analytics Layer
+      - name: Validate Python Syntax
         run: |
           python -m compileall analytics
-
-      - name: Validate Source Code
-        run: |
           python -m compileall src

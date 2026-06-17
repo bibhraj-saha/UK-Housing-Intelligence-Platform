@@ -19,3 +19,16 @@ data/processed/
 data/processed/*.parquet
 
 requirements_full_backup.txt
+
+# Terraform
+terraform/.terraform/
+terraform/*.tfstate
+terraform/*.tfstate.*
+terraform/crash.log
+
+# Terraform variable files
+*.tfvars
+*.tfvars.json
+
+# macOS
+.DS_Store

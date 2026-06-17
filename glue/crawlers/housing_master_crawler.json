@@ -1,0 +1,12 @@
+{
+  "Name": "housing-master-crawler",
+  "Role": "arn:aws:iam::883627150629:role/UKHousingGlueRole",
+  "DatabaseName": "uk_housing_intelligence",
+  "Targets": {
+    "S3Targets": [
+      {
+        "Path": "s3://uk-housing-intelligence-platform-datalake-883627150629/silver/housing_master/"
+      }
+    ]
+  }
+}

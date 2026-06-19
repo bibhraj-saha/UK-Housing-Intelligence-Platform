@@ -60,8 +60,12 @@ For all dashboard screenshots, see:
 * Python
 * Pandas
 * AWS S3
+* AWS Glue Data Catalog
+* Amazon Athena
 * Snowflake
 * dbt
+* Apache Airflow
+* Terraform
 * GitHub
 
 ### Analytics
@@ -152,4 +156,4 @@ reports/eda/
 
 ## Current Status
 
-Phase 6 Completed
+Phase 7 Completed

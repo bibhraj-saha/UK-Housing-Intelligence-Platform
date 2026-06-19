@@ -45,7 +45,9 @@ The goal is to create a centralized analytics platform that transforms raw housi
 3. Store data in cloud infrastructure.
 4. Create analytical datasets.
 5. Build dashboards.
-6. Build machine learning models.
+6. Implement analytics engineering workflows.
+7. Implement pipeline orchestration.
+8. Build machine learning models.
 
 ---
 

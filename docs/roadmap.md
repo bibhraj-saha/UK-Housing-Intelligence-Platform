@@ -123,9 +123,9 @@ Deliverables:
 - Income Affordability Metrics
 - Price-to-Income Ratios
 - Regional Income Lookup
-- Historical Snapshot Enhancement (Next)
-- Market Trend Analytics (Planned)
-- Time-Series Analytics (Planned)
+- Historical Snapshot Enhancement
+- Market Trend Analytics
+- Time-Series Analytics
 
 ## Phase 7
 
@@ -137,31 +137,66 @@ Deliverables:
 - AWS Account Setup
 - IAM Configuration
 - S3 Data Lake Design
-- Raw Zone
-- Processed Zone
-- Curated Zone
+- Bronze Layer
+- Silver Layer
+- Gold Layer
+- AWS Glue Data Catalog
+- Amazon Athena
+- Terraform Infrastructure as Code
+- GitHub Actions CI/CD
 - Secure Data Storage
 - Cloud Data Lifecycle Management
+- Cloud Data Lake Architecture Documentation
 
 ## Phase 8
 
-Data Warehouse & Transformation (Snowflake / dbt)
+Data Warehouse & Analytics Engineering (Snowflake / dbt)
 
-Status: In Progress
+Status: Pending
 
 Deliverables:
 - Snowflake Setup
 - Database Design
 - Schema Design
+- Warehouse Design
+- Roles & Access Management
 - Data Loading Pipelines
+- External Stages
+- Fact Table Design
+- Dimension Table Design
+- Star Schema Modelling
 - dbt Project Setup
+- Source Definitions
 - Staging Models
+- Intermediate Models
 - Mart Models
 - Data Quality Tests
-- Documentation Generation
+- dbt Documentation
+- Data Lineage Generation
 - Metadata Management
+- Analytics Engineering Framework
 
 ## Phase 9
+
+Pipeline Orchestration & Automation
+
+Status: Pending
+
+Deliverables:
+- Apache Airflow Setup
+- DAG Design
+- Pipeline Scheduling
+- Dependency Management
+- Retry Logic
+- Failure Handling
+- Alerting & Notifications
+- Automated Data Refresh
+- Automated Snowflake Loads
+- Automated dbt Runs
+- End-to-End Pipeline Orchestration
+- Orchestration Documentation
+
+## Phase 10
 
 Machine Learning Layer
 
@@ -175,21 +210,24 @@ Deliverables:
 - Model Evaluation Framework
 - Model Monitoring Framework
 - Forecasting Capabilities
+- Housing Market Forecasting
+- Investment Opportunity Prediction
 
-## Phase 10
+## Phase 11
 
-Production & Orchestration
+Production Platform & DevOps
 
 Status: Pending
 
 Deliverables:
 - Docker Containerisation
-- GitHub Actions CI/CD
-- Workflow Automation
-- Airflow or Kestra Orchestration
-- Production Deployment Architecture
+- CI/CD Enhancements
 - Automated Testing
 - Monitoring & Alerting
+- Logging Framework
+- Production Deployment Architecture
+- Environment Management
+- Infrastructure Documentation
 - Production Documentation
 
 ## Future Enhancement

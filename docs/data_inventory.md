@@ -2,732 +2,157 @@
 
 ## Overview
 
-This document inventories all Gold Layer datasets that will be loaded into Snowflake during Phase 8 of the UK Housing Intelligence Platform.
+This document inventories all Gold Layer datasets that will be migrated from the AWS S3 Data Lake into Snowflake during Phase 8 of the UK Housing Intelligence Platform.
 
-### Source Location
+### Source Layer
 
 ```text
-data/analytics/
+AWS S3 Gold Layer
+s3://uk-housing-intelligence-platform/gold/
 ```
 
-### Target Warehouse
+### Target Data Warehouse
 
 ```text
-Snowflake
 Database: UK_HOUSING_DW
-Schema: RAW
+
+Schemas:
+- RAW
+- STAGING
+- DIMENSIONS
+- MARTS
+- ANALYTICS
 ```
 
-### Data Warehouse Loading Strategy
+### Loading Strategy
 
-The following datasets will be loaded into Snowflake RAW tables:
-
-- Area Analytics
-- Housing Intelligence
-- Geographic Intelligence
-- Scoring Models
-- Rankings
-- Trend Analysis
-
-The following datasets will NOT be loaded as permanent RAW tables because they are report outputs generated from ranking datasets:
-
-```text
-top_100_areas.parquet
-bottom_100_areas.parquet
-```
-
-These outputs will be generated from Snowflake MART tables and dashboard queries.
+Datasets are first loaded into the RAW schema and subsequently transformed using dbt into STAGING, DIMENSIONS, MARTS, and ANALYTICS schemas.
 
 ---
 
-# Geography Intelligence Datasets
+# Inventory Summary
 
-## regional_intelligence.parquet
-
-### Source
-
-```text
-data/analytics/regional_intelligence.parquet
-```
-
-### File Type
-
-Parquet
-
-### File Size
-
-6.7 KB
-
-### Rows
-
-INSERT_ROW_COUNT_HERE
-
-### Columns
-
-INSERT_COLUMN_COUNT_HERE
-
-### Business Purpose
-
-Provides regional-level housing intelligence metrics used for regional comparison, benchmarking, and strategic reporting.
-
-### Target Snowflake Table
-
-```sql
-RAW.REGIONAL_INTELLIGENCE
-```
-
-### Primary Analytical Use Cases
-
-- Regional benchmarking
-- Market comparison
-- Regional intelligence reporting
-
-### Key Columns
-
-- region_name
-- average_price
-- housing_intelligence_index
+| Metric | Value |
+|----------|----------|
+| Total Gold Datasets | 18 |
+| Datasets Loaded Into Snowflake | 16 |
+| Excluded Datasets | 2 |
+| Largest Dataset | historical_housing_trends.parquet |
+| Largest Dataset Rows | 1,106,405 |
+| Smallest Dataset | regional_intelligence.parquet |
+| Smallest Dataset Rows | 10 |
+| Primary Business Key | lsoa_code |
+| Warehouse Platform | Snowflake |
+| Transformation Tool | dbt |
+| Data Lake Platform | AWS S3 |
+| Query Engine | Athena |
 
 ---
 
-## location_intelligence.parquet
-
-### Source
-
-```text
-data/analytics/location_intelligence.parquet
-```
-
-### File Type
-
-Parquet
-
-### File Size
-
-896 KB
-
-### Rows
-
-INSERT_ROW_COUNT_HERE
-
-### Columns
-
-INSERT_COLUMN_COUNT_HERE
-
-### Business Purpose
-
-Provides location-level geographic intelligence including coordinates and area-level metadata.
-
-### Target Snowflake Table
-
-```sql
-RAW.LOCATION_INTELLIGENCE
-```
-
-### Primary Analytical Use Cases
-
-- Mapping
-- Geographic analysis
-- Area intelligence
-
-### Key Columns
-
-- lsoa_code
-- latitude
-- longitude
-
----
-
-## school_intelligence.parquet
-
-### Source
-
-```text
-data/analytics/school_intelligence.parquet
-```
-
-### File Type
-
-Parquet
-
-### File Size
-
-402 KB
-
-### Rows
-
-INSERT_ROW_COUNT_HERE
-
-### Columns
-
-INSERT_COLUMN_COUNT_HERE
-
-### Business Purpose
-
-Provides school accessibility indicators to support residential and family-oriented housing decisions.
-
-### Target Snowflake Table
-
-```sql
-RAW.SCHOOL_INTELLIGENCE
-```
-
-### Primary Analytical Use Cases
-
-- School proximity analysis
-- Family housing evaluation
-- Area attractiveness scoring
-
-### Key Columns
-
-- lsoa_code
-- school_count
-
----
-
-## healthcare_intelligence.parquet
-
-### Source
-
-```text
-data/analytics/healthcare_intelligence.parquet
-```
-
-### File Type
-
-Parquet
-
-### File Size
-
-280 KB
-
-### Rows
-
-INSERT_ROW_COUNT_HERE
-
-### Columns
-
-INSERT_COLUMN_COUNT_HERE
-
-### Business Purpose
-
-Provides healthcare accessibility metrics for evaluating community infrastructure.
-
-### Target Snowflake Table
-
-```sql
-RAW.HEALTHCARE_INTELLIGENCE
-```
-
-### Primary Analytical Use Cases
-
-- Healthcare accessibility analysis
-- Area comparison
-- Investment evaluation
-
-### Key Columns
-
-- lsoa_code
-- healthcare_score
-
----
-
-## transport_intelligence.parquet
-
-### Source
-
-```text
-data/analytics/transport_intelligence.parquet
-```
-
-### File Type
-
-Parquet
-
-### File Size
-
-389 KB
-
-### Rows
-
-INSERT_ROW_COUNT_HERE
-
-### Columns
-
-INSERT_COLUMN_COUNT_HERE
-
-### Business Purpose
-
-Provides transport accessibility metrics used for commuter and connectivity analysis.
-
-### Target Snowflake Table
-
-```sql
-RAW.TRANSPORT_INTELLIGENCE
-```
-
-### Primary Analytical Use Cases
-
-- Commuter accessibility analysis
-- Connectivity assessment
-- Area desirability scoring
-
-### Key Columns
-
-- lsoa_code
-- transport_score
-
----
-
-# Housing Intelligence Datasets
-
-## area_analytics_base.parquet
-
-### Source
-
-```text
-data/analytics/area_analytics_base.parquet
-```
-
-### File Type
-
-Parquet
-
-### File Size
-
-2.3 MB
-
-### Rows
-
-INSERT_ROW_COUNT_HERE
-
-### Columns
-
-INSERT_COLUMN_COUNT_HERE
-
-### Business Purpose
-
-Core analytical dataset containing area-level metrics used throughout the platform.
-
-### Target Snowflake Table
-
-```sql
-RAW.AREA_ANALYTICS_BASE
-```
-
----
-
-## housing_intelligence.parquet
-
-### Source
-
-```text
-data/analytics/housing_intelligence.parquet
-```
-
-### File Type
-
-Parquet
-
-### File Size
-
-5.0 MB
-
-### Rows
-
-INSERT_ROW_COUNT_HERE
-
-### Columns
-
-INSERT_COLUMN_COUNT_HERE
-
-### Business Purpose
-
-Master housing intelligence dataset containing final area-level intelligence metrics.
-
-### Target Snowflake Table
-
-```sql
-RAW.HOUSING_INTELLIGENCE
-```
-
----
-
-## housing_map.parquet
-
-### Source
-
-```text
-data/analytics/housing_map.parquet
-```
-
-### File Type
-
-Parquet
-
-### File Size
-
-2.2 MB
-
-### Rows
-
-INSERT_ROW_COUNT_HERE
-
-### Columns
-
-INSERT_COLUMN_COUNT_HERE
-
-### Business Purpose
-
-Optimized dataset supporting geographic visualization and mapping functionality.
-
-### Target Snowflake Table
-
-```sql
-RAW.HOUSING_MAP
-```
-
----
-
-# Scoring Datasets
-
-## crime_scores.parquet
-
-### Source
-
-```text
-data/analytics/crime_scores.parquet
-```
-
-### File Type
-
-Parquet
-
-### File Size
-
-2.4 MB
-
-### Rows
-
-INSERT_ROW_COUNT_HERE
-
-### Columns
-
-INSERT_COLUMN_COUNT_HERE
-
-### Business Purpose
-
-Crime risk scoring model outputs used in housing intelligence calculations.
-
-### Target Snowflake Table
-
-```sql
-RAW.CRIME_SCORES
-```
-
----
-
-## growth_scores.parquet
-
-### Source
-
-```text
-data/analytics/growth_scores.parquet
-```
-
-### File Type
-
-Parquet
-
-### File Size
-
-3.3 MB
-
-### Rows
-
-INSERT_ROW_COUNT_HERE
-
-### Columns
-
-INSERT_COLUMN_COUNT_HERE
-
-### Business Purpose
-
-Property growth scoring model outputs used to identify high-growth housing markets.
-
-### Target Snowflake Table
-
-```sql
-RAW.GROWTH_SCORES
-```
-
----
-
-## investment_scores.parquet
-
-### Source
-
-```text
-data/analytics/investment_scores.parquet
-```
-
-### File Type
-
-Parquet
-
-### File Size
-
-4.3 MB
-
-### Rows
-
-INSERT_ROW_COUNT_HERE
-
-### Columns
-
-INSERT_COLUMN_COUNT_HERE
-
-### Business Purpose
-
-Investment attractiveness scoring outputs used for opportunity identification.
-
-### Target Snowflake Table
-
-```sql
-RAW.INVESTMENT_SCORES
-```
-
----
-
-# Rankings & Opportunities
-
-## rankings.parquet
-
-### Source
-
-```text
-data/analytics/rankings.parquet
-```
-
-### File Type
-
-Parquet
-
-### File Size
-
-1.8 MB
-
-### Rows
-
-INSERT_ROW_COUNT_HERE
-
-### Columns
-
-INSERT_COLUMN_COUNT_HERE
-
-### Business Purpose
-
-Stores final area ranking outputs generated by the Housing Intelligence Platform.
-
-### Target Snowflake Table
-
-```sql
-RAW.RANKINGS
-```
-
-### Primary Analytical Use Cases
-
-- Dashboard rankings
-- Leaderboards
-- Area comparison
-
-### Key Columns
-
-- area_rank
-- percentile_rank
-
----
-
-## opportunity_explorer.parquet
-
-### Source
-
-```text
-data/analytics/opportunity_explorer.parquet
-```
-
-### File Type
-
-Parquet
-
-### File Size
-
-1.8 MB
-
-### Rows
-
-INSERT_ROW_COUNT_HERE
-
-### Columns
-
-INSERT_COLUMN_COUNT_HERE
-
-### Business Purpose
-
-Provides investment opportunity intelligence for identifying high-potential housing markets.
-
-### Target Snowflake Table
-
-```sql
-RAW.OPPORTUNITY_EXPLORER
-```
-
-### Primary Analytical Use Cases
-
-- Opportunity screening
-- Investment analysis
-- Market prioritization
-
-### Key Columns
-
-- investment_score
-- growth_score
-- housing_intelligence_index
-
----
-
-# Trend Analysis Datasets
-
-## historical_housing_trends.parquet
-
-### Source
-
-```text
-data/analytics/historical_housing_trends.parquet
-```
-
-### File Type
-
-Parquet
-
-### File Size
-
-7.3 MB
-
-### Rows
-
-INSERT_ROW_COUNT_HERE
-
-### Columns
-
-INSERT_COLUMN_COUNT_HERE
-
-### Business Purpose
-
-Historical housing trend analysis across time periods.
-
-### Target Snowflake Table
-
-```sql
-RAW.HISTORICAL_HOUSING_TRENDS
-```
-
----
-
-## local_authority_trends.parquet
-
-### Source
-
-```text
-data/analytics/local_authority_trends.parquet
-```
-
-### File Type
-
-Parquet
-
-### File Size
-
-588 KB
-
-### Rows
-
-INSERT_ROW_COUNT_HERE
-
-### Columns
-
-INSERT_COLUMN_COUNT_HERE
-
-### Business Purpose
-
-Local authority-level trend analysis and reporting.
-
-### Target Snowflake Table
-
-```sql
-RAW.LOCAL_AUTHORITY_TRENDS
-```
-
----
-
-## regional_housing_trends.parquet
-
-### Source
-
-```text
-data/analytics/regional_housing_trends.parquet
-```
-
-### File Type
-
-Parquet
-
-### File Size
-
-26 KB
-
-### Rows
-
-INSERT_ROW_COUNT_HERE
-
-### Columns
-
-INSERT_COLUMN_COUNT_HERE
-
-### Business Purpose
-
-Regional housing trend analysis and comparison.
-
-### Target Snowflake Table
-
-```sql
-RAW.REGIONAL_HOUSING_TRENDS
-```
+# Dataset Catalog
+
+| Dataset | Domain | Rows | Columns | Grain | Primary Key | Snowflake Table | Future dbt Model | Priority |
+|----------|----------|----------|----------|----------|----------|----------|----------|----------|
+| area_analytics_base.parquet | Housing Intelligence | 35,671 | 18 | One row per LSOA | lsoa_code | RAW.AREA_ANALYTICS_BASE | stg_area_analytics_base | P1 |
+| housing_intelligence.parquet | Housing Intelligence | 35,671 | 28 | One row per LSOA | lsoa_code | RAW.HOUSING_INTELLIGENCE | stg_housing_intelligence | P1 |
+| crime_scores.parquet | Scoring Engine | 35,671 | 19 | One row per LSOA | lsoa_code | RAW.CRIME_SCORES | stg_crime_scores | P1 |
+| growth_scores.parquet | Scoring Engine | 35,671 | 26 | One row per LSOA | lsoa_code | RAW.GROWTH_SCORES | stg_growth_scores | P1 |
+| investment_scores.parquet | Scoring Engine | 35,671 | 29 | One row per LSOA | lsoa_code | RAW.INVESTMENT_SCORES | stg_investment_scores | P1 |
+| regional_intelligence.parquet | Location Intelligence | 10 | 9 | One row per Region | region | RAW.REGIONAL_INTELLIGENCE | stg_regional_intelligence | P2 |
+| location_intelligence.parquet | Location Intelligence | 35,671 | 22 | One row per LSOA | lsoa_code | RAW.LOCATION_INTELLIGENCE | stg_location_intelligence | P2 |
+| school_intelligence.parquet | Location Intelligence | 35,671 | 7 | One row per LSOA | lsoa_code | RAW.SCHOOL_INTELLIGENCE | stg_school_intelligence | P2 |
+| healthcare_intelligence.parquet | Location Intelligence | 35,671 | 3 | One row per LSOA | lsoa_code | RAW.HEALTHCARE_INTELLIGENCE | stg_healthcare_intelligence | P2 |
+| transport_intelligence.parquet | Location Intelligence | 35,671 | 8 | One row per LSOA | lsoa_code | RAW.TRANSPORT_INTELLIGENCE | stg_transport_intelligence | P2 |
+| rankings.parquet | Rankings | 35,671 | 13 | One row per LSOA | lsoa_code | RAW.RANKINGS | stg_rankings | P3 |
+| opportunity_explorer.parquet | Rankings | 35,671 | 10 | One row per LSOA | lsoa_code | RAW.OPPORTUNITY_EXPLORER | stg_opportunity_explorer | P3 |
+| housing_map.parquet | Analytics | 35,671 | 10 | One row per LSOA | lsoa_code | RAW.HOUSING_MAP | stg_housing_map | P3 |
+| historical_housing_trends.parquet | Trend Analytics | 1,106,405 | 11 | One row per LSOA-Year-Month | lsoa_code + year + month | RAW.HISTORICAL_HOUSING_TRENDS | stg_historical_housing_trends | P3 |
+| local_authority_trends.parquet | Trend Analytics | 12,711 | 11 | One row per LocalAuthority-Year-Month | local_authority + year + month | RAW.LOCAL_AUTHORITY_TRENDS | stg_local_authority_trends | P3 |
+| regional_housing_trends.parquet | Trend Analytics | 400 | 10 | One row per Region-Year-Month | region + year + month | RAW.REGIONAL_HOUSING_TRENDS | stg_regional_housing_trends | P3 |
 
 ---
 
 # Excluded Datasets
 
-The following datasets will not be loaded into Snowflake as permanent RAW tables.
+These datasets will not be loaded as permanent Snowflake RAW tables.
 
 ## top_100_areas.parquet
 
 ### Reason
 
-Generated reporting output derived from rankings.
+Generated reporting output derived from ranking datasets.
+
+### Future Generation
+
+```sql
+SELECT *
+FROM MARTS.AREA_RANKINGS
+ORDER BY area_rank
+LIMIT 100;
+```
+
+---
 
 ## bottom_100_areas.parquet
 
 ### Reason
 
-Generated reporting output derived from rankings.
+Generated reporting output derived from ranking datasets.
 
-### Future Implementation
-
-These datasets will be generated dynamically from:
+### Future Generation
 
 ```sql
-MARTS.AREA_RANKINGS
+SELECT *
+FROM MARTS.AREA_RANKINGS
+ORDER BY area_rank DESC
+LIMIT 100;
 ```
 
-using Snowflake SQL and dashboard queries rather than being stored physically.
+---
+
+# Phase 8 Data Flow
+
+```text
+AWS S3 Gold Layer
+        │
+        ▼
+Snowflake RAW
+        │
+        ▼
+dbt STAGING
+        │
+        ▼
+dbt DIMENSIONS
+        │
+        ▼
+dbt MARTS
+        │
+        ▼
+Analytics & Dashboard Layer
+```
+
+---
+
+# Future Warehouse Objects
+
+## Core Fact Tables
+
+- FACT_HOUSING_INTELLIGENCE
+- FACT_HISTORICAL_HOUSING_TRENDS
+- FACT_INVESTMENT_OPPORTUNITIES
+
+## Dimension Tables
+
+- DIM_LOCATION
+- DIM_REGION
+- DIM_SCHOOL_ACCESSIBILITY
+- DIM_HEALTHCARE_ACCESSIBILITY
+- DIM_TRANSPORT_ACCESSIBILITY
+
+## Analytical Data Marts
+
+- MART_AREA_RANKINGS
+- MART_INVESTMENT_OPPORTUNITIES
+- MART_HOUSING_TRENDS
+- MART_REGIONAL_PERFORMANCE
+- MART_LOCATION_INTELLIGENCE

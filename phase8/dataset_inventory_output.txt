@@ -1,0 +1,434 @@
+
+====================================================================================================
+FILE: area_analytics_base.parquet
+====================================================================================================
+Rows: 35,671
+Columns: 18
+
+Column Information
+lsoa_code (str)
+average_price (float64)
+median_price (float64)
+transaction_count (int64)
+average_crime (float64)
+average_deprivation (float64)
+affordability_score (float64)
+local_authority (str)
+region (str)
+country (str)
+latitude (float64)
+longitude (float64)
+lad_code (str)
+median_weekly_income (float64)
+mean_weekly_income (float64)
+estimated_annual_income (float64)
+price_to_income_ratio (float64)
+income_affordability_score (float64)
+
+====================================================================================================
+FILE: bottom_100_areas.parquet
+====================================================================================================
+Rows: 100
+Columns: 28
+
+Column Information
+lsoa_code (str)
+average_price (float64)
+median_price (float64)
+transaction_count (int64)
+average_crime (float64)
+average_deprivation (float64)
+crime_score (float64)
+affordability_score (float64)
+market_activity_score (float64)
+deprivation_opportunity_score (float64)
+growth_score (float64)
+average_price_to_crime_ratio (float64)
+investment_opportunity_score (float64)
+investment_score (float64)
+housing_intelligence_index (float64)
+area_rank (float64)
+percentile_rank (float64)
+local_authority (str)
+region (str)
+country (str)
+latitude (float64)
+longitude (float64)
+lad_code (str)
+median_weekly_income (float64)
+mean_weekly_income (float64)
+estimated_annual_income (float64)
+price_to_income_ratio (float64)
+income_affordability_score (float64)
+
+====================================================================================================
+FILE: crime_scores.parquet
+====================================================================================================
+Rows: 35,671
+Columns: 19
+
+Column Information
+lsoa_code (str)
+average_price (float64)
+median_price (float64)
+transaction_count (int64)
+average_crime (float64)
+average_deprivation (float64)
+affordability_score (float64)
+crime_score_v2 (float64)
+local_authority (str)
+region (str)
+country (str)
+latitude (float64)
+longitude (float64)
+lad_code (str)
+median_weekly_income (float64)
+mean_weekly_income (float64)
+estimated_annual_income (float64)
+price_to_income_ratio (float64)
+income_affordability_score (float64)
+
+====================================================================================================
+FILE: growth_scores.parquet
+====================================================================================================
+Rows: 35,671
+Columns: 26
+
+Column Information
+lsoa_code (str)
+average_price (float64)
+median_price (float64)
+transaction_count (int64)
+average_crime (float64)
+average_deprivation (float64)
+affordability_score (float64)
+crime_score_v2 (float64)
+crime_percentile (float64)
+crime_score_v3 (float64)
+affordability_percentile (float64)
+affordability_score_v2 (float64)
+market_activity_score (float64)
+deprivation_opportunity_score (float64)
+growth_score (float64)
+local_authority (str)
+region (str)
+country (str)
+latitude (float64)
+longitude (float64)
+lad_code (str)
+median_weekly_income (float64)
+mean_weekly_income (float64)
+estimated_annual_income (float64)
+price_to_income_ratio (float64)
+income_affordability_score (float64)
+
+====================================================================================================
+FILE: healthcare_intelligence.parquet
+====================================================================================================
+Rows: 35,671
+Columns: 3
+
+Column Information
+lsoa_code (str)
+healthcare_site_count (float64)
+healthcare_accessibility_score (float64)
+
+====================================================================================================
+FILE: historical_housing_trends.parquet
+====================================================================================================
+Rows: 1,106,405
+Columns: 11
+
+Column Information
+lsoa_code (str)
+year (int64)
+month (int64)
+average_price (float64)
+median_price (float64)
+transaction_count (int64)
+local_authority (str)
+region (str)
+country (str)
+latitude (float64)
+longitude (float64)
+
+====================================================================================================
+FILE: housing_intelligence.parquet
+====================================================================================================
+Rows: 35,671
+Columns: 28
+
+Column Information
+lsoa_code (str)
+average_price (float64)
+median_price (float64)
+transaction_count (int64)
+average_crime (float64)
+average_deprivation (float64)
+crime_score (float64)
+affordability_score (float64)
+market_activity_score (float64)
+deprivation_opportunity_score (float64)
+growth_score (float64)
+average_price_to_crime_ratio (float64)
+investment_opportunity_score (float64)
+investment_score (float64)
+housing_intelligence_index (float64)
+area_rank (float64)
+percentile_rank (float64)
+local_authority (str)
+region (str)
+country (str)
+latitude (float64)
+longitude (float64)
+lad_code (str)
+median_weekly_income (float64)
+mean_weekly_income (float64)
+estimated_annual_income (float64)
+price_to_income_ratio (float64)
+income_affordability_score (float64)
+
+====================================================================================================
+FILE: housing_map.parquet
+====================================================================================================
+Rows: 35,671
+Columns: 10
+
+Column Information
+lsoa_code (str)
+local_authority (str)
+region (str)
+country (str)
+latitude (float64)
+longitude (float64)
+housing_intelligence_index (float64)
+investment_score (float64)
+growth_score (float64)
+area_rank (float64)
+
+====================================================================================================
+FILE: investment_scores.parquet
+====================================================================================================
+Rows: 35,671
+Columns: 29
+
+Column Information
+lsoa_code (str)
+average_price (float64)
+median_price (float64)
+transaction_count (int64)
+average_crime (float64)
+average_deprivation (float64)
+affordability_score (float64)
+crime_score_v2 (float64)
+crime_percentile (float64)
+crime_score_v3 (float64)
+affordability_percentile (float64)
+affordability_score_v2 (float64)
+market_activity_score (float64)
+deprivation_opportunity_score (float64)
+growth_score (float64)
+average_price_to_crime_ratio (float64)
+investment_opportunity_score (float64)
+investment_score (float64)
+local_authority (str)
+region (str)
+country (str)
+latitude (float64)
+longitude (float64)
+lad_code (str)
+median_weekly_income (float64)
+mean_weekly_income (float64)
+estimated_annual_income (float64)
+price_to_income_ratio (float64)
+income_affordability_score (float64)
+
+====================================================================================================
+FILE: local_authority_trends.parquet
+====================================================================================================
+Rows: 12,711
+Columns: 11
+
+Column Information
+local_authority (str)
+region (str)
+country (str)
+year (int64)
+month (int64)
+average_price (float64)
+median_price (float64)
+transaction_count (int64)
+mom_price_growth_pct (float64)
+yoy_price_growth_pct (float64)
+rolling_12m_average_price (float64)
+
+====================================================================================================
+FILE: location_intelligence.parquet
+====================================================================================================
+Rows: 35,671
+Columns: 22
+
+Column Information
+lsoa_code (str)
+school_count (float64)
+total_pupils (float64)
+primary_school_count (float64)
+secondary_school_count (float64)
+average_pupils_per_school (float64)
+school_accessibility_score (float64)
+healthcare_site_count (float64)
+healthcare_accessibility_score (float64)
+transport_stop_count (int64)
+bus_stop_count (int64)
+rail_station_count (int64)
+metro_station_count (int64)
+airport_count (int64)
+ferry_terminal_count (int64)
+transport_accessibility_score (float64)
+school_percentile_score (float64)
+healthcare_percentile_score (float64)
+transport_percentile_score (float64)
+location_intelligence_score (float64)
+location_rank (int64)
+location_percentile_rank (float64)
+
+====================================================================================================
+FILE: opportunity_explorer.parquet
+====================================================================================================
+Rows: 35,671
+Columns: 10
+
+Column Information
+lsoa_code (str)
+local_authority (str)
+region (str)
+country (str)
+average_price (float64)
+average_crime (float64)
+investment_score (float64)
+growth_score (float64)
+housing_intelligence_index (float64)
+area_rank (float64)
+
+====================================================================================================
+FILE: rankings.parquet
+====================================================================================================
+Rows: 35,671
+Columns: 13
+
+Column Information
+lsoa_code (str)
+housing_intelligence_index (float64)
+area_rank (float64)
+percentile_rank (float64)
+local_authority (str)
+region (str)
+country (str)
+latitude (float64)
+longitude (float64)
+lad_code (str)
+median_weekly_income (float64)
+mean_weekly_income (float64)
+estimated_annual_income (float64)
+
+====================================================================================================
+FILE: regional_housing_trends.parquet
+====================================================================================================
+Rows: 400
+Columns: 10
+
+Column Information
+region (str)
+country (str)
+year (int64)
+month (int64)
+average_price (float64)
+median_price (float64)
+transaction_count (int64)
+mom_price_growth_pct (float64)
+yoy_price_growth_pct (float64)
+rolling_12m_average_price (float64)
+
+====================================================================================================
+FILE: regional_intelligence.parquet
+====================================================================================================
+Rows: 10
+Columns: 9
+
+Column Information
+region (str)
+housing_intelligence_index (float64)
+investment_score (float64)
+growth_score (float64)
+average_price (float64)
+average_crime (float64)
+area_count (int64)
+top_10_percent_areas (int64)
+regional_rank (int64)
+
+====================================================================================================
+FILE: school_intelligence.parquet
+====================================================================================================
+Rows: 35,671
+Columns: 7
+
+Column Information
+lsoa_code (str)
+school_count (float64)
+total_pupils (float64)
+primary_school_count (float64)
+secondary_school_count (float64)
+average_pupils_per_school (float64)
+school_accessibility_score (float64)
+
+====================================================================================================
+FILE: top_100_areas.parquet
+====================================================================================================
+Rows: 100
+Columns: 28
+
+Column Information
+lsoa_code (str)
+average_price (float64)
+median_price (float64)
+transaction_count (int64)
+average_crime (float64)
+average_deprivation (float64)
+crime_score (float64)
+affordability_score (float64)
+market_activity_score (float64)
+deprivation_opportunity_score (float64)
+growth_score (float64)
+average_price_to_crime_ratio (float64)
+investment_opportunity_score (float64)
+investment_score (float64)
+housing_intelligence_index (float64)
+area_rank (float64)
+percentile_rank (float64)
+local_authority (str)
+region (str)
+country (str)
+latitude (float64)
+longitude (float64)
+lad_code (str)
+median_weekly_income (float64)
+mean_weekly_income (float64)
+estimated_annual_income (float64)
+price_to_income_ratio (float64)
+income_affordability_score (float64)
+
+====================================================================================================
+FILE: transport_intelligence.parquet
+====================================================================================================
+Rows: 35,671
+Columns: 8
+
+Column Information
+lsoa_code (str)
+transport_stop_count (int64)
+bus_stop_count (int64)
+rail_station_count (int64)
+metro_station_count (int64)
+airport_count (int64)
+ferry_terminal_count (int64)
+transport_accessibility_score (float64)

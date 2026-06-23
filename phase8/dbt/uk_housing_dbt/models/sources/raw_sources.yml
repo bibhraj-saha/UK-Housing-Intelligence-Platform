@@ -1,0 +1,38 @@
+version: 2
+
+sources:
+  - name: raw
+
+    database: UK_HOUSING_DW
+
+    schema: RAW
+
+    tables:
+
+      - name: housing_intelligence
+
+      - name: crime_scores
+
+      - name: growth_scores
+
+      - name: investment_scores
+
+      - name: location_intelligence
+
+      - name: rankings
+
+      - name: school_intelligence
+
+      - name: healthcare_intelligence
+
+      - name: transport_intelligence
+
+      - name: regional_intelligence
+
+      - name: opportunity_explorer
+
+      - name: historical_housing_trends
+
+      - name: local_authority_trends
+
+      - name: regional_housing_trends

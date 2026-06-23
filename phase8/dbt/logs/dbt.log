@@ -1,0 +1,76 @@
+[0m13:14:07.331124 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1095e79e0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10d3fcf80>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10d3fc710>]}
+
+
+============================== 13:14:07.333969 | fd980430-6863-42d6-8056-0c9df218b700 ==============================
+[0m13:14:07.333969 [info ] [MainThread]: Running with dbt=1.11.11
+[0m13:14:07.334247 [debug] [MainThread]: running dbt with arguments {'warn_error': 'None', 'introspect': 'True', 'profiles_dir': '/Users/bibhrajsaha/.dbt', 'fail_fast': 'False', 'quiet': 'False', 'use_experimental_parser': 'False', 'no_print': 'None', 'indirect_selection': 'eager', 'use_colors': 'True', 'target_path': 'None', 'debug': 'False', 'empty': 'None', 'log_path': 'logs', 'send_anonymous_usage_stats': 'True', 'version_check': 'True', 'cache_selected_only': 'False', 'invocation_command': 'dbt init uk_housing_dbt', 'write_json': 'True', 'static_parser': 'True', 'partial_parse': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'printer_width': '80', 'log_format': 'default', 'log_cache_events': 'False'}
+[0m13:14:07.344192 [info ] [MainThread]: Creating dbt configuration folder at /Users/bibhrajsaha/.dbt
+[0m13:14:07.345120 [debug] [MainThread]: Starter project path: /Users/bibhrajsaha/uk-housing-intelligence-platform/venv/lib/python3.12/site-packages/dbt/include/starter_project
+[0m13:14:07.349008 [info ] [MainThread]: 
+Your new dbt project "uk_housing_dbt" was created!
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack:
+
+  https://community.getdbt.com/
+
+Happy modeling!
+
+[0m13:14:07.349163 [info ] [MainThread]: Setting up your profile.
+[0m13:14:41.309163 [debug] [MainThread]: Snowflake adapter: Setting snowflake.connector to ERROR (file logging only)
+[0m13:14:41.309597 [debug] [MainThread]: Snowflake adapter: Setting botocore to ERROR (file logging only)
+[0m13:14:41.309739 [debug] [MainThread]: Snowflake adapter: Setting boto3 to ERROR (file logging only)
+[0m13:17:32.530077 [error] [MainThread]: Encountered an error:
+
+[0m13:17:32.548040 [error] [MainThread]: Traceback (most recent call last):
+  File "/Users/bibhrajsaha/uk-housing-intelligence-platform/venv/lib/python3.12/site-packages/dbt/cli/requires.py", line 182, in wrapper
+    result, success = func(*args, **kwargs)
+                      ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/bibhrajsaha/uk-housing-intelligence-platform/venv/lib/python3.12/site-packages/dbt/cli/requires.py", line 128, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/bibhrajsaha/uk-housing-intelligence-platform/venv/lib/python3.12/site-packages/dbt/cli/main.py", line 488, in init
+    results = task.run()
+              ^^^^^^^^^^
+  File "/Users/bibhrajsaha/uk-housing-intelligence-platform/venv/lib/python3.12/site-packages/dbt/task/init.py", line 346, in run
+    self.setup_profile(profile_name)
+  File "/Users/bibhrajsaha/uk-housing-intelligence-platform/venv/lib/python3.12/site-packages/dbt/task/init.py", line 262, in setup_profile
+    self.create_profile_from_target(adapter, profile_name=profile_name)
+  File "/Users/bibhrajsaha/uk-housing-intelligence-platform/venv/lib/python3.12/site-packages/dbt/task/init.py", line 179, in create_profile_from_target
+    self.create_profile_from_profile_template(profile_template, profile_name)
+  File "/Users/bibhrajsaha/uk-housing-intelligence-platform/venv/lib/python3.12/site-packages/dbt/task/init.py", line 163, in create_profile_from_profile_template
+    target = self.generate_target_from_input(prompts, initial_target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/bibhrajsaha/uk-housing-intelligence-platform/venv/lib/python3.12/site-packages/dbt/task/init.py", line 129, in generate_target_from_input
+    target[key] = click.prompt(
+                  ^^^^^^^^^^^^^
+  File "/Users/bibhrajsaha/uk-housing-intelligence-platform/venv/lib/python3.12/site-packages/click/termui.py", line 218, in prompt
+    value = prompt_func(prompt)
+            ^^^^^^^^^^^^^^^^^^^
+  File "/Users/bibhrajsaha/uk-housing-intelligence-platform/venv/lib/python3.12/site-packages/click/termui.py", line 201, in prompt_func
+    raise Abort() from None
+click.exceptions.Abort
+
+[0m13:17:33.072385 [debug] [MainThread]: Resource report: {"command_name": "init", "command_success": false, "command_wall_clock_time": 205.7831, "process_in_blocks": "0", "process_kernel_time": 0.327638, "process_mem_max_rss": "193658880", "process_out_blocks": "0", "process_user_time": 1.003556}
+[0m13:17:33.075278 [debug] [MainThread]: Command `dbt init` failed at 13:17:33.075093 after 205.79 seconds
+[0m13:17:33.077442 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10d371640>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x113820860>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x110c30aa0>]}
+[0m13:17:33.078521 [debug] [MainThread]: Flushing usage events
+[0m13:17:34.529662 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m13:17:52.205898 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10af43ce0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10b674ec0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10b674650>]}
+
+
+============================== 13:17:52.208971 | a7a31702-56f3-491d-9105-63c078d47850 ==============================
+[0m13:17:52.208971 [info ] [MainThread]: Running with dbt=1.11.11
+[0m13:17:52.209251 [debug] [MainThread]: running dbt with arguments {'log_cache_events': 'False', 'static_parser': 'True', 'debug': 'False', 'write_json': 'True', 'send_anonymous_usage_stats': 'True', 'log_format': 'default', 'quiet': 'False', 'invocation_command': 'dbt init uk_housing_dbt', 'partial_parse': 'True', 'use_experimental_parser': 'False', 'fail_fast': 'False', 'introspect': 'True', 'use_colors': 'True', 'profiles_dir': '/Users/bibhrajsaha/.dbt', 'target_path': 'None', 'no_print': 'None', 'printer_width': '80', 'log_path': 'logs', 'version_check': 'True', 'warn_error': 'None', 'indirect_selection': 'eager', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'cache_selected_only': 'False', 'empty': 'None'}
+[0m13:17:52.218385 [info ] [MainThread]: A project called uk_housing_dbt already exists here.
+[0m13:17:52.220308 [debug] [MainThread]: Resource report: {"command_name": "init", "command_success": true, "command_wall_clock_time": 0.057299625, "process_in_blocks": "0", "process_kernel_time": 0.140523, "process_mem_max_rss": "112312320", "process_out_blocks": "0", "process_user_time": 0.654213}
+[0m13:17:52.220539 [debug] [MainThread]: Command `dbt init` succeeded at 13:17:52.220485 after 0.06 seconds
+[0m13:17:52.220694 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10b5ed640>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x102486ab0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10aaba4e0>]}
+[0m13:17:52.220843 [debug] [MainThread]: Flushing usage events
+[0m13:17:53.508913 [debug] [MainThread]: An error was encountered while trying to flush usage events

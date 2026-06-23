@@ -144,6 +144,15 @@ The project includes exploratory analysis of major UK housing and crime datasets
 * Police force analysis
 * Crime distribution analysis
 
+## dbt Data Lineage
+
+The platform uses dbt to transform Snowflake RAW datasets into
+business-ready dimensional models and marts.
+
+### Lineage Graph
+
+[final screenshot]
+
 Outputs
 
 Visualisations generated during the EDA phase are available in:

@@ -32,3 +32,22 @@ terraform/crash.log
 
 # macOS
 .DS_Store
+
+# ==================================================
+# dbt
+# ==================================================
+
+phase8/dbt/uk_housing_dbt/target/
+phase8/dbt/uk_housing_dbt/logs/
+phase8/dbt/uk_housing_dbt/dbt_packages/
+
+# dbt generated metadata
+manifest.json
+catalog.json
+run_results.json
+
+# Snowflake worksheets temporary files
+*.tmp
+
+# IDE
+.vscode/

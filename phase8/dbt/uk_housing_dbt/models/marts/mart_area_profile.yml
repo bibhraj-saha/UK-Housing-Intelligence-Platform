@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: mart_area_profile
+
+    columns:
+
+      - name: location_key
+        tests:
+          - not_null
+          - unique
+
+      - name: housing_intelligence_index
+        tests:
+          - not_null

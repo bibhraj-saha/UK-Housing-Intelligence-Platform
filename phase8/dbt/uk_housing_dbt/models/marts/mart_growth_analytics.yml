@@ -1,0 +1,11 @@
+version: 2
+
+models:
+
+  - name: mart_growth_analytics
+
+    columns:
+
+      - name: growth_score
+        tests:
+          - not_null

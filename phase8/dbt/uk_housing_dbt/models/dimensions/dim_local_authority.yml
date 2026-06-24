@@ -1,0 +1,16 @@
+version: 2
+
+models:
+  - name: dim_local_authority
+
+    columns:
+
+      - name: local_authority_key
+        tests:
+          - unique
+          - not_null
+
+      - name: lad_code
+        tests:
+          - unique
+          - not_null

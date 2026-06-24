@@ -1,0 +1,30 @@
+version: 2
+
+models:
+  - name: dim_location
+
+    description: >
+      Master location dimension for UK Housing Intelligence Platform.
+
+    columns:
+
+      - name: location_key
+        description: Surrogate warehouse key
+        tests:
+          - unique
+          - not_null
+
+      - name: lsoa_code
+        description: UK LSOA identifier
+        tests:
+          - unique
+          - not_null
+
+      - name: local_authority
+        description: Local authority
+
+      - name: region
+        description: UK region
+
+      - name: country
+        description: UK country

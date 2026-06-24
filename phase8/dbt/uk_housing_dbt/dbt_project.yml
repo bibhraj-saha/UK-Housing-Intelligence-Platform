@@ -37,7 +37,9 @@ models:
       +materialized: view
 
     dimensions:
+      +schema: dimensions
       +materialized: table
 
     marts:
+      +schema: marts
       +materialized: table

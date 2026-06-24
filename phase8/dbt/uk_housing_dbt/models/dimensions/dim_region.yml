@@ -1,0 +1,16 @@
+version: 2
+
+models:
+  - name: dim_region
+
+    columns:
+
+      - name: region_key
+        tests:
+          - unique
+          - not_null
+
+      - name: region
+        tests:
+          - unique
+          - not_null

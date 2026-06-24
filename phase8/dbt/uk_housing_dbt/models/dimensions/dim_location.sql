@@ -1,0 +1,13 @@
+SELECT
+    ROW_NUMBER() OVER (
+        ORDER BY "lsoa_code"
+    ) AS location_key,
+
+    "lsoa_code" AS lsoa_code,
+    "local_authority" AS local_authority,
+    "region" AS region,
+    "country" AS country,
+    "latitude" AS latitude,
+    "longitude" AS longitude
+
+FROM {{ ref('stg_housing_intelligence') }}

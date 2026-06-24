@@ -153,6 +153,22 @@ business-ready dimensional models and marts.
 
 [final screenshot]
 
+## Analytics Engineering Framework
+
+The UK Housing Intelligence Platform follows a layered analytics engineering architecture:
+
+RAW → STAGING → INTERMEDIATE → DIMENSIONS → FACTS → MARTS
+
+The warehouse is implemented using Snowflake and dbt.
+
+Primary consumption layer:
+- Streamlit Dashboard
+
+Future consumption layers:
+- Machine Learning Models
+- Airflow Pipelines
+- External APIs
+
 Outputs
 
 Visualisations generated during the EDA phase are available in:

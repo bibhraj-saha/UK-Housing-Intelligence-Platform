@@ -144,14 +144,28 @@ The project includes exploratory analysis of major UK housing and crime datasets
 * Police force analysis
 * Crime distribution analysis
 
+## Snowflake Warehouse
+
+The project contains a production-style Snowflake warehouse built using dbt.
+
+### Warehouse Layers
+
+RAW → STAGING → INTERMEDIATE → DIMENSIONS → FACTS → MARTS
+
+### Primary Consumption Dataset
+
+MART_AREA_PROFILE
+
+This model serves as the primary dataset for future dashboard consumption.
+
 ## dbt Data Lineage
 
 The platform uses dbt to transform Snowflake RAW datasets into
 business-ready dimensional models and marts.
 
-### Lineage Graph
+### dbt Data Lineage Graph
 
-[final screenshot]
+![dbt Data Lineage](docs/dbt_Data_Lineage.png)
 
 ## Analytics Engineering Framework
 
@@ -181,4 +195,4 @@ reports/eda/
 
 ## Current Status
 
-Phase 7 Completed
+Phase 8 Completed

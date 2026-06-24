@@ -20,7 +20,7 @@ SELECT
 
     slat."rolling_12m_average_price"  AS rolling_12m_average_price
 
-FROM {{ ref('stg_local_authority_trends') }} slat
+FROM {{ ref('int_local_authority_trends') }} slat
 
 LEFT JOIN {{ ref('dim_local_authority') }} dla
     ON slat."local_authority" = dla.local_authority

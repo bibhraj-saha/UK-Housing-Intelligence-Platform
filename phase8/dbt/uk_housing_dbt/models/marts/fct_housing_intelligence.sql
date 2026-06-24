@@ -24,7 +24,7 @@ SELECT
     shi."area_rank"                        AS area_rank,
     shi."percentile_rank"                  AS percentile_rank
 
-FROM {{ ref('stg_housing_intelligence') }} shi
+FROM {{ ref('int_housing_scores') }} shi
 
 LEFT JOIN {{ ref('dim_location') }} dl
     ON shi."lsoa_code" = dl.lsoa_code

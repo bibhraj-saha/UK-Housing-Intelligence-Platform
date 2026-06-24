@@ -18,7 +18,7 @@ SELECT
 
     srt."rolling_12m_average_price"  AS rolling_12m_average_price
 
-FROM {{ ref('stg_regional_housing_trends') }} srt
+FROM {{ ref('int_regional_trends') }} srt
 
 LEFT JOIN {{ ref('dim_region') }} dr
     ON srt."region" = dr.region

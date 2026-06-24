@@ -16,7 +16,7 @@ SELECT
 
     sht."transaction_count"   AS transaction_count
 
-FROM {{ ref('stg_historical_housing_trends') }} sht
+FROM {{ ref('int_housing_trends') }} sht
 
 LEFT JOIN {{ ref('dim_location') }} dl
     ON sht."lsoa_code" = dl.lsoa_code

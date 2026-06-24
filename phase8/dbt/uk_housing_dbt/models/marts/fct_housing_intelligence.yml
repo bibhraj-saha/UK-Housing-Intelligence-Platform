@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: fct_housing_intelligence
+
+    columns:
+
+      - name: location_key
+        tests:
+          - not_null
+
+      - name: local_authority_key
+        tests:
+          - not_null
+
+      - name: region_key
+        tests:
+          - not_null
+
+      - name: housing_intelligence_index
+        tests:
+          - not_null

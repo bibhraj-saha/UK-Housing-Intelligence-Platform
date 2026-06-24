@@ -1,0 +1,19 @@
+version: 2
+
+models:
+
+  - name: fct_regional_trends
+
+    columns:
+
+      - name: region_key
+        tests:
+          - not_null
+
+      - name: country_key
+        tests:
+          - not_null
+
+      - name: date_key
+        tests:
+          - not_null

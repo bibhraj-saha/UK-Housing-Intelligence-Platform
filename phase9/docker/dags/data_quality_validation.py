@@ -10,7 +10,7 @@ from airflow.sdk import DAG, task
 PROJECT_ROOT = Path("/opt/project")
 
 DATASETS = [
-    PROJECT_ROOT / "data" / "analytics" / "housing_master_dataset.parquet",
+    PROJECT_ROOT / "data" / "analytics" / "housing_intelligence.parquet",
     PROJECT_ROOT / "data" / "analytics" / "area_analytics_base.parquet",
     PROJECT_ROOT / "data" / "analytics" / "rankings.parquet",
     PROJECT_ROOT / "data" / "analytics" / "regional_intelligence.parquet",

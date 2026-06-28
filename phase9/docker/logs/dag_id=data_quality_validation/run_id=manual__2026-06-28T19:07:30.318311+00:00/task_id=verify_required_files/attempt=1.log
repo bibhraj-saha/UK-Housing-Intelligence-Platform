@@ -1,0 +1,12 @@
+{"timestamp":"2026-06-28T19:07:33.686453Z","level":"info","event":"DAG bundles loaded: dags-folder","logger":"airflow.dag_processing.bundles.manager.DagBundlesManager","filename":"manager.py","lineno":179}
+{"timestamp":"2026-06-28T19:07:33.688972Z","level":"info","event":"Filling up the DagBag from /opt/airflow/dags/data_quality_validation.py","logger":"airflow.models.dagbag.DagBag","filename":"dagbag.py","lineno":593}
+{"timestamp":"2026-06-28T19:07:41.386872Z","level":"info","event":"======================================================================","logger":"task.stdout"}
+{"timestamp":"2026-06-28T19:07:41.387058Z","level":"info","event":"Checking required datasets...","logger":"task.stdout"}
+{"timestamp":"2026-06-28T19:07:41.387126Z","level":"info","event":"======================================================================","logger":"task.stdout"}
+{"timestamp":"2026-06-28T19:07:41.388543Z","level":"info","event":"FOUND : housing_intelligence.parquet","logger":"task.stdout"}
+{"timestamp":"2026-06-28T19:07:41.388771Z","level":"info","event":"FOUND : area_analytics_base.parquet","logger":"task.stdout"}
+{"timestamp":"2026-06-28T19:07:41.389699Z","level":"info","event":"FOUND : rankings.parquet","logger":"task.stdout"}
+{"timestamp":"2026-06-28T19:07:41.389909Z","level":"info","event":"FOUND : regional_intelligence.parquet","logger":"task.stdout"}
+{"timestamp":"2026-06-28T19:07:41.389977Z","level":"info","event":"","logger":"task.stdout"}
+{"timestamp":"2026-06-28T19:07:41.390045Z","level":"info","event":"All required datasets exist.","logger":"task.stdout"}
+{"timestamp":"2026-06-28T19:07:41.390336Z","level":"info","event":"Done. Returned value was: None","logger":"airflow.task.operators.airflow.providers.standard.decorators.python._PythonDecoratedOperator","filename":"python.py","lineno":218}

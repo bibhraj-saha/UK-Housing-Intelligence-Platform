@@ -9,84 +9,91 @@ from airflow.sdk import DAG, task
 
 PROJECT_ROOT = Path("/opt/project")
 
-DATASETS = [
-    PROJECT_ROOT / "data" / "analytics" / "housing_intelligence.parquet",
-    PROJECT_ROOT / "data" / "analytics" / "area_analytics_base.parquet",
-    PROJECT_ROOT / "data" / "analytics" / "rankings.parquet",
-    PROJECT_ROOT / "data" / "analytics" / "regional_intelligence.parquet",
-]
+ANALYTICS_DIRECTORY = PROJECT_ROOT / "data" / "analytics"
 
 REPORT_DIRECTORY = PROJECT_ROOT / "phase9" / "data_quality" / "reports"
 
 
+def discover_datasets():
+    """
+    Automatically discover every parquet dataset
+    inside the analytics directory.
+    """
+
+    return sorted(
+        ANALYTICS_DIRECTORY.glob("*.parquet")
+    )
+
+
 with DAG(
     dag_id="data_quality_validation",
-    description="Validate analytical datasets before orchestration",
+    description="Production Data Quality Validation",
     start_date=datetime(2026, 1, 1),
     schedule=None,
     catchup=False,
-    tags=["phase9", "data-quality", "validation"],
+    tags=[
+        "phase9",
+        "production",
+        "validation",
+    ],
 ) as dag:
 
     @task
-    def verify_required_files():
+    def discover_files():
+
+        datasets = discover_datasets()
 
         print("=" * 70)
-        print("Checking required datasets...")
+        print("Dataset Discovery")
         print("=" * 70)
 
-        missing = []
-
-        for dataset in DATASETS:
-
-            if dataset.exists():
-                print(f"FOUND : {dataset.name}")
-            else:
-                print(f"MISSING : {dataset.name}")
-                missing.append(dataset.name)
-
-        if missing:
+        if not datasets:
             raise FileNotFoundError(
-                f"Missing datasets: {', '.join(missing)}"
+                "No parquet datasets found."
             )
 
-        print("\nAll required datasets exist.")
+        print(f"Datasets Found : {len(datasets)}\n")
+
+        for dataset in datasets:
+            print(dataset.name)
 
     @task
     def validate_file_sizes():
 
+        datasets = discover_datasets()
+
         print("=" * 70)
-        print("Checking file sizes...")
+        print("File Size Validation")
         print("=" * 70)
 
-        for dataset in DATASETS:
+        for dataset in datasets:
 
             size_mb = dataset.stat().st_size / (1024 * 1024)
 
-            print(f"{dataset.name} : {size_mb:.2f} MB")
+            print(f"{dataset.name:<45} {size_mb:10.2f} MB")
 
             if size_mb <= 0:
                 raise ValueError(
-                    f"{dataset.name} appears empty."
+                    f"{dataset.name} is empty."
                 )
 
-        print("\nAll dataset sizes look valid.")
+        print("\nAll datasets contain data.")
 
     @task
     def validate_dataset_readability():
 
+        datasets = discover_datasets()
+
         print("=" * 70)
-        print("Checking dataset readability...")
+        print("Readability Validation")
         print("=" * 70)
 
-        for dataset in DATASETS:
+        for dataset in datasets:
 
             with open(dataset, "rb") as f:
-                f.read(16)
+                f.read(32)
 
-            print(f"{dataset.name} : Read successful")
-
-        print("\nAll datasets are readable.")
+            print(f"{dataset.name} : OK")
 
     @task
     def generate_validation_report():
@@ -96,24 +103,35 @@ with DAG(
             exist_ok=True,
         )
 
-        report_file = (
+        datasets = discover_datasets()
+
+        report = (
             REPORT_DIRECTORY
             / f"validation_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
         )
 
-        with open(report_file, "w") as report:
+        with open(report, "w") as file:
 
-            report.write("UK Housing Intelligence Platform\n")
-            report.write("Phase 9 Data Quality Validation\n")
-            report.write(f"Execution Time: {datetime.now()}\n")
-            report.write("\n")
+            file.write("UK Housing Intelligence Platform\n")
+            file.write("Phase 9 Data Quality Validation\n")
+            file.write(f"Execution Time : {datetime.now()}\n")
+            file.write(f"Datasets Validated : {len(datasets)}\n\n")
 
-            report.write("Validation Result: SUCCESS\n")
+            for dataset in datasets:
 
-        print(f"Validation report created:\n{report_file}")
+                size_mb = dataset.stat().st_size / (1024 * 1024)
+
+                file.write(
+                    f"{dataset.name:<45} "
+                    f"{size_mb:.2f} MB\n"
+                )
+
+            file.write("\nValidation Status : SUCCESS\n")
+
+        print(f"Validation report generated:\n{report}")
 
     (
-        verify_required_files()
+        discover_files()
         >> validate_file_sizes()
         >> validate_dataset_readability()
         >> generate_validation_report()

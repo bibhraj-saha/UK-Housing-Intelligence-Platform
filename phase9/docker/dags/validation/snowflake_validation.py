@@ -1,38 +1,16 @@
-from airflow import DAG
-from airflow.operators.python import PythonOperator
 from datetime import datetime
-from pathlib import Path
 
-
-def validate_project_structure():
-    print("=" * 60)
-    print("SNOWFLAKE VALIDATION")
-    print("=" * 60)
-
-    analytics_path = Path("/opt/project/data/analytics")
-
-    if analytics_path.exists():
-        print("Analytics folder found.")
-    else:
-        raise FileNotFoundError("Analytics folder not found.")
-
-    parquet_files = list(analytics_path.glob("*.parquet"))
-
-    print(f"Found {len(parquet_files)} parquet files.")
-
-    if len(parquet_files) == 0:
-        raise Exception("No parquet files found.")
-
-    print("Validation completed successfully.")
-
+from airflow import DAG
+from airflow.providers.snowflake.operators.snowflake import SnowflakeCheckOperator
 
 default_args = {
     "owner": "Bibhraj Saha",
+    "retries": 2,
 }
-
 
 with DAG(
     dag_id="snowflake_validation",
+    description="Validate Snowflake environment before running warehouse pipelines",
     start_date=datetime(2026, 1, 1),
     schedule=None,
     catchup=False,
@@ -40,9 +18,38 @@ with DAG(
     tags=["snowflake", "validation", "phase9"],
 ) as dag:
 
-    validate = PythonOperator(
-        task_id="validate_snowflake_inputs",
-        python_callable=validate_project_structure,
+    warehouse_check = SnowflakeCheckOperator(
+        task_id="verify_warehouse",
+        snowflake_conn_id="snowflake_default",
+        sql="""
+        SELECT CURRENT_WAREHOUSE() IS NOT NULL;
+        """,
     )
 
-    validate
+    database_check = SnowflakeCheckOperator(
+        task_id="verify_database",
+        snowflake_conn_id="snowflake_default",
+        sql="""
+        SELECT CURRENT_DATABASE() = 'UK_HOUSING_DW';
+        """,
+    )
+
+    schema_check = SnowflakeCheckOperator(
+        task_id="verify_schema",
+        snowflake_conn_id="snowflake_default",
+        sql="""
+        SELECT CURRENT_SCHEMA() = 'RAW';
+        """,
+    )
+
+    table_check = SnowflakeCheckOperator(
+        task_id="verify_raw_tables",
+        snowflake_conn_id="snowflake_default",
+        sql="""
+        SELECT COUNT(*)
+        FROM INFORMATION_SCHEMA.TABLES
+        WHERE TABLE_SCHEMA='RAW';
+        """,
+    )
+
+    warehouse_check >> database_check >> schema_check >> table_check

@@ -14,3 +14,6 @@ matplotlib
 
 dbt-core
 dbt-snowflake
+
+apache-airflow-providers-snowflake
+snowflake-connector-python

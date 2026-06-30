@@ -2,6 +2,7 @@ from datetime import datetime
 
 from airflow import DAG
 from airflow.operators.empty import EmptyOperator
+from airflow.operators.bash import BashOperator
 from airflow.operators.trigger_dagrun import TriggerDagRunOperator
 
 default_args = {
@@ -44,6 +45,27 @@ with DAG(
         poke_interval=10,
     )
 
+    load_raw_data = BashOperator(
+        task_id="load_raw_data",
+        bash_command="""
+        python /opt/project/phase9/scripts/load_raw_to_snowflake.py
+        """,
+    )
+
+    run_dbt_models = BashOperator(
+        task_id="run_dbt_models",
+        bash_command="""
+        python /opt/project/phase9/scripts/run_dbt_models.py
+        """,
+    )
+
+    refresh_dashboard = BashOperator(
+        task_id="refresh_dashboard",
+        bash_command="""
+        python /opt/project/phase9/scripts/refresh_dashboard.py
+        """,
+    )
+
     finish = EmptyOperator(
         task_id="pipeline_completed"
     )
@@ -53,5 +75,8 @@ with DAG(
         >> trigger_health_check
         >> trigger_snowflake_validation
         >> trigger_data_quality_validation
+        >> load_raw_data
+        >> run_dbt_models
+        >> refresh_dashboard
         >> finish
     )

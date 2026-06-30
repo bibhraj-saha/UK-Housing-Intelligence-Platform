@@ -1,0 +1,23 @@
+uk_housing_dbt:
+  target: dev
+
+  outputs:
+    dev:
+      type: snowflake
+      account: UGLGPMY-FW39691
+
+      user: BIBHRAJSAHA
+
+      password: IntoTheWild@123
+
+      role: ACCOUNTADMIN
+
+      database: UK_HOUSING_DW
+
+      warehouse: COMPUTE_WH
+
+      schema: STAGING
+
+      threads: 4
+
+      client_session_keep_alive: false

@@ -1,0 +1,5 @@
+{"timestamp":"2026-06-30T08:07:59.808775Z","level":"info","event":"DAG bundles loaded: dags-folder","logger":"airflow.dag_processing.bundles.manager.DagBundlesManager","filename":"manager.py","lineno":179}
+{"timestamp":"2026-06-30T08:07:59.809420Z","level":"info","event":"Filling up the DagBag from /opt/airflow/dags/validation/data_quality_validation.py","logger":"airflow.models.dagbag.DagBag","filename":"dagbag.py","lineno":593}
+{"timestamp":"2026-06-30T08:08:00.820784Z","level":"info","event":"Validation report generated:","logger":"task.stdout"}
+{"timestamp":"2026-06-30T08:08:00.820961Z","level":"info","event":"/opt/project/phase9/data_quality/reports/validation_report_20260630_080800.txt","logger":"task.stdout"}
+{"timestamp":"2026-06-30T08:08:00.821448Z","level":"info","event":"Done. Returned value was: None","logger":"airflow.task.operators.airflow.providers.standard.decorators.python._PythonDecoratedOperator","filename":"python.py","lineno":218}

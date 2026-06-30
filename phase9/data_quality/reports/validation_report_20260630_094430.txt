@@ -1,0 +1,25 @@
+UK Housing Intelligence Platform
+Phase 9 Data Quality Validation
+Execution Time : 2026-06-30 09:44:30.675012
+Datasets Validated : 18
+
+area_analytics_base.parquet                   2.33 MB
+bottom_100_areas.parquet                      0.03 MB
+crime_scores.parquet                          2.37 MB
+growth_scores.parquet                         3.31 MB
+healthcare_intelligence.parquet               0.27 MB
+historical_housing_trends.parquet             7.29 MB
+housing_intelligence.parquet                  4.97 MB
+housing_map.parquet                           2.16 MB
+investment_scores.parquet                     4.32 MB
+local_authority_trends.parquet                0.57 MB
+location_intelligence.parquet                 0.88 MB
+opportunity_explorer.parquet                  1.82 MB
+rankings.parquet                              1.84 MB
+regional_housing_trends.parquet               0.02 MB
+regional_intelligence.parquet                 0.01 MB
+school_intelligence.parquet                   0.39 MB
+top_100_areas.parquet                         0.03 MB
+transport_intelligence.parquet                0.38 MB
+
+Validation Status : SUCCESS

@@ -59,6 +59,13 @@ with DAG(
         """,
     )
 
+    run_dbt_tests = BashOperator(
+        task_id="run_dbt_tests",
+        bash_command="""
+        python /opt/project/phase9/scripts/run_dbt_tests.py
+        """,
+    )
+
     refresh_dashboard = BashOperator(
         task_id="refresh_dashboard",
         bash_command="""
@@ -77,6 +84,7 @@ with DAG(
         >> trigger_data_quality_validation
         >> load_raw_data
         >> run_dbt_models
+        >> run_dbt_tests
         >> refresh_dashboard
         >> finish
     )

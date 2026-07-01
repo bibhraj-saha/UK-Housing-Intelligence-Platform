@@ -65,6 +65,10 @@ SELECT
     dl.latitude,
     dl.longitude,
 
+    dl.estimated_annual_income,
+    dl.price_to_income_ratio,
+    dl.income_affordability_score,
+
     h.average_price,
     h.median_price,
     h.transaction_count,

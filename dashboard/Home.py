@@ -41,7 +41,7 @@ st.markdown(
 
 avg_price = round(df["average_price"].mean(), 0)
 
-avg_crime = round(df["average_crime"].mean(), 2)
+avg_crime_score = round(df["crime_score"].mean(), 2)
 
 avg_investment = round(
     df["investment_score"].mean(),
@@ -121,8 +121,8 @@ col1.metric(
 )
 
 col2.metric(
-    "Average Crime",
-    avg_crime
+    "Crime Score",
+    avg_crime_score
 )
 
 col3.metric(
@@ -140,7 +140,7 @@ with st.expander("KPI Guide"):
         """
         **Average House Price** – Mean property price across all analysed UK LSOAs.
 
-        **Average Crime** – Average crime level across analysed areas.
+        **Crime Score** – Normalised safety score based on crime data. Higher scores represent safer areas with lower crime, while lower scores represent higher crime levels.
 
         **Investment Score** – Composite score measuring investment attractiveness.
 

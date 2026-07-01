@@ -59,6 +59,16 @@ df = df[
     )
 ]
 
+opportunity_score = (
+    df["investment_score"] * 0.6
+    +
+    df["growth_score"] * 0.4
+)
+
+df = df.copy()
+
+df["opportunity_score"] = opportunity_score
+
 st.title("Investment Opportunities")
 
 st.markdown(
@@ -234,7 +244,7 @@ st.subheader(
 
 opportunity_areas = (
     df.sort_values(
-        "investment_opportunity_score",
+        "opportunity_score",
         ascending=False
     )
     .head(top_n)
@@ -247,7 +257,6 @@ st.dataframe(
             "lsoa_code",
             "local_authority",
             "region",
-            "investment_opportunity_score",
             "investment_score",
             "growth_score",
             "average_price"

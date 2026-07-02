@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from airflow import DAG
 from airflow.operators.empty import EmptyOperator
@@ -7,7 +7,18 @@ from airflow.operators.trigger_dagrun import TriggerDagRunOperator
 
 default_args = {
     "owner": "Bibhraj Saha",
-    "retries": 2,
+
+    "depends_on_past": False,
+
+    "retries": 3,
+
+    "retry_delay": timedelta(minutes=2),
+
+    "retry_exponential_backoff": True,
+
+    "max_retry_delay": timedelta(minutes=15),
+
+    "execution_timeout": timedelta(minutes=60),
 }
 
 with DAG(

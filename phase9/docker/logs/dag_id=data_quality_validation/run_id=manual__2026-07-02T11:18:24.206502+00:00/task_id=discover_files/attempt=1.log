@@ -1,0 +1,26 @@
+{"timestamp":"2026-07-02T11:18:25.152532Z","level":"info","event":"DAG bundles loaded: dags-folder","logger":"airflow.dag_processing.bundles.manager.DagBundlesManager","filename":"manager.py","lineno":179}
+{"timestamp":"2026-07-02T11:18:25.153198Z","level":"info","event":"Filling up the DagBag from /opt/airflow/dags/validation/data_quality_validation.py","logger":"airflow.models.dagbag.DagBag","filename":"dagbag.py","lineno":593}
+{"timestamp":"2026-07-02T11:18:25.462300Z","level":"info","event":"======================================================================","logger":"task.stdout"}
+{"timestamp":"2026-07-02T11:18:25.462453Z","level":"info","event":"Dataset Discovery","logger":"task.stdout"}
+{"timestamp":"2026-07-02T11:18:25.462545Z","level":"info","event":"======================================================================","logger":"task.stdout"}
+{"timestamp":"2026-07-02T11:18:25.462631Z","level":"info","event":"Datasets Found : 18","logger":"task.stdout"}
+{"timestamp":"2026-07-02T11:18:25.462759Z","level":"info","event":"","logger":"task.stdout"}
+{"timestamp":"2026-07-02T11:18:25.462876Z","level":"info","event":"area_analytics_base.parquet","logger":"task.stdout"}
+{"timestamp":"2026-07-02T11:18:25.462956Z","level":"info","event":"bottom_100_areas.parquet","logger":"task.stdout"}
+{"timestamp":"2026-07-02T11:18:25.463022Z","level":"info","event":"crime_scores.parquet","logger":"task.stdout"}
+{"timestamp":"2026-07-02T11:18:25.463084Z","level":"info","event":"growth_scores.parquet","logger":"task.stdout"}
+{"timestamp":"2026-07-02T11:18:25.463142Z","level":"info","event":"healthcare_intelligence.parquet","logger":"task.stdout"}
+{"timestamp":"2026-07-02T11:18:25.463241Z","level":"info","event":"historical_housing_trends.parquet","logger":"task.stdout"}
+{"timestamp":"2026-07-02T11:18:25.463325Z","level":"info","event":"housing_intelligence.parquet","logger":"task.stdout"}
+{"timestamp":"2026-07-02T11:18:25.463430Z","level":"info","event":"housing_map.parquet","logger":"task.stdout"}
+{"timestamp":"2026-07-02T11:18:25.463501Z","level":"info","event":"investment_scores.parquet","logger":"task.stdout"}
+{"timestamp":"2026-07-02T11:18:25.463567Z","level":"info","event":"local_authority_trends.parquet","logger":"task.stdout"}
+{"timestamp":"2026-07-02T11:18:25.463627Z","level":"info","event":"location_intelligence.parquet","logger":"task.stdout"}
+{"timestamp":"2026-07-02T11:18:25.463705Z","level":"info","event":"opportunity_explorer.parquet","logger":"task.stdout"}
+{"timestamp":"2026-07-02T11:18:25.463763Z","level":"info","event":"rankings.parquet","logger":"task.stdout"}
+{"timestamp":"2026-07-02T11:18:25.463820Z","level":"info","event":"regional_housing_trends.parquet","logger":"task.stdout"}
+{"timestamp":"2026-07-02T11:18:25.463885Z","level":"info","event":"regional_intelligence.parquet","logger":"task.stdout"}
+{"timestamp":"2026-07-02T11:18:25.463942Z","level":"info","event":"school_intelligence.parquet","logger":"task.stdout"}
+{"timestamp":"2026-07-02T11:18:25.463997Z","level":"info","event":"top_100_areas.parquet","logger":"task.stdout"}
+{"timestamp":"2026-07-02T11:18:25.464053Z","level":"info","event":"transport_intelligence.parquet","logger":"task.stdout"}
+{"timestamp":"2026-07-02T11:18:25.462361Z","level":"info","event":"Done. Returned value was: None","logger":"airflow.task.operators.airflow.providers.standard.decorators.python._PythonDecoratedOperator","filename":"python.py","lineno":218}

@@ -4,20 +4,15 @@ from airflow import DAG
 from airflow.operators.empty import EmptyOperator
 from airflow.operators.bash import BashOperator
 from airflow.operators.trigger_dagrun import TriggerDagRunOperator
+from airflow.utils.trigger_rule import TriggerRule
 
 default_args = {
     "owner": "Bibhraj Saha",
-
     "depends_on_past": False,
-
     "retries": 3,
-
     "retry_delay": timedelta(minutes=2),
-
     "retry_exponential_backoff": True,
-
     "max_retry_delay": timedelta(minutes=15),
-
     "execution_timeout": timedelta(minutes=60),
 }
 
@@ -84,11 +79,20 @@ with DAG(
         """,
     )
 
-    send_notification = BashOperator(
-        task_id="send_notification",
+    notify_success = BashOperator(
+        task_id="notify_success",
         bash_command="""
-        python /opt/project/phase9/notifications/send_notification.py
+        python /opt/project/phase9/scripts/success_notification.py
         """,
+        trigger_rule=TriggerRule.ALL_SUCCESS,
+    )
+
+    notify_failure = BashOperator(
+        task_id="notify_failure",
+        bash_command="""
+        python /opt/project/phase9/scripts/failure_notification.py
+        """,
+        trigger_rule=TriggerRule.ONE_FAILED,
     )
 
     finish = EmptyOperator(
@@ -104,6 +108,14 @@ with DAG(
         >> run_dbt_models
         >> run_dbt_tests
         >> refresh_dashboard
-        >> send_notification
+        >> notify_success
         >> finish
     )
+
+    trigger_health_check >> notify_failure
+    trigger_snowflake_validation >> notify_failure
+    trigger_data_quality_validation >> notify_failure
+    load_raw_data >> notify_failure
+    run_dbt_models >> notify_failure
+    run_dbt_tests >> notify_failure
+    refresh_dashboard >> notify_failure

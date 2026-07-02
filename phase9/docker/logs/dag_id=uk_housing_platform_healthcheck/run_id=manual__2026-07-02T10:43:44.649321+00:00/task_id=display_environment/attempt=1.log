@@ -1,0 +1,12 @@
+{"timestamp":"2026-07-02T10:43:45.901789Z","level":"info","event":"DAG bundles loaded: dags-folder","logger":"airflow.dag_processing.bundles.manager.DagBundlesManager","filename":"manager.py","lineno":179}
+{"timestamp":"2026-07-02T10:43:45.902593Z","level":"info","event":"Filling up the DagBag from /opt/airflow/dags/health/uk_housing_platform_healthcheck.py","logger":"airflow.models.dagbag.DagBag","filename":"dagbag.py","lineno":593}
+{"timestamp":"2026-07-02T10:43:46.105337Z","level":"info","event":"============================================================","logger":"task.stdout"}
+{"timestamp":"2026-07-02T10:43:46.105438Z","level":"info","event":"UK Housing Intelligence Platform","logger":"task.stdout"}
+{"timestamp":"2026-07-02T10:43:46.105502Z","level":"info","event":"Phase 9 - Airflow Health Check","logger":"task.stdout"}
+{"timestamp":"2026-07-02T10:43:46.105573Z","level":"info","event":"============================================================","logger":"task.stdout"}
+{"timestamp":"2026-07-02T10:43:46.105623Z","level":"info","event":"Execution Time : 2026-07-02 10:43:46.105313","logger":"task.stdout"}
+{"timestamp":"2026-07-02T10:43:46.105662Z","level":"info","event":"Environment    : Local Docker","logger":"task.stdout"}
+{"timestamp":"2026-07-02T10:43:46.105732Z","level":"info","event":"Executor       : LocalExecutor","logger":"task.stdout"}
+{"timestamp":"2026-07-02T10:43:46.105783Z","level":"info","event":"Platform       : Apache Airflow 3.1","logger":"task.stdout"}
+{"timestamp":"2026-07-02T10:43:46.105822Z","level":"info","event":"============================================================","logger":"task.stdout"}
+{"timestamp":"2026-07-02T10:43:46.105356Z","level":"info","event":"Done. Returned value was: None","logger":"airflow.task.operators.airflow.providers.standard.decorators.python._PythonDecoratedOperator","filename":"python.py","lineno":218}

@@ -73,6 +73,13 @@ with DAG(
         """,
     )
 
+    send_notification = BashOperator(
+        task_id="send_notification",
+        bash_command="""
+        python /opt/project/phase9/notifications/send_notification.py
+        """,
+    )
+
     finish = EmptyOperator(
         task_id="pipeline_completed"
     )
@@ -86,5 +93,6 @@ with DAG(
         >> run_dbt_models
         >> run_dbt_tests
         >> refresh_dashboard
+        >> send_notification
         >> finish
     )

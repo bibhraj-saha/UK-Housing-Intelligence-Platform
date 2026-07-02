@@ -1,0 +1,7 @@
+{"timestamp":"2026-07-02T10:43:40.636287Z","level":"info","event":"Filling up the DagBag from /opt/airflow/dags/validation/snowflake_validation.py","logger":"airflow.models.dagbag.DagBag","filename":"dagbag.py","lineno":593}
+{"timestamp":"2026-07-02T10:44:12.581621Z","level":"info","event":"Filling up the DagBag from /opt/airflow/dags/validation/snowflake_validation.py","logger":"airflow.models.dagbag.DagBag","filename":"dagbag.py","lineno":593}
+{"timestamp":"2026-07-02T10:44:43.210039Z","level":"info","event":"Filling up the DagBag from /opt/airflow/dags/validation/snowflake_validation.py","logger":"airflow.models.dagbag.DagBag","filename":"dagbag.py","lineno":593}
+{"timestamp":"2026-07-02T10:45:13.800719Z","level":"info","event":"Filling up the DagBag from /opt/airflow/dags/validation/snowflake_validation.py","logger":"airflow.models.dagbag.DagBag","filename":"dagbag.py","lineno":593}
+{"timestamp":"2026-07-02T10:45:44.413585Z","level":"info","event":"Filling up the DagBag from /opt/airflow/dags/validation/snowflake_validation.py","logger":"airflow.models.dagbag.DagBag","filename":"dagbag.py","lineno":593}
+{"timestamp":"2026-07-02T10:46:15.029272Z","level":"info","event":"Filling up the DagBag from /opt/airflow/dags/validation/snowflake_validation.py","logger":"airflow.models.dagbag.DagBag","filename":"dagbag.py","lineno":593}
+{"timestamp":"2026-07-02T10:46:45.637809Z","level":"info","event":"Filling up the DagBag from /opt/airflow/dags/validation/snowflake_validation.py","logger":"airflow.models.dagbag.DagBag","filename":"dagbag.py","lineno":593}

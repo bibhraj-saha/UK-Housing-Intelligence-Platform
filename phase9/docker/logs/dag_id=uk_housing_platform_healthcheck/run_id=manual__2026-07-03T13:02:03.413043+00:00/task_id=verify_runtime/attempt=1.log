@@ -1,0 +1,8 @@
+{"timestamp":"2026-07-03T13:02:05.812276Z","level":"info","event":"DAG bundles loaded: dags-folder","logger":"airflow.dag_processing.bundles.manager.DagBundlesManager","filename":"manager.py","lineno":179}
+{"timestamp":"2026-07-03T13:02:05.814427Z","level":"info","event":"Filling up the DagBag from /opt/airflow/dags/health/uk_housing_platform_healthcheck.py","logger":"airflow.models.dagbag.DagBag","filename":"dagbag.py","lineno":593}
+{"timestamp":"2026-07-03T13:02:06.089896Z","level":"info","event":"Verifying orchestration environment...","logger":"task.stdout"}
+{"timestamp":"2026-07-03T13:02:06.090039Z","level":"info","event":"Airflow Scheduler : OK","logger":"task.stdout"}
+{"timestamp":"2026-07-03T13:02:06.090135Z","level":"info","event":"Task Execution    : OK","logger":"task.stdout"}
+{"timestamp":"2026-07-03T13:02:06.090211Z","level":"info","event":"Python Runtime    : OK","logger":"task.stdout"}
+{"timestamp":"2026-07-03T13:02:06.090277Z","level":"info","event":"Health Check      : PASSED","logger":"task.stdout"}
+{"timestamp":"2026-07-03T13:02:06.089963Z","level":"info","event":"Done. Returned value was: None","logger":"airflow.task.operators.airflow.providers.standard.decorators.python._PythonDecoratedOperator","filename":"python.py","lineno":218}

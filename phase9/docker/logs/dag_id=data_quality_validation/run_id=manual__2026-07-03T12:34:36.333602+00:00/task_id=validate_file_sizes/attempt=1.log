@@ -1,0 +1,26 @@
+{"timestamp":"2026-07-03T12:34:38.284510Z","level":"info","event":"DAG bundles loaded: dags-folder","logger":"airflow.dag_processing.bundles.manager.DagBundlesManager","filename":"manager.py","lineno":179}
+{"timestamp":"2026-07-03T12:34:38.285011Z","level":"info","event":"Filling up the DagBag from /opt/airflow/dags/validation/data_quality_validation.py","logger":"airflow.models.dagbag.DagBag","filename":"dagbag.py","lineno":593}
+{"timestamp":"2026-07-03T12:34:38.462818Z","level":"info","event":"======================================================================","logger":"task.stdout"}
+{"timestamp":"2026-07-03T12:34:38.463085Z","level":"info","event":"File Size Validation","logger":"task.stdout"}
+{"timestamp":"2026-07-03T12:34:38.463169Z","level":"info","event":"======================================================================","logger":"task.stdout"}
+{"timestamp":"2026-07-03T12:34:38.463370Z","level":"info","event":"area_analytics_base.parquet                         2.33 MB","logger":"task.stdout"}
+{"timestamp":"2026-07-03T12:34:38.463517Z","level":"info","event":"bottom_100_areas.parquet                            0.03 MB","logger":"task.stdout"}
+{"timestamp":"2026-07-03T12:34:38.463581Z","level":"info","event":"crime_scores.parquet                                2.37 MB","logger":"task.stdout"}
+{"timestamp":"2026-07-03T12:34:38.463648Z","level":"info","event":"growth_scores.parquet                               3.31 MB","logger":"task.stdout"}
+{"timestamp":"2026-07-03T12:34:38.463837Z","level":"info","event":"healthcare_intelligence.parquet                     0.27 MB","logger":"task.stdout"}
+{"timestamp":"2026-07-03T12:34:38.463896Z","level":"info","event":"historical_housing_trends.parquet                   7.29 MB","logger":"task.stdout"}
+{"timestamp":"2026-07-03T12:34:38.464105Z","level":"info","event":"housing_intelligence.parquet                        4.42 MB","logger":"task.stdout"}
+{"timestamp":"2026-07-03T12:34:38.464145Z","level":"info","event":"housing_map.parquet                                 2.16 MB","logger":"task.stdout"}
+{"timestamp":"2026-07-03T12:34:38.464200Z","level":"info","event":"investment_scores.parquet                           4.32 MB","logger":"task.stdout"}
+{"timestamp":"2026-07-03T12:34:38.464268Z","level":"info","event":"local_authority_trends.parquet                      0.57 MB","logger":"task.stdout"}
+{"timestamp":"2026-07-03T12:34:38.464312Z","level":"info","event":"location_intelligence.parquet                       0.88 MB","logger":"task.stdout"}
+{"timestamp":"2026-07-03T12:34:38.464368Z","level":"info","event":"opportunity_explorer.parquet                        1.82 MB","logger":"task.stdout"}
+{"timestamp":"2026-07-03T12:34:38.464436Z","level":"info","event":"rankings.parquet                                    1.84 MB","logger":"task.stdout"}
+{"timestamp":"2026-07-03T12:34:38.464510Z","level":"info","event":"regional_housing_trends.parquet                     0.02 MB","logger":"task.stdout"}
+{"timestamp":"2026-07-03T12:34:38.464557Z","level":"info","event":"regional_intelligence.parquet                       0.01 MB","logger":"task.stdout"}
+{"timestamp":"2026-07-03T12:34:38.464617Z","level":"info","event":"school_intelligence.parquet                         0.39 MB","logger":"task.stdout"}
+{"timestamp":"2026-07-03T12:34:38.464666Z","level":"info","event":"top_100_areas.parquet                               0.03 MB","logger":"task.stdout"}
+{"timestamp":"2026-07-03T12:34:38.464712Z","level":"info","event":"transport_intelligence.parquet                      0.38 MB","logger":"task.stdout"}
+{"timestamp":"2026-07-03T12:34:38.464764Z","level":"info","event":"","logger":"task.stdout"}
+{"timestamp":"2026-07-03T12:34:38.464809Z","level":"info","event":"All datasets contain data.","logger":"task.stdout"}
+{"timestamp":"2026-07-03T12:34:38.464664Z","level":"info","event":"Done. Returned value was: None","logger":"airflow.task.operators.airflow.providers.standard.decorators.python._PythonDecoratedOperator","filename":"python.py","lineno":218}

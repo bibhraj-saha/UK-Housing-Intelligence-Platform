@@ -1,0 +1,148 @@
+project:
+  name: "UK Housing Intelligence Platform"
+  phase: 10
+  component: "Machine Learning Layer"
+  audit_name: "ML Readiness Audit"
+
+paths:
+  analytics_directory: "data/analytics"
+  processed_directory: "data/processed"
+  raw_directory: "data/raw"
+  external_directory: "data/external"
+  reference_directory: "data/reference"
+  audit_output_directory: "phase10/reports/audits"
+
+discovery:
+  supported_extensions:
+    - ".parquet"
+    - ".csv"
+
+  recursive: true
+
+  directories:
+    - "data/analytics"
+    - "data/processed"
+    - "data/raw"
+    - "data/external"
+    - "data/reference"
+
+profiling:
+  sample_rows: 50000
+  top_values_limit: 10
+  calculate_numeric_statistics: true
+  calculate_missingness: true
+  detect_datetime_columns: true
+  detect_geography_columns: true
+  detect_candidate_targets: true
+  detect_leakage_risks: true
+
+datetime_detection:
+  explicit_name_tokens:
+    - "date"
+    - "time"
+    - "timestamp"
+    - "month"
+    - "year"
+    - "period"
+
+  minimum_parse_success_ratio: 0.90
+
+geography_detection:
+  exact_columns:
+    - "lsoa_code"
+    - "lsoa"
+    - "msoa_code"
+    - "msoa"
+    - "postcode"
+    - "postcode_clean"
+    - "district"
+    - "local_authority"
+    - "local_authority_code"
+    - "region"
+    - "country"
+    - "latitude"
+    - "longitude"
+
+  name_tokens:
+    - "lsoa"
+    - "msoa"
+    - "postcode"
+    - "district"
+    - "authority"
+    - "region"
+    - "country"
+    - "latitude"
+    - "longitude"
+
+candidate_target_detection:
+  exact_columns:
+    - "price"
+    - "average_price"
+    - "median_price"
+    - "growth"
+    - "growth_rate"
+    - "price_growth"
+    - "investment_score"
+    - "investment_opportunity"
+    - "housing_intelligence_index"
+
+  name_tokens:
+    - "price"
+    - "growth"
+    - "investment"
+    - "forecast"
+    - "target"
+    - "outcome"
+
+leakage_detection:
+  high_risk_exact_columns:
+    - "target"
+    - "label"
+    - "future_price"
+    - "future_growth"
+    - "predicted_price"
+    - "predicted_growth"
+    - "prediction"
+
+  high_risk_name_tokens:
+    - "future"
+    - "target"
+    - "label"
+    - "prediction"
+    - "predicted"
+    - "forecast"
+
+  derived_score_tokens:
+    - "score"
+    - "index"
+    - "rank"
+    - "ranking"
+
+readiness_rules:
+  minimum_dataset_count: 1
+  minimum_temporal_dataset_count: 1
+  minimum_geography_dataset_count: 1
+
+  task_requirements:
+    price_prediction:
+      requires_price_signal: true
+      requires_geography_signal: true
+      requires_temporal_signal: true
+
+    growth_prediction:
+      requires_price_signal: true
+      requires_geography_signal: true
+      requires_temporal_signal: true
+
+    area_recommendation:
+      requires_geography_signal: true
+      requires_feature_signal: true
+
+    forecasting:
+      requires_temporal_signal: true
+      requires_repeated_observations: true
+
+    investment_opportunity_prediction:
+      requires_geography_signal: true
+      requires_temporal_signal: true
+      requires_target_definition: true

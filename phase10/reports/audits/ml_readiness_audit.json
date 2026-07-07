@@ -1,249 +1,32 @@
 {
   "audit_metadata": {
-    "project_name": "UK Housing Intelligence Platform",
+    "project": "UK Housing Intelligence Platform",
     "phase": 10,
-    "audit_name": "ML Readiness Audit",
-    "generated_at_utc": "2026-07-07T07:42:54.765234+00:00",
-    "project_root": "/Users/bibhrajsaha/uk-housing-intelligence-platform",
+    "audit": "ML Readiness Audit",
+    "generated_at_utc": "2026-07-07T09:03:59.991559+00:00",
     "config_path": "phase10/config/readiness_audit.yml"
   },
-  "overall_decision": "CONDITIONAL_GO",
+  "overall_decision": "NO_GO",
   "summary": {
     "dataset_count": 91,
-    "successful_dataset_count": 90,
-    "failed_dataset_count": 1,
-    "temporal_dataset_count": 52,
-    "geography_dataset_count": 78,
-    "candidate_target_dataset_count": 62,
-    "leakage_review_dataset_count": 21,
-    "price_signal_dataset_count": 18,
-    "growth_signal_dataset_count": 10,
-    "investment_signal_dataset_count": 7,
-    "readiness_flags": {
-      "has_datasets": true,
-      "has_temporal_signal": true,
-      "has_geography_signal": true,
-      "has_candidate_targets": true,
-      "has_price_signal": true,
-      "has_growth_signal": true,
-      "has_investment_signal": true,
-      "has_feature_signal": true,
-      "has_repeated_observation_signal": true,
-      "has_leakage_risks_to_review": true
-    },
-    "task_assessment": {
-      "price_prediction": {
-        "status": "conditional_go",
-        "reason": "Required data signals are present, but engineering controls remain incomplete: future_price_target_defined, point_in_time_features_validated, temporal_split_policy_defined.",
-        "required_signals": [
-          "price_signal",
-          "geography_signal",
-          "temporal_signal"
-        ],
-        "met_signals": [
-          "price_signal",
-          "geography_signal",
-          "temporal_signal"
-        ],
-        "missing_signals": [],
-        "required_controls": [
-          "future_price_target_defined",
-          "point_in_time_features_validated",
-          "temporal_split_policy_defined"
-        ],
-        "met_controls": [],
-        "missing_controls": [
-          "future_price_target_defined",
-          "point_in_time_features_validated",
-          "temporal_split_policy_defined"
-        ],
-        "control_details": {
-          "future_price_target_defined": {
-            "description": "A future price outcome is formally defined relative to prediction time and forecast horizon.",
-            "satisfied": false
-          },
-          "point_in_time_features_validated": {
-            "description": "Every training feature is proven to have been available at or before the prediction cutoff.",
-            "satisfied": false
-          },
-          "temporal_split_policy_defined": {
-            "description": "Train, validation, and test periods are explicitly ordered through time.",
-            "satisfied": false
-          }
-        }
-      },
-      "growth_prediction": {
-        "status": "conditional_go",
-        "reason": "Required data signals are present, but engineering controls remain incomplete: future_growth_target_defined, historical_ordering_validated, point_in_time_features_validated, temporal_split_policy_defined.",
-        "required_signals": [
-          "price_signal",
-          "geography_signal",
-          "temporal_signal"
-        ],
-        "met_signals": [
-          "price_signal",
-          "geography_signal",
-          "temporal_signal"
-        ],
-        "missing_signals": [],
-        "required_controls": [
-          "future_growth_target_defined",
-          "historical_ordering_validated",
-          "point_in_time_features_validated",
-          "temporal_split_policy_defined"
-        ],
-        "met_controls": [],
-        "missing_controls": [
-          "future_growth_target_defined",
-          "historical_ordering_validated",
-          "point_in_time_features_validated",
-          "temporal_split_policy_defined"
-        ],
-        "control_details": {
-          "future_growth_target_defined": {
-            "description": "A future growth outcome is formally engineered from historically ordered observations.",
-            "satisfied": false
-          },
-          "historical_ordering_validated": {
-            "description": "Historical observations are validated for chronological ordering within each prediction entity.",
-            "satisfied": false
-          },
-          "point_in_time_features_validated": {
-            "description": "Every training feature is proven to have been available at or before the prediction cutoff.",
-            "satisfied": false
-          },
-          "temporal_split_policy_defined": {
-            "description": "Train, validation, and test periods are explicitly ordered through time.",
-            "satisfied": false
-          }
-        }
-      },
-      "area_recommendation": {
-        "status": "conditional_go",
-        "reason": "Required data signals are present, but engineering controls remain incomplete: user_preference_contract_defined, feature_scaling_policy_defined, ranking_policy_defined, offline_evaluation_policy_defined.",
-        "required_signals": [
-          "geography_signal",
-          "feature_signal"
-        ],
-        "met_signals": [
-          "geography_signal",
-          "feature_signal"
-        ],
-        "missing_signals": [],
-        "required_controls": [
-          "user_preference_contract_defined",
-          "feature_scaling_policy_defined",
-          "ranking_policy_defined",
-          "offline_evaluation_policy_defined"
-        ],
-        "met_controls": [],
-        "missing_controls": [
-          "user_preference_contract_defined",
-          "feature_scaling_policy_defined",
-          "ranking_policy_defined",
-          "offline_evaluation_policy_defined"
-        ],
-        "control_details": {
-          "user_preference_contract_defined": {
-            "description": "Recommendation inputs and user preference semantics are formally defined.",
-            "satisfied": false
-          },
-          "feature_scaling_policy_defined": {
-            "description": "Feature scaling and comparability rules are formally defined for recommendation features.",
-            "satisfied": false
-          },
-          "ranking_policy_defined": {
-            "description": "Recommendation ranking logic and tie-breaking behaviour are formally defined.",
-            "satisfied": false
-          },
-          "offline_evaluation_policy_defined": {
-            "description": "Offline recommendation evaluation metrics and validation procedures are formally defined.",
-            "satisfied": false
-          }
-        }
-      },
-      "forecasting": {
-        "status": "conditional_go",
-        "reason": "Required data signals are present, but engineering controls remain incomplete: stable_time_frequency_validated, forecast_horizon_defined, backtesting_policy_defined.",
-        "required_signals": [
-          "temporal_signal",
-          "geography_signal",
-          "repeated_observations"
-        ],
-        "met_signals": [
-          "temporal_signal",
-          "geography_signal",
-          "repeated_observations"
-        ],
-        "missing_signals": [],
-        "required_controls": [
-          "stable_time_frequency_validated",
-          "forecast_horizon_defined",
-          "backtesting_policy_defined"
-        ],
-        "met_controls": [],
-        "missing_controls": [
-          "stable_time_frequency_validated",
-          "forecast_horizon_defined",
-          "backtesting_policy_defined"
-        ],
-        "control_details": {
-          "stable_time_frequency_validated": {
-            "description": "Repeated historical observations are validated at a stable modelling frequency.",
-            "satisfied": false
-          },
-          "forecast_horizon_defined": {
-            "description": "The forecasting horizon is explicitly defined.",
-            "satisfied": false
-          },
-          "backtesting_policy_defined": {
-            "description": "Rolling or expanding-window forecast backtesting is formally defined.",
-            "satisfied": false
-          }
-        }
-      },
-      "investment_opportunity_prediction": {
-        "status": "conditional_go",
-        "reason": "Required data signals are present, but engineering controls remain incomplete: future_investment_outcome_target_defined, point_in_time_features_validated, temporal_split_policy_defined.",
-        "required_signals": [
-          "geography_signal",
-          "temporal_signal",
-          "investment_signal"
-        ],
-        "met_signals": [
-          "geography_signal",
-          "temporal_signal",
-          "investment_signal"
-        ],
-        "missing_signals": [],
-        "required_controls": [
-          "future_investment_outcome_target_defined",
-          "point_in_time_features_validated",
-          "temporal_split_policy_defined"
-        ],
-        "met_controls": [],
-        "missing_controls": [
-          "future_investment_outcome_target_defined",
-          "point_in_time_features_validated",
-          "temporal_split_policy_defined"
-        ],
-        "control_details": {
-          "future_investment_outcome_target_defined": {
-            "description": "Investment opportunity is defined as an observable future outcome rather than a contemporaneous analytical score.",
-            "satisfied": false
-          },
-          "point_in_time_features_validated": {
-            "description": "Every training feature is proven to have been available at or before the prediction cutoff.",
-            "satisfied": false
-          },
-          "temporal_split_policy_defined": {
-            "description": "Train, validation, and test periods are explicitly ordered through time.",
-            "satisfied": false
-          }
-        }
-      }
-    }
+    "successful_dataset_count": 91,
+    "failed_dataset_count": 0,
+    "temporal_dataset_count": 53,
+    "geography_dataset_count": 79,
+    "candidate_target_dataset_count": 61,
+    "leakage_review_dataset_count": 69
   },
+  "observed_signals": {
+    "has_datasets": true,
+    "has_price_signal": true,
+    "has_growth_signal": true,
+    "has_investment_signal": true,
+    "has_geography_signal": true,
+    "has_temporal_signal": true,
+    "has_feature_signal": true,
+    "has_repeated_observation_signal": true
+  },
+  "task_assessments": {},
   "datasets": [
     {
       "path": "data/analytics/area_analytics_base.parquet",
@@ -306,18 +89,16 @@
         "latitude": 0.0,
         "longitude": 0.0,
         "lad_code": 0.0,
-        "median_weekly_income": 0.0196,
-        "mean_weekly_income": 0.2411,
-        "estimated_annual_income": 0.0196,
-        "price_to_income_ratio": 0.0196,
-        "income_affordability_score": 0.0196
+        "median_weekly_income": 0.019624,
+        "mean_weekly_income": 0.241092,
+        "estimated_annual_income": 0.019624,
+        "price_to_income_ratio": 0.019624,
+        "income_affordability_score": 0.019624
       },
       "datetime_columns": [],
       "datetime_ranges": {},
       "geography_columns": [
-        "country",
         "latitude",
-        "local_authority",
         "longitude",
         "lsoa_code",
         "region"
@@ -327,7 +108,13 @@
         "median_price",
         "price_to_income_ratio"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "affordability_score",
+        "average_price",
+        "income_affordability_score",
+        "median_price",
+        "price_to_income_ratio"
+      ],
       "derived_score_columns": [
         "affordability_score",
         "income_affordability_score"
@@ -458,9 +245,7 @@
       "datetime_columns": [],
       "datetime_ranges": {},
       "geography_columns": [
-        "country",
         "latitude",
-        "local_authority",
         "longitude",
         "lsoa_code",
         "region"
@@ -469,13 +254,28 @@
         "average_price",
         "average_price_to_crime_ratio",
         "growth_score",
-        "housing_intelligence_index",
         "investment_opportunity_score",
         "investment_score",
         "median_price",
         "price_to_income_ratio"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "affordability_score",
+        "area_rank",
+        "average_price",
+        "average_price_to_crime_ratio",
+        "crime_score",
+        "deprivation_opportunity_score",
+        "growth_score",
+        "housing_intelligence_index",
+        "income_affordability_score",
+        "investment_opportunity_score",
+        "investment_score",
+        "market_activity_score",
+        "median_price",
+        "percentile_rank",
+        "price_to_income_ratio"
+      ],
       "derived_score_columns": [
         "affordability_score",
         "area_rank",
@@ -589,18 +389,16 @@
         "latitude": 0.0,
         "longitude": 0.0,
         "lad_code": 0.0,
-        "median_weekly_income": 0.0196,
-        "mean_weekly_income": 0.2411,
-        "estimated_annual_income": 0.0196,
-        "price_to_income_ratio": 0.0196,
-        "income_affordability_score": 0.0196
+        "median_weekly_income": 0.019624,
+        "mean_weekly_income": 0.241092,
+        "estimated_annual_income": 0.019624,
+        "price_to_income_ratio": 0.019624,
+        "income_affordability_score": 0.019624
       },
       "datetime_columns": [],
       "datetime_ranges": {},
       "geography_columns": [
-        "country",
         "latitude",
-        "local_authority",
         "longitude",
         "lsoa_code",
         "region"
@@ -610,7 +408,14 @@
         "median_price",
         "price_to_income_ratio"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "affordability_score",
+        "average_price",
+        "crime_score_v2",
+        "income_affordability_score",
+        "median_price",
+        "price_to_income_ratio"
+      ],
       "derived_score_columns": [
         "affordability_score",
         "crime_score_v2",
@@ -728,18 +533,16 @@
         "latitude": 0.0,
         "longitude": 0.0,
         "lad_code": 0.0,
-        "median_weekly_income": 0.0196,
-        "mean_weekly_income": 0.2411,
-        "estimated_annual_income": 0.0196,
-        "price_to_income_ratio": 0.0196,
-        "income_affordability_score": 0.0196
+        "median_weekly_income": 0.019624,
+        "mean_weekly_income": 0.241092,
+        "estimated_annual_income": 0.019624,
+        "price_to_income_ratio": 0.019624,
+        "income_affordability_score": 0.019624
       },
       "datetime_columns": [],
       "datetime_ranges": {},
       "geography_columns": [
-        "country",
         "latitude",
-        "local_authority",
         "longitude",
         "lsoa_code",
         "region"
@@ -750,10 +553,26 @@
         "median_price",
         "price_to_income_ratio"
       ],
-      "leakage_risk_columns": [],
-      "derived_score_columns": [
+      "leakage_risk_columns": [
+        "affordability_percentile",
         "affordability_score",
         "affordability_score_v2",
+        "average_price",
+        "crime_percentile",
+        "crime_score_v2",
+        "crime_score_v3",
+        "deprivation_opportunity_score",
+        "growth_score",
+        "income_affordability_score",
+        "market_activity_score",
+        "median_price",
+        "price_to_income_ratio"
+      ],
+      "derived_score_columns": [
+        "affordability_percentile",
+        "affordability_score",
+        "affordability_score_v2",
+        "crime_percentile",
         "crime_score_v2",
         "crime_score_v3",
         "deprivation_opportunity_score",
@@ -823,7 +642,9 @@
         "lsoa_code"
       ],
       "candidate_target_columns": [],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "healthcare_accessibility_score"
+      ],
       "derived_score_columns": [
         "healthcare_accessibility_score"
       ],
@@ -890,18 +711,16 @@
       ],
       "datetime_ranges": {
         "year": {
-          "min": "1970-01-01T00:00:00.000002023",
-          "max": "1970-01-01T00:00:00.000002026"
+          "minimum": "1970-01-01T00:00:00.000002023+00:00",
+          "maximum": "1970-01-01T00:00:00.000002026+00:00"
         },
         "month": {
-          "min": "1970-01-01T00:00:00.000000001",
-          "max": "1970-01-01T00:00:00.000000012"
+          "minimum": "1970-01-01T00:00:00.000000001+00:00",
+          "maximum": "1970-01-01T00:00:00.000000012+00:00"
         }
       },
       "geography_columns": [
-        "country",
         "latitude",
-        "local_authority",
         "longitude",
         "lsoa_code",
         "region"
@@ -910,7 +729,10 @@
         "average_price",
         "median_price"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "average_price",
+        "median_price"
+      ],
       "derived_score_columns": [],
       "numeric_columns": [
         "average_price",
@@ -1028,9 +850,9 @@
         "country": 0.0,
         "latitude": 0.0,
         "longitude": 0.0,
-        "estimated_annual_income": 0.0196,
-        "price_to_income_ratio": 0.0196,
-        "income_affordability_score": 0.0196,
+        "estimated_annual_income": 0.019624,
+        "price_to_income_ratio": 0.019624,
+        "income_affordability_score": 0.019624,
         "average_price": 0.0,
         "median_price": 0.0,
         "transaction_count": 0.0,
@@ -1063,15 +885,12 @@
       ],
       "datetime_ranges": {
         "warehouse_loaded_at": {
-          "min": "2026-07-03T13:03:50.498000+00:00",
-          "max": "2026-07-03T13:03:50.498000+00:00"
+          "minimum": "2026-07-03T13:03:50.498000+00:00",
+          "maximum": "2026-07-03T13:03:50.498000+00:00"
         }
       },
       "geography_columns": [
-        "country",
         "latitude",
-        "local_authority",
-        "local_authority_key",
         "longitude",
         "lsoa_code",
         "region",
@@ -1080,12 +899,26 @@
       "candidate_target_columns": [
         "average_price",
         "growth_score",
-        "housing_intelligence_index",
         "investment_score",
         "median_price",
         "price_to_income_ratio"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "affordability_score",
+        "area_rank",
+        "average_price",
+        "crime_score",
+        "growth_score",
+        "healthcare_accessibility_score",
+        "housing_intelligence_index",
+        "income_affordability_score",
+        "investment_score",
+        "median_price",
+        "percentile_rank",
+        "price_to_income_ratio",
+        "school_accessibility_score",
+        "transport_accessibility_score"
+      ],
       "derived_score_columns": [
         "affordability_score",
         "area_rank",
@@ -1138,7 +971,8 @@
         "country",
         "local_authority",
         "lsoa_code",
-        "region"
+        "region",
+        "warehouse_loaded_at"
       ],
       "duplicate_row_count": 0,
       "profile_status": "success",
@@ -1190,19 +1024,21 @@
       "datetime_columns": [],
       "datetime_ranges": {},
       "geography_columns": [
-        "country",
         "latitude",
-        "local_authority",
         "longitude",
         "lsoa_code",
         "region"
       ],
       "candidate_target_columns": [
         "growth_score",
+        "investment_score"
+      ],
+      "leakage_risk_columns": [
+        "area_rank",
+        "growth_score",
         "housing_intelligence_index",
         "investment_score"
       ],
-      "leakage_risk_columns": [],
       "derived_score_columns": [
         "area_rank",
         "growth_score",
@@ -1321,18 +1157,16 @@
         "latitude": 0.0,
         "longitude": 0.0,
         "lad_code": 0.0,
-        "median_weekly_income": 0.0196,
-        "mean_weekly_income": 0.2411,
-        "estimated_annual_income": 0.0196,
-        "price_to_income_ratio": 0.0196,
-        "income_affordability_score": 0.0196
+        "median_weekly_income": 0.019624,
+        "mean_weekly_income": 0.241092,
+        "estimated_annual_income": 0.019624,
+        "price_to_income_ratio": 0.019624,
+        "income_affordability_score": 0.019624
       },
       "datetime_columns": [],
       "datetime_ranges": {},
       "geography_columns": [
-        "country",
         "latitude",
-        "local_authority",
         "longitude",
         "lsoa_code",
         "region"
@@ -1346,10 +1180,29 @@
         "median_price",
         "price_to_income_ratio"
       ],
-      "leakage_risk_columns": [],
-      "derived_score_columns": [
+      "leakage_risk_columns": [
+        "affordability_percentile",
         "affordability_score",
         "affordability_score_v2",
+        "average_price",
+        "average_price_to_crime_ratio",
+        "crime_percentile",
+        "crime_score_v2",
+        "crime_score_v3",
+        "deprivation_opportunity_score",
+        "growth_score",
+        "income_affordability_score",
+        "investment_opportunity_score",
+        "investment_score",
+        "market_activity_score",
+        "median_price",
+        "price_to_income_ratio"
+      ],
+      "derived_score_columns": [
+        "affordability_percentile",
+        "affordability_score",
+        "affordability_score_v2",
+        "crime_percentile",
         "crime_score_v2",
         "crime_score_v3",
         "deprivation_opportunity_score",
@@ -1438,8 +1291,8 @@
         "average_price": 0.0,
         "median_price": 0.0,
         "transaction_count": 0.0,
-        "mom_price_growth_pct": 2.5018,
-        "yoy_price_growth_pct": 30.0212,
+        "mom_price_growth_pct": 2.50177,
+        "yoy_price_growth_pct": 30.021241,
         "rolling_12m_average_price": 0.0
       },
       "datetime_columns": [
@@ -1448,17 +1301,15 @@
       ],
       "datetime_ranges": {
         "year": {
-          "min": "1970-01-01T00:00:00.000002023",
-          "max": "1970-01-01T00:00:00.000002026"
+          "minimum": "1970-01-01T00:00:00.000002023+00:00",
+          "maximum": "1970-01-01T00:00:00.000002026+00:00"
         },
         "month": {
-          "min": "1970-01-01T00:00:00.000000001",
-          "max": "1970-01-01T00:00:00.000000012"
+          "minimum": "1970-01-01T00:00:00.000000001+00:00",
+          "maximum": "1970-01-01T00:00:00.000000012+00:00"
         }
       },
       "geography_columns": [
-        "country",
-        "local_authority",
         "region"
       ],
       "candidate_target_columns": [
@@ -1468,7 +1319,13 @@
         "rolling_12m_average_price",
         "yoy_price_growth_pct"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "average_price",
+        "median_price",
+        "mom_price_growth_pct",
+        "rolling_12m_average_price",
+        "yoy_price_growth_pct"
+      ],
       "derived_score_columns": [],
       "numeric_columns": [
         "average_price",
@@ -1574,7 +1431,17 @@
         "lsoa_code"
       ],
       "candidate_target_columns": [],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "healthcare_accessibility_score",
+        "healthcare_percentile_score",
+        "location_intelligence_score",
+        "location_percentile_rank",
+        "location_rank",
+        "school_accessibility_score",
+        "school_percentile_score",
+        "transport_accessibility_score",
+        "transport_percentile_score"
+      ],
       "derived_score_columns": [
         "healthcare_accessibility_score",
         "healthcare_percentile_score",
@@ -1662,18 +1529,21 @@
       "datetime_columns": [],
       "datetime_ranges": {},
       "geography_columns": [
-        "country",
-        "local_authority",
         "lsoa_code",
         "region"
       ],
       "candidate_target_columns": [
         "average_price",
         "growth_score",
+        "investment_score"
+      ],
+      "leakage_risk_columns": [
+        "area_rank",
+        "average_price",
+        "growth_score",
         "housing_intelligence_index",
         "investment_score"
       ],
-      "leakage_risk_columns": [],
       "derived_score_columns": [
         "area_rank",
         "growth_score",
@@ -1746,24 +1616,24 @@
         "latitude": 0.0,
         "longitude": 0.0,
         "lad_code": 0.0,
-        "median_weekly_income": 0.0196,
-        "mean_weekly_income": 0.2411,
-        "estimated_annual_income": 0.0196
+        "median_weekly_income": 0.019624,
+        "mean_weekly_income": 0.241092,
+        "estimated_annual_income": 0.019624
       },
       "datetime_columns": [],
       "datetime_ranges": {},
       "geography_columns": [
-        "country",
         "latitude",
-        "local_authority",
         "longitude",
         "lsoa_code",
         "region"
       ],
-      "candidate_target_columns": [
-        "housing_intelligence_index"
+      "candidate_target_columns": [],
+      "leakage_risk_columns": [
+        "area_rank",
+        "housing_intelligence_index",
+        "percentile_rank"
       ],
-      "leakage_risk_columns": [],
       "derived_score_columns": [
         "area_rank",
         "housing_intelligence_index",
@@ -1839,16 +1709,15 @@
       ],
       "datetime_ranges": {
         "year": {
-          "min": "1970-01-01T00:00:00.000002023",
-          "max": "1970-01-01T00:00:00.000002026"
+          "minimum": "1970-01-01T00:00:00.000002023+00:00",
+          "maximum": "1970-01-01T00:00:00.000002026+00:00"
         },
         "month": {
-          "min": "1970-01-01T00:00:00.000000001",
-          "max": "1970-01-01T00:00:00.000000012"
+          "minimum": "1970-01-01T00:00:00.000000001+00:00",
+          "maximum": "1970-01-01T00:00:00.000000012+00:00"
         }
       },
       "geography_columns": [
-        "country",
         "region"
       ],
       "candidate_target_columns": [
@@ -1858,7 +1727,13 @@
         "rolling_12m_average_price",
         "yoy_price_growth_pct"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "average_price",
+        "median_price",
+        "mom_price_growth_pct",
+        "rolling_12m_average_price",
+        "yoy_price_growth_pct"
+      ],
       "derived_score_columns": [],
       "numeric_columns": [
         "average_price",
@@ -1927,10 +1802,15 @@
       "candidate_target_columns": [
         "average_price",
         "growth_score",
-        "housing_intelligence_index",
         "investment_score"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "average_price",
+        "growth_score",
+        "housing_intelligence_index",
+        "investment_score",
+        "regional_rank"
+      ],
       "derived_score_columns": [
         "growth_score",
         "housing_intelligence_index",
@@ -1994,7 +1874,9 @@
         "lsoa_code"
       ],
       "candidate_target_columns": [],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "school_accessibility_score"
+      ],
       "derived_score_columns": [
         "school_accessibility_score"
       ],
@@ -2113,9 +1995,7 @@
       "datetime_columns": [],
       "datetime_ranges": {},
       "geography_columns": [
-        "country",
         "latitude",
-        "local_authority",
         "longitude",
         "lsoa_code",
         "region"
@@ -2124,13 +2004,28 @@
         "average_price",
         "average_price_to_crime_ratio",
         "growth_score",
-        "housing_intelligence_index",
         "investment_opportunity_score",
         "investment_score",
         "median_price",
         "price_to_income_ratio"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "affordability_score",
+        "area_rank",
+        "average_price",
+        "average_price_to_crime_ratio",
+        "crime_score",
+        "deprivation_opportunity_score",
+        "growth_score",
+        "housing_intelligence_index",
+        "income_affordability_score",
+        "investment_opportunity_score",
+        "investment_score",
+        "market_activity_score",
+        "median_price",
+        "percentile_rank",
+        "price_to_income_ratio"
+      ],
       "derived_score_columns": [
         "affordability_score",
         "area_rank",
@@ -2223,7 +2118,9 @@
         "lsoa_code"
       ],
       "candidate_target_columns": [],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "transport_accessibility_score"
+      ],
       "derived_score_columns": [
         "transport_accessibility_score"
       ],
@@ -2279,17 +2176,17 @@
         "Context": "float64"
       },
       "missingness_percent": {
-        "Crime ID": 14.9727,
+        "Crime ID": 14.972684,
         "Month": 0.0,
         "Reported by": 0.0,
         "Falls within": 0.0,
-        "Longitude": 4.7067,
-        "Latitude": 4.7067,
+        "Longitude": 4.70673,
+        "Latitude": 4.70673,
         "Location": 0.0,
-        "LSOA code": 4.7067,
-        "LSOA name": 4.7067,
+        "LSOA code": 4.70673,
+        "LSOA name": 4.70673,
         "Crime type": 0.0,
-        "Last outcome category": 14.9727,
+        "Last outcome category": 14.972684,
         "Context": 100.0
       },
       "datetime_columns": [
@@ -2297,8 +2194,8 @@
       ],
       "datetime_ranges": {
         "Month": {
-          "min": "2026-04-01T00:00:00",
-          "max": "2026-04-01T00:00:00"
+          "minimum": "2026-04-01T00:00:00+00:00",
+          "maximum": "2026-04-01T00:00:00+00:00"
         }
       },
       "geography_columns": [
@@ -2310,7 +2207,9 @@
       "candidate_target_columns": [
         "Last outcome category"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "Last outcome category"
+      ],
       "derived_score_columns": [],
       "numeric_columns": [
         "Context",
@@ -2325,6 +2224,7 @@
         "LSOA name",
         "Last outcome category",
         "Location",
+        "Month",
         "Reported by"
       ],
       "duplicate_row_count": 824,
@@ -2367,17 +2267,17 @@
         "Context": "float64"
       },
       "missingness_percent": {
-        "Crime ID": 17.1534,
+        "Crime ID": 17.153355,
         "Month": 0.0,
         "Reported by": 0.0,
         "Falls within": 0.0,
-        "Longitude": 3.7517,
-        "Latitude": 3.7517,
+        "Longitude": 3.751692,
+        "Latitude": 3.751692,
         "Location": 0.0,
-        "LSOA code": 3.7517,
-        "LSOA name": 3.7517,
+        "LSOA code": 3.751692,
+        "LSOA name": 3.751692,
         "Crime type": 0.0,
-        "Last outcome category": 17.1534,
+        "Last outcome category": 17.153355,
         "Context": 100.0
       },
       "datetime_columns": [
@@ -2385,8 +2285,8 @@
       ],
       "datetime_ranges": {
         "Month": {
-          "min": "2026-04-01T00:00:00",
-          "max": "2026-04-01T00:00:00"
+          "minimum": "2026-04-01T00:00:00+00:00",
+          "maximum": "2026-04-01T00:00:00+00:00"
         }
       },
       "geography_columns": [
@@ -2398,7 +2298,9 @@
       "candidate_target_columns": [
         "Last outcome category"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "Last outcome category"
+      ],
       "derived_score_columns": [],
       "numeric_columns": [
         "Context",
@@ -2413,6 +2315,7 @@
         "LSOA name",
         "Last outcome category",
         "Location",
+        "Month",
         "Reported by"
       ],
       "duplicate_row_count": 253,
@@ -2455,17 +2358,17 @@
         "Context": "float64"
       },
       "missingness_percent": {
-        "Crime ID": 18.107,
+        "Crime ID": 18.106996,
         "Month": 0.0,
         "Reported by": 0.0,
         "Falls within": 0.0,
-        "Longitude": 2.8807,
-        "Latitude": 2.8807,
+        "Longitude": 2.880658,
+        "Latitude": 2.880658,
         "Location": 0.0,
-        "LSOA code": 2.8807,
-        "LSOA name": 2.8807,
+        "LSOA code": 2.880658,
+        "LSOA name": 2.880658,
         "Crime type": 0.0,
-        "Last outcome category": 18.107,
+        "Last outcome category": 18.106996,
         "Context": 100.0
       },
       "datetime_columns": [
@@ -2473,8 +2376,8 @@
       ],
       "datetime_ranges": {
         "Month": {
-          "min": "2026-04-01T00:00:00",
-          "max": "2026-04-01T00:00:00"
+          "minimum": "2026-04-01T00:00:00+00:00",
+          "maximum": "2026-04-01T00:00:00+00:00"
         }
       },
       "geography_columns": [
@@ -2486,7 +2389,9 @@
       "candidate_target_columns": [
         "Last outcome category"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "Last outcome category"
+      ],
       "derived_score_columns": [],
       "numeric_columns": [
         "Context",
@@ -2501,6 +2406,7 @@
         "LSOA name",
         "Last outcome category",
         "Location",
+        "Month",
         "Reported by"
       ],
       "duplicate_row_count": 289,
@@ -2543,7 +2449,7 @@
         "Context": "float64"
       },
       "missingness_percent": {
-        "Crime ID": 10.5779,
+        "Crime ID": 10.577893,
         "Month": 0.0,
         "Reported by": 0.0,
         "Falls within": 0.0,
@@ -2553,7 +2459,7 @@
         "LSOA code": 0.0,
         "LSOA name": 0.0,
         "Crime type": 0.0,
-        "Last outcome category": 10.5779,
+        "Last outcome category": 10.577893,
         "Context": 100.0
       },
       "datetime_columns": [
@@ -2561,8 +2467,8 @@
       ],
       "datetime_ranges": {
         "Month": {
-          "min": "2026-04-01T00:00:00",
-          "max": "2026-04-01T00:00:00"
+          "minimum": "2026-04-01T00:00:00+00:00",
+          "maximum": "2026-04-01T00:00:00+00:00"
         }
       },
       "geography_columns": [
@@ -2574,7 +2480,9 @@
       "candidate_target_columns": [
         "Last outcome category"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "Last outcome category"
+      ],
       "derived_score_columns": [],
       "numeric_columns": [
         "Context",
@@ -2589,6 +2497,7 @@
         "LSOA name",
         "Last outcome category",
         "Location",
+        "Month",
         "Reported by"
       ],
       "duplicate_row_count": 149,
@@ -2631,17 +2540,17 @@
         "Context": "float64"
       },
       "missingness_percent": {
-        "Crime ID": 3.3967,
+        "Crime ID": 3.396739,
         "Month": 0.0,
         "Reported by": 0.0,
         "Falls within": 0.0,
-        "Longitude": 5.5707,
-        "Latitude": 5.5707,
+        "Longitude": 5.570652,
+        "Latitude": 5.570652,
         "Location": 0.0,
-        "LSOA code": 5.5707,
-        "LSOA name": 5.5707,
+        "LSOA code": 5.570652,
+        "LSOA name": 5.570652,
         "Crime type": 0.0,
-        "Last outcome category": 3.3967,
+        "Last outcome category": 3.396739,
         "Context": 100.0
       },
       "datetime_columns": [
@@ -2649,8 +2558,8 @@
       ],
       "datetime_ranges": {
         "Month": {
-          "min": "2026-04-01T00:00:00",
-          "max": "2026-04-01T00:00:00"
+          "minimum": "2026-04-01T00:00:00+00:00",
+          "maximum": "2026-04-01T00:00:00+00:00"
         }
       },
       "geography_columns": [
@@ -2662,7 +2571,9 @@
       "candidate_target_columns": [
         "Last outcome category"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "Last outcome category"
+      ],
       "derived_score_columns": [],
       "numeric_columns": [
         "Context",
@@ -2677,6 +2588,7 @@
         "LSOA name",
         "Last outcome category",
         "Location",
+        "Month",
         "Reported by"
       ],
       "duplicate_row_count": 2,
@@ -2719,7 +2631,7 @@
         "Context": "float64"
       },
       "missingness_percent": {
-        "Crime ID": 15.8195,
+        "Crime ID": 15.819502,
         "Month": 0.0,
         "Reported by": 0.0,
         "Falls within": 0.0,
@@ -2729,7 +2641,7 @@
         "LSOA code": 0.0,
         "LSOA name": 0.0,
         "Crime type": 0.0,
-        "Last outcome category": 15.8195,
+        "Last outcome category": 15.819502,
         "Context": 100.0
       },
       "datetime_columns": [
@@ -2737,8 +2649,8 @@
       ],
       "datetime_ranges": {
         "Month": {
-          "min": "2026-04-01T00:00:00",
-          "max": "2026-04-01T00:00:00"
+          "minimum": "2026-04-01T00:00:00+00:00",
+          "maximum": "2026-04-01T00:00:00+00:00"
         }
       },
       "geography_columns": [
@@ -2750,7 +2662,9 @@
       "candidate_target_columns": [
         "Last outcome category"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "Last outcome category"
+      ],
       "derived_score_columns": [],
       "numeric_columns": [
         "Context",
@@ -2765,6 +2679,7 @@
         "LSOA name",
         "Last outcome category",
         "Location",
+        "Month",
         "Reported by"
       ],
       "duplicate_row_count": 420,
@@ -2807,7 +2722,7 @@
         "Context": "float64"
       },
       "missingness_percent": {
-        "Crime ID": 4.6084,
+        "Crime ID": 4.608434,
         "Month": 0.0,
         "Reported by": 0.0,
         "Falls within": 0.0,
@@ -2817,7 +2732,7 @@
         "LSOA code": 0.0,
         "LSOA name": 0.0,
         "Crime type": 0.0,
-        "Last outcome category": 4.6084,
+        "Last outcome category": 4.608434,
         "Context": 100.0
       },
       "datetime_columns": [
@@ -2825,8 +2740,8 @@
       ],
       "datetime_ranges": {
         "Month": {
-          "min": "2026-04-01T00:00:00",
-          "max": "2026-04-01T00:00:00"
+          "minimum": "2026-04-01T00:00:00+00:00",
+          "maximum": "2026-04-01T00:00:00+00:00"
         }
       },
       "geography_columns": [
@@ -2838,7 +2753,9 @@
       "candidate_target_columns": [
         "Last outcome category"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "Last outcome category"
+      ],
       "derived_score_columns": [],
       "numeric_columns": [
         "Context",
@@ -2853,6 +2770,7 @@
         "LSOA name",
         "Last outcome category",
         "Location",
+        "Month",
         "Reported by"
       ],
       "duplicate_row_count": 15,
@@ -2895,7 +2813,7 @@
         "Context": "float64"
       },
       "missingness_percent": {
-        "Crime ID": 13.8886,
+        "Crime ID": 13.88858,
         "Month": 0.0,
         "Reported by": 0.0,
         "Falls within": 0.0,
@@ -2905,7 +2823,7 @@
         "LSOA code": 0.0,
         "LSOA name": 0.0,
         "Crime type": 0.0,
-        "Last outcome category": 13.8886,
+        "Last outcome category": 13.88858,
         "Context": 100.0
       },
       "datetime_columns": [
@@ -2913,8 +2831,8 @@
       ],
       "datetime_ranges": {
         "Month": {
-          "min": "2026-04-01T00:00:00",
-          "max": "2026-04-01T00:00:00"
+          "minimum": "2026-04-01T00:00:00+00:00",
+          "maximum": "2026-04-01T00:00:00+00:00"
         }
       },
       "geography_columns": [
@@ -2926,7 +2844,9 @@
       "candidate_target_columns": [
         "Last outcome category"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "Last outcome category"
+      ],
       "derived_score_columns": [],
       "numeric_columns": [
         "Context",
@@ -2941,6 +2861,7 @@
         "LSOA name",
         "Last outcome category",
         "Location",
+        "Month",
         "Reported by"
       ],
       "duplicate_row_count": 324,
@@ -2983,17 +2904,17 @@
         "Context": "float64"
       },
       "missingness_percent": {
-        "Crime ID": 11.8839,
+        "Crime ID": 11.883868,
         "Month": 0.0,
         "Reported by": 0.0,
         "Falls within": 0.0,
-        "Longitude": 3.6004,
-        "Latitude": 3.6004,
+        "Longitude": 3.600426,
+        "Latitude": 3.600426,
         "Location": 0.0,
-        "LSOA code": 3.6004,
-        "LSOA name": 3.6004,
+        "LSOA code": 3.600426,
+        "LSOA name": 3.600426,
         "Crime type": 0.0,
-        "Last outcome category": 11.8839,
+        "Last outcome category": 11.883868,
         "Context": 100.0
       },
       "datetime_columns": [
@@ -3001,8 +2922,8 @@
       ],
       "datetime_ranges": {
         "Month": {
-          "min": "2026-04-01T00:00:00",
-          "max": "2026-04-01T00:00:00"
+          "minimum": "2026-04-01T00:00:00+00:00",
+          "maximum": "2026-04-01T00:00:00+00:00"
         }
       },
       "geography_columns": [
@@ -3014,7 +2935,9 @@
       "candidate_target_columns": [
         "Last outcome category"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "Last outcome category"
+      ],
       "derived_score_columns": [],
       "numeric_columns": [
         "Context",
@@ -3029,6 +2952,7 @@
         "LSOA name",
         "Last outcome category",
         "Location",
+        "Month",
         "Reported by"
       ],
       "duplicate_row_count": 395,
@@ -3071,17 +2995,17 @@
         "Context": "float64"
       },
       "missingness_percent": {
-        "Crime ID": 26.6184,
+        "Crime ID": 26.618399,
         "Month": 0.0,
         "Reported by": 0.0,
         "Falls within": 0.0,
-        "Longitude": 0.2342,
-        "Latitude": 0.2342,
+        "Longitude": 0.234242,
+        "Latitude": 0.234242,
         "Location": 0.0,
-        "LSOA code": 0.2342,
-        "LSOA name": 0.2342,
+        "LSOA code": 0.234242,
+        "LSOA name": 0.234242,
         "Crime type": 0.0,
-        "Last outcome category": 26.6184,
+        "Last outcome category": 26.618399,
         "Context": 100.0
       },
       "datetime_columns": [
@@ -3089,8 +3013,8 @@
       ],
       "datetime_ranges": {
         "Month": {
-          "min": "2026-04-01T00:00:00",
-          "max": "2026-04-01T00:00:00"
+          "minimum": "2026-04-01T00:00:00+00:00",
+          "maximum": "2026-04-01T00:00:00+00:00"
         }
       },
       "geography_columns": [
@@ -3102,7 +3026,9 @@
       "candidate_target_columns": [
         "Last outcome category"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "Last outcome category"
+      ],
       "derived_score_columns": [],
       "numeric_columns": [
         "Context",
@@ -3117,6 +3043,7 @@
         "LSOA name",
         "Last outcome category",
         "Location",
+        "Month",
         "Reported by"
       ],
       "duplicate_row_count": 406,
@@ -3159,7 +3086,7 @@
         "Context": "float64"
       },
       "missingness_percent": {
-        "Crime ID": 20.6317,
+        "Crime ID": 20.631671,
         "Month": 0.0,
         "Reported by": 0.0,
         "Falls within": 0.0,
@@ -3169,7 +3096,7 @@
         "LSOA code": 0.0,
         "LSOA name": 0.0,
         "Crime type": 0.0,
-        "Last outcome category": 20.6317,
+        "Last outcome category": 20.631671,
         "Context": 100.0
       },
       "datetime_columns": [
@@ -3177,8 +3104,8 @@
       ],
       "datetime_ranges": {
         "Month": {
-          "min": "2026-04-01T00:00:00",
-          "max": "2026-04-01T00:00:00"
+          "minimum": "2026-04-01T00:00:00+00:00",
+          "maximum": "2026-04-01T00:00:00+00:00"
         }
       },
       "geography_columns": [
@@ -3190,7 +3117,9 @@
       "candidate_target_columns": [
         "Last outcome category"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "Last outcome category"
+      ],
       "derived_score_columns": [],
       "numeric_columns": [
         "Context",
@@ -3205,6 +3134,7 @@
         "LSOA name",
         "Last outcome category",
         "Location",
+        "Month",
         "Reported by"
       ],
       "duplicate_row_count": 472,
@@ -3247,17 +3177,17 @@
         "Context": "float64"
       },
       "missingness_percent": {
-        "Crime ID": 10.7285,
+        "Crime ID": 10.728477,
         "Month": 0.0,
         "Reported by": 0.0,
         "Falls within": 0.0,
-        "Longitude": 3.5762,
-        "Latitude": 3.5762,
+        "Longitude": 3.576159,
+        "Latitude": 3.576159,
         "Location": 0.0,
-        "LSOA code": 3.5762,
-        "LSOA name": 3.5762,
+        "LSOA code": 3.576159,
+        "LSOA name": 3.576159,
         "Crime type": 0.0,
-        "Last outcome category": 10.7285,
+        "Last outcome category": 10.728477,
         "Context": 100.0
       },
       "datetime_columns": [
@@ -3265,8 +3195,8 @@
       ],
       "datetime_ranges": {
         "Month": {
-          "min": "2026-04-01T00:00:00",
-          "max": "2026-04-01T00:00:00"
+          "minimum": "2026-04-01T00:00:00+00:00",
+          "maximum": "2026-04-01T00:00:00+00:00"
         }
       },
       "geography_columns": [
@@ -3278,7 +3208,9 @@
       "candidate_target_columns": [
         "Last outcome category"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "Last outcome category"
+      ],
       "derived_score_columns": [],
       "numeric_columns": [
         "Context",
@@ -3293,6 +3225,7 @@
         "LSOA name",
         "Last outcome category",
         "Location",
+        "Month",
         "Reported by"
       ],
       "duplicate_row_count": 88,
@@ -3335,17 +3268,17 @@
         "Context": "float64"
       },
       "missingness_percent": {
-        "Crime ID": 12.8828,
+        "Crime ID": 12.882825,
         "Month": 0.0,
         "Reported by": 0.0,
         "Falls within": 0.0,
-        "Longitude": 1.3288,
-        "Latitude": 1.3288,
+        "Longitude": 1.328786,
+        "Latitude": 1.328786,
         "Location": 0.0,
-        "LSOA code": 1.3288,
-        "LSOA name": 1.3288,
+        "LSOA code": 1.328786,
+        "LSOA name": 1.328786,
         "Crime type": 0.0,
-        "Last outcome category": 12.8828,
+        "Last outcome category": 12.882825,
         "Context": 100.0
       },
       "datetime_columns": [
@@ -3353,8 +3286,8 @@
       ],
       "datetime_ranges": {
         "Month": {
-          "min": "2026-04-01T00:00:00",
-          "max": "2026-04-01T00:00:00"
+          "minimum": "2026-04-01T00:00:00+00:00",
+          "maximum": "2026-04-01T00:00:00+00:00"
         }
       },
       "geography_columns": [
@@ -3366,7 +3299,9 @@
       "candidate_target_columns": [
         "Last outcome category"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "Last outcome category"
+      ],
       "derived_score_columns": [],
       "numeric_columns": [
         "Context",
@@ -3381,6 +3316,7 @@
         "LSOA name",
         "Last outcome category",
         "Location",
+        "Month",
         "Reported by"
       ],
       "duplicate_row_count": 515,
@@ -3423,7 +3359,7 @@
         "Context": "float64"
       },
       "missingness_percent": {
-        "Crime ID": 13.5648,
+        "Crime ID": 13.564784,
         "Month": 0.0,
         "Reported by": 0.0,
         "Falls within": 0.0,
@@ -3433,7 +3369,7 @@
         "LSOA code": 0.0,
         "LSOA name": 0.0,
         "Crime type": 0.0,
-        "Last outcome category": 13.5648,
+        "Last outcome category": 13.564784,
         "Context": 100.0
       },
       "datetime_columns": [
@@ -3441,8 +3377,8 @@
       ],
       "datetime_ranges": {
         "Month": {
-          "min": "2026-04-01T00:00:00",
-          "max": "2026-04-01T00:00:00"
+          "minimum": "2026-04-01T00:00:00+00:00",
+          "maximum": "2026-04-01T00:00:00+00:00"
         }
       },
       "geography_columns": [
@@ -3454,7 +3390,9 @@
       "candidate_target_columns": [
         "Last outcome category"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "Last outcome category"
+      ],
       "derived_score_columns": [],
       "numeric_columns": [
         "Context",
@@ -3469,6 +3407,7 @@
         "LSOA name",
         "Last outcome category",
         "Location",
+        "Month",
         "Reported by"
       ],
       "duplicate_row_count": 516,
@@ -3511,17 +3450,17 @@
         "Context": "float64"
       },
       "missingness_percent": {
-        "Crime ID": 21.9294,
+        "Crime ID": 21.929438,
         "Month": 0.0,
         "Reported by": 0.0,
         "Falls within": 0.0,
-        "Longitude": 2.2051,
-        "Latitude": 2.2051,
+        "Longitude": 2.205072,
+        "Latitude": 2.205072,
         "Location": 0.0,
-        "LSOA code": 2.2051,
-        "LSOA name": 2.2051,
+        "LSOA code": 2.205072,
+        "LSOA name": 2.205072,
         "Crime type": 0.0,
-        "Last outcome category": 21.9294,
+        "Last outcome category": 21.929438,
         "Context": 100.0
       },
       "datetime_columns": [
@@ -3529,8 +3468,8 @@
       ],
       "datetime_ranges": {
         "Month": {
-          "min": "2026-04-01T00:00:00",
-          "max": "2026-04-01T00:00:00"
+          "minimum": "2026-04-01T00:00:00+00:00",
+          "maximum": "2026-04-01T00:00:00+00:00"
         }
       },
       "geography_columns": [
@@ -3542,7 +3481,9 @@
       "candidate_target_columns": [
         "Last outcome category"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "Last outcome category"
+      ],
       "derived_score_columns": [],
       "numeric_columns": [
         "Context",
@@ -3557,6 +3498,7 @@
         "LSOA name",
         "Last outcome category",
         "Location",
+        "Month",
         "Reported by"
       ],
       "duplicate_row_count": 564,
@@ -3599,7 +3541,7 @@
         "Context": "float64"
       },
       "missingness_percent": {
-        "Crime ID": 7.8799,
+        "Crime ID": 7.879925,
         "Month": 0.0,
         "Reported by": 0.0,
         "Falls within": 0.0,
@@ -3609,7 +3551,7 @@
         "LSOA code": 0.0,
         "LSOA name": 0.0,
         "Crime type": 0.0,
-        "Last outcome category": 7.8799,
+        "Last outcome category": 7.879925,
         "Context": 100.0
       },
       "datetime_columns": [
@@ -3617,8 +3559,8 @@
       ],
       "datetime_ranges": {
         "Month": {
-          "min": "2026-04-01T00:00:00",
-          "max": "2026-04-01T00:00:00"
+          "minimum": "2026-04-01T00:00:00+00:00",
+          "maximum": "2026-04-01T00:00:00+00:00"
         }
       },
       "geography_columns": [
@@ -3630,7 +3572,9 @@
       "candidate_target_columns": [
         "Last outcome category"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "Last outcome category"
+      ],
       "derived_score_columns": [],
       "numeric_columns": [
         "Context",
@@ -3645,6 +3589,7 @@
         "LSOA name",
         "Last outcome category",
         "Location",
+        "Month",
         "Reported by"
       ],
       "duplicate_row_count": 149,
@@ -3687,17 +3632,17 @@
         "Context": "float64"
       },
       "missingness_percent": {
-        "Crime ID": 20.7291,
+        "Crime ID": 20.729053,
         "Month": 0.0,
         "Reported by": 0.0,
         "Falls within": 0.0,
-        "Longitude": 0.9997,
-        "Latitude": 0.9997,
+        "Longitude": 0.999728,
+        "Latitude": 0.999728,
         "Location": 0.0,
-        "LSOA code": 0.9997,
-        "LSOA name": 0.9997,
+        "LSOA code": 0.999728,
+        "LSOA name": 0.999728,
         "Crime type": 0.0,
-        "Last outcome category": 20.7291,
+        "Last outcome category": 20.729053,
         "Context": 100.0
       },
       "datetime_columns": [
@@ -3705,8 +3650,8 @@
       ],
       "datetime_ranges": {
         "Month": {
-          "min": "2026-04-01T00:00:00",
-          "max": "2026-04-01T00:00:00"
+          "minimum": "2026-04-01T00:00:00+00:00",
+          "maximum": "2026-04-01T00:00:00+00:00"
         }
       },
       "geography_columns": [
@@ -3718,7 +3663,9 @@
       "candidate_target_columns": [
         "Last outcome category"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "Last outcome category"
+      ],
       "derived_score_columns": [],
       "numeric_columns": [
         "Context",
@@ -3733,6 +3680,7 @@
         "LSOA name",
         "Last outcome category",
         "Location",
+        "Month",
         "Reported by"
       ],
       "duplicate_row_count": 883,
@@ -3775,17 +3723,17 @@
         "Context": "float64"
       },
       "missingness_percent": {
-        "Crime ID": 15.127,
+        "Crime ID": 15.127029,
         "Month": 0.0,
         "Reported by": 0.0,
         "Falls within": 0.0,
-        "Longitude": 3.7126,
-        "Latitude": 3.7126,
+        "Longitude": 3.712601,
+        "Latitude": 3.712601,
         "Location": 0.0,
-        "LSOA code": 3.7126,
-        "LSOA name": 3.7126,
+        "LSOA code": 3.712601,
+        "LSOA name": 3.712601,
         "Crime type": 0.0,
-        "Last outcome category": 15.127,
+        "Last outcome category": 15.127029,
         "Context": 100.0
       },
       "datetime_columns": [
@@ -3793,8 +3741,8 @@
       ],
       "datetime_ranges": {
         "Month": {
-          "min": "2026-04-01T00:00:00",
-          "max": "2026-04-01T00:00:00"
+          "minimum": "2026-04-01T00:00:00+00:00",
+          "maximum": "2026-04-01T00:00:00+00:00"
         }
       },
       "geography_columns": [
@@ -3806,7 +3754,9 @@
       "candidate_target_columns": [
         "Last outcome category"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "Last outcome category"
+      ],
       "derived_score_columns": [],
       "numeric_columns": [
         "Context",
@@ -3821,6 +3771,7 @@
         "LSOA name",
         "Last outcome category",
         "Location",
+        "Month",
         "Reported by"
       ],
       "duplicate_row_count": 545,
@@ -3863,17 +3814,17 @@
         "Context": "float64"
       },
       "missingness_percent": {
-        "Crime ID": 13.8142,
+        "Crime ID": 13.81421,
         "Month": 0.0,
         "Reported by": 0.0,
         "Falls within": 0.0,
-        "Longitude": 3.1805,
-        "Latitude": 3.1805,
+        "Longitude": 3.180509,
+        "Latitude": 3.180509,
         "Location": 0.0,
-        "LSOA code": 3.1805,
-        "LSOA name": 3.1805,
+        "LSOA code": 3.180509,
+        "LSOA name": 3.180509,
         "Crime type": 0.0,
-        "Last outcome category": 13.8142,
+        "Last outcome category": 13.81421,
         "Context": 100.0
       },
       "datetime_columns": [
@@ -3881,8 +3832,8 @@
       ],
       "datetime_ranges": {
         "Month": {
-          "min": "2026-04-01T00:00:00",
-          "max": "2026-04-01T00:00:00"
+          "minimum": "2026-04-01T00:00:00+00:00",
+          "maximum": "2026-04-01T00:00:00+00:00"
         }
       },
       "geography_columns": [
@@ -3894,7 +3845,9 @@
       "candidate_target_columns": [
         "Last outcome category"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "Last outcome category"
+      ],
       "derived_score_columns": [],
       "numeric_columns": [
         "Context",
@@ -3909,6 +3862,7 @@
         "LSOA name",
         "Last outcome category",
         "Location",
+        "Month",
         "Reported by"
       ],
       "duplicate_row_count": 275,
@@ -3951,7 +3905,7 @@
         "Context": "float64"
       },
       "missingness_percent": {
-        "Crime ID": 24.8168,
+        "Crime ID": 24.816805,
         "Month": 0.0,
         "Reported by": 0.0,
         "Falls within": 0.0,
@@ -3961,7 +3915,7 @@
         "LSOA code": 0.0,
         "LSOA name": 0.0,
         "Crime type": 0.0,
-        "Last outcome category": 24.8168,
+        "Last outcome category": 24.816805,
         "Context": 100.0
       },
       "datetime_columns": [
@@ -3969,8 +3923,8 @@
       ],
       "datetime_ranges": {
         "Month": {
-          "min": "2026-04-01T00:00:00",
-          "max": "2026-04-01T00:00:00"
+          "minimum": "2026-04-01T00:00:00+00:00",
+          "maximum": "2026-04-01T00:00:00+00:00"
         }
       },
       "geography_columns": [
@@ -3982,7 +3936,9 @@
       "candidate_target_columns": [
         "Last outcome category"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "Last outcome category"
+      ],
       "derived_score_columns": [],
       "numeric_columns": [
         "Context",
@@ -3997,6 +3953,7 @@
         "LSOA name",
         "Last outcome category",
         "Location",
+        "Month",
         "Reported by"
       ],
       "duplicate_row_count": 473,
@@ -4039,7 +3996,7 @@
         "Context": "float64"
       },
       "missingness_percent": {
-        "Crime ID": 10.6043,
+        "Crime ID": 10.604314,
         "Month": 0.0,
         "Reported by": 0.0,
         "Falls within": 0.0,
@@ -4049,7 +4006,7 @@
         "LSOA code": 0.0,
         "LSOA name": 0.0,
         "Crime type": 0.0,
-        "Last outcome category": 10.6043,
+        "Last outcome category": 10.604314,
         "Context": 100.0
       },
       "datetime_columns": [
@@ -4057,8 +4014,8 @@
       ],
       "datetime_ranges": {
         "Month": {
-          "min": "2026-04-01T00:00:00",
-          "max": "2026-04-01T00:00:00"
+          "minimum": "2026-04-01T00:00:00+00:00",
+          "maximum": "2026-04-01T00:00:00+00:00"
         }
       },
       "geography_columns": [
@@ -4070,7 +4027,9 @@
       "candidate_target_columns": [
         "Last outcome category"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "Last outcome category"
+      ],
       "derived_score_columns": [],
       "numeric_columns": [
         "Context",
@@ -4085,6 +4044,7 @@
         "LSOA name",
         "Last outcome category",
         "Location",
+        "Month",
         "Reported by"
       ],
       "duplicate_row_count": 333,
@@ -4145,8 +4105,8 @@
       ],
       "datetime_ranges": {
         "Month": {
-          "min": "2026-04-01T00:00:00",
-          "max": "2026-04-01T00:00:00"
+          "minimum": "2026-04-01T00:00:00+00:00",
+          "maximum": "2026-04-01T00:00:00+00:00"
         }
       },
       "geography_columns": [
@@ -4158,7 +4118,9 @@
       "candidate_target_columns": [
         "Last outcome category"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "Last outcome category"
+      ],
       "derived_score_columns": [],
       "numeric_columns": [
         "Context",
@@ -4173,6 +4135,7 @@
         "LSOA name",
         "Last outcome category",
         "Location",
+        "Month",
         "Reported by"
       ],
       "duplicate_row_count": 5330,
@@ -4215,17 +4178,17 @@
         "Context": "float64"
       },
       "missingness_percent": {
-        "Crime ID": 14.5481,
+        "Crime ID": 14.548073,
         "Month": 0.0,
         "Reported by": 0.0,
         "Falls within": 0.0,
-        "Longitude": 1.9445,
-        "Latitude": 1.9445,
+        "Longitude": 1.944544,
+        "Latitude": 1.944544,
         "Location": 0.0,
-        "LSOA code": 1.9445,
-        "LSOA name": 1.9445,
+        "LSOA code": 1.944544,
+        "LSOA name": 1.944544,
         "Crime type": 0.0,
-        "Last outcome category": 14.5481,
+        "Last outcome category": 14.548073,
         "Context": 100.0
       },
       "datetime_columns": [
@@ -4233,8 +4196,8 @@
       ],
       "datetime_ranges": {
         "Month": {
-          "min": "2026-04-01T00:00:00",
-          "max": "2026-04-01T00:00:00"
+          "minimum": "2026-04-01T00:00:00+00:00",
+          "maximum": "2026-04-01T00:00:00+00:00"
         }
       },
       "geography_columns": [
@@ -4246,7 +4209,9 @@
       "candidate_target_columns": [
         "Last outcome category"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "Last outcome category"
+      ],
       "derived_score_columns": [],
       "numeric_columns": [
         "Context",
@@ -4261,6 +4226,7 @@
         "LSOA name",
         "Last outcome category",
         "Location",
+        "Month",
         "Reported by"
       ],
       "duplicate_row_count": 182,
@@ -4303,7 +4269,7 @@
         "Context": "float64"
       },
       "missingness_percent": {
-        "Crime ID": 22.1309,
+        "Crime ID": 22.130854,
         "Month": 0.0,
         "Reported by": 0.0,
         "Falls within": 0.0,
@@ -4313,7 +4279,7 @@
         "LSOA code": 0.0,
         "LSOA name": 0.0,
         "Crime type": 0.0,
-        "Last outcome category": 22.1309,
+        "Last outcome category": 22.130854,
         "Context": 100.0
       },
       "datetime_columns": [
@@ -4321,8 +4287,8 @@
       ],
       "datetime_ranges": {
         "Month": {
-          "min": "2026-04-01T00:00:00",
-          "max": "2026-04-01T00:00:00"
+          "minimum": "2026-04-01T00:00:00+00:00",
+          "maximum": "2026-04-01T00:00:00+00:00"
         }
       },
       "geography_columns": [
@@ -4334,7 +4300,9 @@
       "candidate_target_columns": [
         "Last outcome category"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "Last outcome category"
+      ],
       "derived_score_columns": [],
       "numeric_columns": [
         "Context",
@@ -4349,6 +4317,7 @@
         "LSOA name",
         "Last outcome category",
         "Location",
+        "Month",
         "Reported by"
       ],
       "duplicate_row_count": 326,
@@ -4391,17 +4360,17 @@
         "Context": "float64"
       },
       "missingness_percent": {
-        "Crime ID": 23.5214,
+        "Crime ID": 23.521401,
         "Month": 0.0,
         "Reported by": 0.0,
         "Falls within": 0.0,
-        "Longitude": 0.5058,
-        "Latitude": 0.5058,
+        "Longitude": 0.505837,
+        "Latitude": 0.505837,
         "Location": 0.0,
-        "LSOA code": 0.5058,
-        "LSOA name": 0.5058,
+        "LSOA code": 0.505837,
+        "LSOA name": 0.505837,
         "Crime type": 0.0,
-        "Last outcome category": 23.5214,
+        "Last outcome category": 23.521401,
         "Context": 100.0
       },
       "datetime_columns": [
@@ -4409,8 +4378,8 @@
       ],
       "datetime_ranges": {
         "Month": {
-          "min": "2026-04-01T00:00:00",
-          "max": "2026-04-01T00:00:00"
+          "minimum": "2026-04-01T00:00:00+00:00",
+          "maximum": "2026-04-01T00:00:00+00:00"
         }
       },
       "geography_columns": [
@@ -4422,7 +4391,9 @@
       "candidate_target_columns": [
         "Last outcome category"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "Last outcome category"
+      ],
       "derived_score_columns": [],
       "numeric_columns": [
         "Context",
@@ -4437,6 +4408,7 @@
         "LSOA name",
         "Last outcome category",
         "Location",
+        "Month",
         "Reported by"
       ],
       "duplicate_row_count": 428,
@@ -4479,17 +4451,17 @@
         "Context": "float64"
       },
       "missingness_percent": {
-        "Crime ID": 25.6957,
+        "Crime ID": 25.695688,
         "Month": 0.0,
         "Reported by": 0.0,
         "Falls within": 0.0,
-        "Longitude": 1.1717,
-        "Latitude": 1.1717,
+        "Longitude": 1.171684,
+        "Latitude": 1.171684,
         "Location": 0.0,
-        "LSOA code": 1.1717,
-        "LSOA name": 1.1717,
+        "LSOA code": 1.171684,
+        "LSOA name": 1.171684,
         "Crime type": 0.0,
-        "Last outcome category": 25.6957,
+        "Last outcome category": 25.695688,
         "Context": 100.0
       },
       "datetime_columns": [
@@ -4497,8 +4469,8 @@
       ],
       "datetime_ranges": {
         "Month": {
-          "min": "2026-04-01T00:00:00",
-          "max": "2026-04-01T00:00:00"
+          "minimum": "2026-04-01T00:00:00+00:00",
+          "maximum": "2026-04-01T00:00:00+00:00"
         }
       },
       "geography_columns": [
@@ -4510,7 +4482,9 @@
       "candidate_target_columns": [
         "Last outcome category"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "Last outcome category"
+      ],
       "derived_score_columns": [],
       "numeric_columns": [
         "Context",
@@ -4525,6 +4499,7 @@
         "LSOA name",
         "Last outcome category",
         "Location",
+        "Month",
         "Reported by"
       ],
       "duplicate_row_count": 456,
@@ -4567,12 +4542,12 @@
         "Context": "float64"
       },
       "missingness_percent": {
-        "Crime ID": 34.0806,
+        "Crime ID": 34.08064,
         "Month": 0.0,
         "Reported by": 0.0,
         "Falls within": 0.0,
-        "Longitude": 1.0167,
-        "Latitude": 1.0167,
+        "Longitude": 1.016684,
+        "Latitude": 1.016684,
         "Location": 0.0,
         "LSOA code": 100.0,
         "LSOA name": 100.0,
@@ -4585,8 +4560,8 @@
       ],
       "datetime_ranges": {
         "Month": {
-          "min": "2026-04-01T00:00:00",
-          "max": "2026-04-01T00:00:00"
+          "minimum": "2026-04-01T00:00:00+00:00",
+          "maximum": "2026-04-01T00:00:00+00:00"
         }
       },
       "geography_columns": [
@@ -4598,7 +4573,9 @@
       "candidate_target_columns": [
         "Last outcome category"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "Last outcome category"
+      ],
       "derived_score_columns": [],
       "numeric_columns": [
         "Context",
@@ -4613,6 +4590,7 @@
         "Crime type",
         "Falls within",
         "Location",
+        "Month",
         "Reported by"
       ],
       "duplicate_row_count": 1187,
@@ -4655,17 +4633,17 @@
         "Context": "float64"
       },
       "missingness_percent": {
-        "Crime ID": 22.0086,
+        "Crime ID": 22.008631,
         "Month": 0.0,
         "Reported by": 0.0,
         "Falls within": 0.0,
-        "Longitude": 3.6328,
-        "Latitude": 3.6328,
+        "Longitude": 3.632797,
+        "Latitude": 3.632797,
         "Location": 0.0,
-        "LSOA code": 3.6328,
-        "LSOA name": 3.6328,
+        "LSOA code": 3.632797,
+        "LSOA name": 3.632797,
         "Crime type": 0.0,
-        "Last outcome category": 22.0086,
+        "Last outcome category": 22.008631,
         "Context": 100.0
       },
       "datetime_columns": [
@@ -4673,8 +4651,8 @@
       ],
       "datetime_ranges": {
         "Month": {
-          "min": "2026-04-01T00:00:00",
-          "max": "2026-04-01T00:00:00"
+          "minimum": "2026-04-01T00:00:00+00:00",
+          "maximum": "2026-04-01T00:00:00+00:00"
         }
       },
       "geography_columns": [
@@ -4686,7 +4664,9 @@
       "candidate_target_columns": [
         "Last outcome category"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "Last outcome category"
+      ],
       "derived_score_columns": [],
       "numeric_columns": [
         "Context",
@@ -4701,6 +4681,7 @@
         "LSOA name",
         "Last outcome category",
         "Location",
+        "Month",
         "Reported by"
       ],
       "duplicate_row_count": 875,
@@ -4743,17 +4724,17 @@
         "Context": "float64"
       },
       "missingness_percent": {
-        "Crime ID": 15.8262,
+        "Crime ID": 15.826243,
         "Month": 0.0,
         "Reported by": 0.0,
         "Falls within": 0.0,
-        "Longitude": 0.5911,
-        "Latitude": 0.5911,
+        "Longitude": 0.591133,
+        "Latitude": 0.591133,
         "Location": 0.0,
-        "LSOA code": 0.5911,
-        "LSOA name": 0.5911,
+        "LSOA code": 0.591133,
+        "LSOA name": 0.591133,
         "Crime type": 0.0,
-        "Last outcome category": 15.8262,
+        "Last outcome category": 15.826243,
         "Context": 100.0
       },
       "datetime_columns": [
@@ -4761,8 +4742,8 @@
       ],
       "datetime_ranges": {
         "Month": {
-          "min": "2026-04-01T00:00:00",
-          "max": "2026-04-01T00:00:00"
+          "minimum": "2026-04-01T00:00:00+00:00",
+          "maximum": "2026-04-01T00:00:00+00:00"
         }
       },
       "geography_columns": [
@@ -4774,7 +4755,9 @@
       "candidate_target_columns": [
         "Last outcome category"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "Last outcome category"
+      ],
       "derived_score_columns": [],
       "numeric_columns": [
         "Context",
@@ -4789,6 +4772,7 @@
         "LSOA name",
         "Last outcome category",
         "Location",
+        "Month",
         "Reported by"
       ],
       "duplicate_row_count": 520,
@@ -4831,17 +4815,17 @@
         "Context": "float64"
       },
       "missingness_percent": {
-        "Crime ID": 12.1882,
+        "Crime ID": 12.188155,
         "Month": 0.0,
         "Reported by": 0.0,
         "Falls within": 0.0,
-        "Longitude": 2.3424,
-        "Latitude": 2.3424,
+        "Longitude": 2.342411,
+        "Latitude": 2.342411,
         "Location": 0.0,
-        "LSOA code": 2.3424,
-        "LSOA name": 2.3424,
+        "LSOA code": 2.342411,
+        "LSOA name": 2.342411,
         "Crime type": 0.0,
-        "Last outcome category": 12.1882,
+        "Last outcome category": 12.188155,
         "Context": 100.0
       },
       "datetime_columns": [
@@ -4849,8 +4833,8 @@
       ],
       "datetime_ranges": {
         "Month": {
-          "min": "2026-04-01T00:00:00",
-          "max": "2026-04-01T00:00:00"
+          "minimum": "2026-04-01T00:00:00+00:00",
+          "maximum": "2026-04-01T00:00:00+00:00"
         }
       },
       "geography_columns": [
@@ -4862,7 +4846,9 @@
       "candidate_target_columns": [
         "Last outcome category"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "Last outcome category"
+      ],
       "derived_score_columns": [],
       "numeric_columns": [
         "Context",
@@ -4877,6 +4863,7 @@
         "LSOA name",
         "Last outcome category",
         "Location",
+        "Month",
         "Reported by"
       ],
       "duplicate_row_count": 332,
@@ -4919,17 +4906,17 @@
         "Context": "float64"
       },
       "missingness_percent": {
-        "Crime ID": 16.2109,
+        "Crime ID": 16.210884,
         "Month": 0.0,
         "Reported by": 0.0,
         "Falls within": 0.0,
-        "Longitude": 4.7959,
-        "Latitude": 4.7959,
+        "Longitude": 4.795918,
+        "Latitude": 4.795918,
         "Location": 0.0,
-        "LSOA code": 4.7959,
-        "LSOA name": 4.7959,
+        "LSOA code": 4.795918,
+        "LSOA name": 4.795918,
         "Crime type": 0.0,
-        "Last outcome category": 16.2109,
+        "Last outcome category": 16.210884,
         "Context": 100.0
       },
       "datetime_columns": [
@@ -4937,8 +4924,8 @@
       ],
       "datetime_ranges": {
         "Month": {
-          "min": "2026-04-01T00:00:00",
-          "max": "2026-04-01T00:00:00"
+          "minimum": "2026-04-01T00:00:00+00:00",
+          "maximum": "2026-04-01T00:00:00+00:00"
         }
       },
       "geography_columns": [
@@ -4950,7 +4937,9 @@
       "candidate_target_columns": [
         "Last outcome category"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "Last outcome category"
+      ],
       "derived_score_columns": [],
       "numeric_columns": [
         "Context",
@@ -4965,6 +4954,7 @@
         "LSOA name",
         "Last outcome category",
         "Location",
+        "Month",
         "Reported by"
       ],
       "duplicate_row_count": 609,
@@ -5007,17 +4997,17 @@
         "Context": "float64"
       },
       "missingness_percent": {
-        "Crime ID": 17.2678,
+        "Crime ID": 17.26776,
         "Month": 0.0,
         "Reported by": 0.0,
         "Falls within": 0.0,
-        "Longitude": 1.7814,
-        "Latitude": 1.7814,
+        "Longitude": 1.781421,
+        "Latitude": 1.781421,
         "Location": 0.0,
-        "LSOA code": 1.7814,
-        "LSOA name": 1.7814,
+        "LSOA code": 1.781421,
+        "LSOA name": 1.781421,
         "Crime type": 0.0,
-        "Last outcome category": 17.2678,
+        "Last outcome category": 17.26776,
         "Context": 100.0
       },
       "datetime_columns": [
@@ -5025,8 +5015,8 @@
       ],
       "datetime_ranges": {
         "Month": {
-          "min": "2026-04-01T00:00:00",
-          "max": "2026-04-01T00:00:00"
+          "minimum": "2026-04-01T00:00:00+00:00",
+          "maximum": "2026-04-01T00:00:00+00:00"
         }
       },
       "geography_columns": [
@@ -5038,7 +5028,9 @@
       "candidate_target_columns": [
         "Last outcome category"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "Last outcome category"
+      ],
       "derived_score_columns": [],
       "numeric_columns": [
         "Context",
@@ -5053,6 +5045,7 @@
         "LSOA name",
         "Last outcome category",
         "Location",
+        "Month",
         "Reported by"
       ],
       "duplicate_row_count": 409,
@@ -5095,17 +5088,17 @@
         "Context": "float64"
       },
       "missingness_percent": {
-        "Crime ID": 8.2292,
+        "Crime ID": 8.229243,
         "Month": 0.0,
         "Reported by": 0.0,
         "Falls within": 0.0,
-        "Longitude": 0.5878,
-        "Latitude": 0.5878,
+        "Longitude": 0.587803,
+        "Latitude": 0.587803,
         "Location": 0.0,
-        "LSOA code": 0.5878,
-        "LSOA name": 0.5878,
+        "LSOA code": 0.587803,
+        "LSOA name": 0.587803,
         "Crime type": 0.0,
-        "Last outcome category": 8.2292,
+        "Last outcome category": 8.229243,
         "Context": 100.0
       },
       "datetime_columns": [
@@ -5113,8 +5106,8 @@
       ],
       "datetime_ranges": {
         "Month": {
-          "min": "2026-04-01T00:00:00",
-          "max": "2026-04-01T00:00:00"
+          "minimum": "2026-04-01T00:00:00+00:00",
+          "maximum": "2026-04-01T00:00:00+00:00"
         }
       },
       "geography_columns": [
@@ -5126,7 +5119,9 @@
       "candidate_target_columns": [
         "Last outcome category"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "Last outcome category"
+      ],
       "derived_score_columns": [],
       "numeric_columns": [
         "Context",
@@ -5141,6 +5136,7 @@
         "LSOA name",
         "Last outcome category",
         "Location",
+        "Month",
         "Reported by"
       ],
       "duplicate_row_count": 43,
@@ -5183,17 +5179,17 @@
         "Context": "float64"
       },
       "missingness_percent": {
-        "Crime ID": 17.0565,
+        "Crime ID": 17.056543,
         "Month": 0.0,
         "Reported by": 0.0,
         "Falls within": 0.0,
-        "Longitude": 1.6575,
-        "Latitude": 1.6575,
+        "Longitude": 1.657532,
+        "Latitude": 1.657532,
         "Location": 0.0,
-        "LSOA code": 1.6575,
-        "LSOA name": 1.6575,
+        "LSOA code": 1.657532,
+        "LSOA name": 1.657532,
         "Crime type": 0.0,
-        "Last outcome category": 17.0565,
+        "Last outcome category": 17.056543,
         "Context": 100.0
       },
       "datetime_columns": [
@@ -5201,8 +5197,8 @@
       ],
       "datetime_ranges": {
         "Month": {
-          "min": "2026-04-01T00:00:00",
-          "max": "2026-04-01T00:00:00"
+          "minimum": "2026-04-01T00:00:00+00:00",
+          "maximum": "2026-04-01T00:00:00+00:00"
         }
       },
       "geography_columns": [
@@ -5214,7 +5210,9 @@
       "candidate_target_columns": [
         "Last outcome category"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "Last outcome category"
+      ],
       "derived_score_columns": [],
       "numeric_columns": [
         "Context",
@@ -5229,6 +5227,7 @@
         "LSOA name",
         "Last outcome category",
         "Location",
+        "Month",
         "Reported by"
       ],
       "duplicate_row_count": 292,
@@ -5271,17 +5270,17 @@
         "Context": "float64"
       },
       "missingness_percent": {
-        "Crime ID": 23.607,
+        "Crime ID": 23.606967,
         "Month": 0.0,
         "Reported by": 0.0,
         "Falls within": 0.0,
-        "Longitude": 3.0185,
-        "Latitude": 3.0185,
+        "Longitude": 3.018528,
+        "Latitude": 3.018528,
         "Location": 0.0,
-        "LSOA code": 3.0185,
-        "LSOA name": 3.0185,
+        "LSOA code": 3.018528,
+        "LSOA name": 3.018528,
         "Crime type": 0.0,
-        "Last outcome category": 23.607,
+        "Last outcome category": 23.606967,
         "Context": 100.0
       },
       "datetime_columns": [
@@ -5289,8 +5288,8 @@
       ],
       "datetime_ranges": {
         "Month": {
-          "min": "2026-04-01T00:00:00",
-          "max": "2026-04-01T00:00:00"
+          "minimum": "2026-04-01T00:00:00+00:00",
+          "maximum": "2026-04-01T00:00:00+00:00"
         }
       },
       "geography_columns": [
@@ -5302,7 +5301,9 @@
       "candidate_target_columns": [
         "Last outcome category"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "Last outcome category"
+      ],
       "derived_score_columns": [],
       "numeric_columns": [
         "Context",
@@ -5317,6 +5318,7 @@
         "LSOA name",
         "Last outcome category",
         "Location",
+        "Month",
         "Reported by"
       ],
       "duplicate_row_count": 1195,
@@ -5363,11 +5365,11 @@
         "Month": 0.0,
         "Reported by": 0.0,
         "Falls within": 0.0,
-        "Longitude": 2.3753,
-        "Latitude": 2.3753,
+        "Longitude": 2.375282,
+        "Latitude": 2.375282,
         "Location": 0.0,
-        "LSOA code": 2.3753,
-        "LSOA name": 2.3753,
+        "LSOA code": 2.375282,
+        "LSOA name": 2.375282,
         "Crime type": 0.0,
         "Last outcome category": 11.2658,
         "Context": 100.0
@@ -5377,8 +5379,8 @@
       ],
       "datetime_ranges": {
         "Month": {
-          "min": "2026-04-01T00:00:00",
-          "max": "2026-04-01T00:00:00"
+          "minimum": "2026-04-01T00:00:00+00:00",
+          "maximum": "2026-04-01T00:00:00+00:00"
         }
       },
       "geography_columns": [
@@ -5390,7 +5392,9 @@
       "candidate_target_columns": [
         "Last outcome category"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "Last outcome category"
+      ],
       "derived_score_columns": [],
       "numeric_columns": [
         "Context",
@@ -5405,6 +5409,7 @@
         "LSOA name",
         "Last outcome category",
         "Location",
+        "Month",
         "Reported by"
       ],
       "duplicate_row_count": 384,
@@ -5447,17 +5452,17 @@
         "Context": "float64"
       },
       "missingness_percent": {
-        "Crime ID": 21.896,
+        "Crime ID": 21.895954,
         "Month": 0.0,
         "Reported by": 0.0,
         "Falls within": 0.0,
-        "Longitude": 0.1387,
-        "Latitude": 0.1387,
+        "Longitude": 0.138728,
+        "Latitude": 0.138728,
         "Location": 0.0,
-        "LSOA code": 0.1387,
-        "LSOA name": 0.1387,
+        "LSOA code": 0.138728,
+        "LSOA name": 0.138728,
         "Crime type": 0.0,
-        "Last outcome category": 21.896,
+        "Last outcome category": 21.895954,
         "Context": 100.0
       },
       "datetime_columns": [
@@ -5465,8 +5470,8 @@
       ],
       "datetime_ranges": {
         "Month": {
-          "min": "2026-04-01T00:00:00",
-          "max": "2026-04-01T00:00:00"
+          "minimum": "2026-04-01T00:00:00+00:00",
+          "maximum": "2026-04-01T00:00:00+00:00"
         }
       },
       "geography_columns": [
@@ -5478,7 +5483,9 @@
       "candidate_target_columns": [
         "Last outcome category"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "Last outcome category"
+      ],
       "derived_score_columns": [],
       "numeric_columns": [
         "Context",
@@ -5493,6 +5500,7 @@
         "LSOA name",
         "Last outcome category",
         "Location",
+        "Month",
         "Reported by"
       ],
       "duplicate_row_count": 286,
@@ -5535,17 +5543,17 @@
         "Context": "float64"
       },
       "missingness_percent": {
-        "Crime ID": 17.0648,
+        "Crime ID": 17.064806,
         "Month": 0.0,
         "Reported by": 0.0,
         "Falls within": 0.0,
-        "Longitude": 1.6675,
-        "Latitude": 1.6675,
+        "Longitude": 1.667455,
+        "Latitude": 1.667455,
         "Location": 0.0,
-        "LSOA code": 1.6675,
-        "LSOA name": 1.6675,
+        "LSOA code": 1.667455,
+        "LSOA name": 1.667455,
         "Crime type": 0.0,
-        "Last outcome category": 17.0648,
+        "Last outcome category": 17.064806,
         "Context": 100.0
       },
       "datetime_columns": [
@@ -5553,8 +5561,8 @@
       ],
       "datetime_ranges": {
         "Month": {
-          "min": "2026-04-01T00:00:00",
-          "max": "2026-04-01T00:00:00"
+          "minimum": "2026-04-01T00:00:00+00:00",
+          "maximum": "2026-04-01T00:00:00+00:00"
         }
       },
       "geography_columns": [
@@ -5566,7 +5574,9 @@
       "candidate_target_columns": [
         "Last outcome category"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "Last outcome category"
+      ],
       "derived_score_columns": [],
       "numeric_columns": [
         "Context",
@@ -5581,6 +5591,7 @@
         "LSOA name",
         "Last outcome category",
         "Location",
+        "Month",
         "Reported by"
       ],
       "duplicate_row_count": 1344,
@@ -5623,7 +5634,7 @@
         "Context": "float64"
       },
       "missingness_percent": {
-        "Crime ID": 3.6519,
+        "Crime ID": 3.651939,
         "Month": 0.0,
         "Reported by": 0.0,
         "Falls within": 0.0,
@@ -5633,7 +5644,7 @@
         "LSOA code": 0.0,
         "LSOA name": 0.0,
         "Crime type": 0.0,
-        "Last outcome category": 3.6519,
+        "Last outcome category": 3.651939,
         "Context": 100.0
       },
       "datetime_columns": [
@@ -5641,8 +5652,8 @@
       ],
       "datetime_ranges": {
         "Month": {
-          "min": "2026-04-01T00:00:00",
-          "max": "2026-04-01T00:00:00"
+          "minimum": "2026-04-01T00:00:00+00:00",
+          "maximum": "2026-04-01T00:00:00+00:00"
         }
       },
       "geography_columns": [
@@ -5654,7 +5665,9 @@
       "candidate_target_columns": [
         "Last outcome category"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "Last outcome category"
+      ],
       "derived_score_columns": [],
       "numeric_columns": [
         "Context",
@@ -5669,6 +5682,7 @@
         "LSOA name",
         "Last outcome category",
         "Location",
+        "Month",
         "Reported by"
       ],
       "duplicate_row_count": 157,
@@ -5711,17 +5725,17 @@
         "Context": "float64"
       },
       "missingness_percent": {
-        "Crime ID": 11.0571,
+        "Crime ID": 11.057078,
         "Month": 0.0,
         "Reported by": 0.0,
         "Falls within": 0.0,
-        "Longitude": 0.5811,
-        "Latitude": 0.5811,
+        "Longitude": 0.581084,
+        "Latitude": 0.581084,
         "Location": 0.0,
-        "LSOA code": 0.5811,
-        "LSOA name": 0.5811,
+        "LSOA code": 0.581084,
+        "LSOA name": 0.581084,
         "Crime type": 0.0,
-        "Last outcome category": 11.0571,
+        "Last outcome category": 11.057078,
         "Context": 100.0
       },
       "datetime_columns": [
@@ -5729,8 +5743,8 @@
       ],
       "datetime_ranges": {
         "Month": {
-          "min": "2026-04-01T00:00:00",
-          "max": "2026-04-01T00:00:00"
+          "minimum": "2026-04-01T00:00:00+00:00",
+          "maximum": "2026-04-01T00:00:00+00:00"
         }
       },
       "geography_columns": [
@@ -5742,7 +5756,9 @@
       "candidate_target_columns": [
         "Last outcome category"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "Last outcome category"
+      ],
       "derived_score_columns": [],
       "numeric_columns": [
         "Context",
@@ -5757,6 +5773,7 @@
         "LSOA name",
         "Last outcome category",
         "Location",
+        "Month",
         "Reported by"
       ],
       "duplicate_row_count": 649,
@@ -5799,7 +5816,7 @@
         "Context": "float64"
       },
       "missingness_percent": {
-        "Crime ID": 18.797,
+        "Crime ID": 18.796992,
         "Month": 0.0,
         "Reported by": 0.0,
         "Falls within": 0.0,
@@ -5809,7 +5826,7 @@
         "LSOA code": 0.0,
         "LSOA name": 0.0,
         "Crime type": 0.0,
-        "Last outcome category": 18.797,
+        "Last outcome category": 18.796992,
         "Context": 100.0
       },
       "datetime_columns": [
@@ -5817,8 +5834,8 @@
       ],
       "datetime_ranges": {
         "Month": {
-          "min": "2026-04-01T00:00:00",
-          "max": "2026-04-01T00:00:00"
+          "minimum": "2026-04-01T00:00:00+00:00",
+          "maximum": "2026-04-01T00:00:00+00:00"
         }
       },
       "geography_columns": [
@@ -5830,7 +5847,9 @@
       "candidate_target_columns": [
         "Last outcome category"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "Last outcome category"
+      ],
       "derived_score_columns": [],
       "numeric_columns": [
         "Context",
@@ -5845,6 +5864,7 @@
         "LSOA name",
         "Last outcome category",
         "Location",
+        "Month",
         "Reported by"
       ],
       "duplicate_row_count": 220,
@@ -5919,22 +5939,22 @@
       "missingness_percent": {
         "G6V2S": 0.0,
         "NORTH LONDON NHS FOUNDATION TRUST": 0.0,
-        "Y56": 1.0989,
-        "Z9B2Z": 1.0989,
+        "Y56": 1.098901,
+        "Z9B2Z": 1.098901,
         "4TH FLOOR, EAST WING": 0.0,
-        "ST. PANCRAS HOSPITAL": 16.1172,
-        "4 ST. PANCRAS WAY": 71.0623,
+        "ST. PANCRAS HOSPITAL": 16.117216,
+        "4 ST. PANCRAS WAY": 71.062271,
         "LONDON": 0.0,
         "Unnamed: 8": 100.0,
         "NW1 0PE": 0.0,
         "20241101": 0.0,
-        "Unnamed: 11": 73.9927,
+        "Unnamed: 11": 73.992674,
         "Unnamed: 12": 100.0,
         "Unnamed: 13": 100.0,
         "Unnamed: 14": 100.0,
         "Unnamed: 15": 100.0,
         "Unnamed: 16": 100.0,
-        "Unnamed: 17": 5.8608,
+        "Unnamed: 17": 5.860806,
         "Unnamed: 18": 100.0,
         "Unnamed: 19": 100.0,
         "Unnamed: 20": 100.0,
@@ -6054,28 +6074,28 @@
       "missingness_percent": {
         "A0A1E": 0.0,
         "CAMHS - ADASH": 0.0,
-        "Y61": 0.4483,
-        "S1Y5D": 0.4483,
+        "Y61": 0.448274,
+        "S1Y5D": 0.448274,
         "DOWNS FARM CENTRE": 0.0,
-        "2A MCDONALD COURT": 44.0904,
-        "HIGH VIEW": 86.8711,
+        "2A MCDONALD COURT": 44.090442,
+        "HIGH VIEW": 86.87105,
         "HATFIELD": 0.0,
         "Unnamed: 8": 100.0,
         "AL10 8HR": 0.0,
         "20240322": 0.0,
-        "Unnamed: 11": 77.1402,
+        "Unnamed: 11": 77.140233,
         "Unnamed: 12": 100.0,
-        "RO31": 63.7248,
+        "RO31": 63.724826,
         "RWR": 0.0,
         "Unnamed: 15": 100.0,
         "Unnamed: 16": 100.0,
-        "Unnamed: 17": 98.946,
+        "Unnamed: 17": 98.94601,
         "Unnamed: 18": 100.0,
         "Unnamed: 19": 100.0,
         "Unnamed: 20": 100.0,
         "1": 0.0,
         "Unnamed: 22": 100.0,
-        "G": 0.0197,
+        "G": 0.01968,
         "Unnamed: 24": 100.0,
         "Unnamed: 25": 100.0,
         "Unnamed: 26": 100.0
@@ -6192,7 +6212,7 @@
         "Unnamed: 2": 100.0,
         "Unnamed: 3": 100.0,
         "EXECUTIVE OFFICES, YSBYTY GWYNEDD": 0.0,
-        "PENRHOSGARNEDD": 16.6667,
+        "PENRHOSGARNEDD": 16.666667,
         "Unnamed: 6": 50.0,
         "BANGOR": 0.0,
         "Unnamed: 8": 100.0,
@@ -6327,13 +6347,13 @@
         "Unnamed: 2": 100.0,
         "Unnamed: 3": 100.0,
         "MAES PENNANT ROAD": 0.0,
-        "MOSTYN": 48.0392,
-        "Unnamed: 6": 90.7407,
+        "MOSTYN": 48.039216,
+        "Unnamed: 6": 90.740741,
         "HOLYWELL": 0.0,
         "Unnamed: 8": 100.0,
         "CH8 9PY": 0.0,
         "20091001": 0.0,
-        "Unnamed: 11": 93.2462,
+        "Unnamed: 11": 93.246187,
         "Unnamed: 12": 100.0,
         "Unnamed: 13": 100.0,
         "Unnamed: 14": 100.0,
@@ -6396,22 +6416,599 @@
       "file_name": "edubasealldata20260615.csv",
       "extension": ".csv",
       "file_size_bytes": 64461442,
-      "row_count": null,
-      "column_count": null,
-      "columns": [],
-      "dtypes": {},
-      "missingness_percent": {},
-      "datetime_columns": [],
-      "datetime_ranges": {},
-      "geography_columns": [],
+      "row_count": 52397,
+      "column_count": 135,
+      "columns": [
+        "URN",
+        "LA (code)",
+        "LA (name)",
+        "EstablishmentNumber",
+        "EstablishmentName",
+        "TypeOfEstablishment (code)",
+        "TypeOfEstablishment (name)",
+        "EstablishmentTypeGroup (code)",
+        "EstablishmentTypeGroup (name)",
+        "EstablishmentStatus (code)",
+        "EstablishmentStatus (name)",
+        "ReasonEstablishmentOpened (code)",
+        "ReasonEstablishmentOpened (name)",
+        "OpenDate",
+        "ReasonEstablishmentClosed (code)",
+        "ReasonEstablishmentClosed (name)",
+        "CloseDate",
+        "PhaseOfEducation (code)",
+        "PhaseOfEducation (name)",
+        "StatutoryLowAge",
+        "StatutoryHighAge",
+        "Boarders (code)",
+        "Boarders (name)",
+        "NurseryProvision (name)",
+        "OfficialSixthForm (code)",
+        "OfficialSixthForm (name)",
+        "Gender (code)",
+        "Gender (name)",
+        "ReligiousCharacter (code)",
+        "ReligiousCharacter (name)",
+        "ReligiousEthos (name)",
+        "Diocese (code)",
+        "Diocese (name)",
+        "AdmissionsPolicy (code)",
+        "AdmissionsPolicy (name)",
+        "SchoolCapacity",
+        "SpecialClasses (code)",
+        "SpecialClasses (name)",
+        "CensusDate",
+        "NumberOfPupils",
+        "NumberOfBoys",
+        "NumberOfGirls",
+        "PercentageFSM",
+        "TrustSchoolFlag (code)",
+        "TrustSchoolFlag (name)",
+        "Trusts (code)",
+        "Trusts (name)",
+        "SchoolSponsorFlag (name)",
+        "SchoolSponsors (name)",
+        "FederationFlag (name)",
+        "Federations (code)",
+        "Federations (name)",
+        "UKPRN",
+        "FEHEIdentifier",
+        "FurtherEducationType (name)",
+        "LastChangedDate",
+        "Street",
+        "Locality",
+        "Address3",
+        "Town",
+        "County (name)",
+        "Postcode",
+        "SchoolWebsite",
+        "TelephoneNum",
+        "HeadTitle (name)",
+        "HeadFirstName",
+        "HeadLastName",
+        "HeadPreferredJobTitle",
+        "BSOInspectorateName (name)",
+        "InspectorateReport",
+        "DateOfLastInspectionVisit",
+        "NextInspectionVisit",
+        "TeenMoth (name)",
+        "TeenMothPlaces",
+        "CCF (name)",
+        "SENPRU (name)",
+        "EBD (name)",
+        "PlacesPRU",
+        "FTProv (name)",
+        "EdByOther (name)",
+        "Section41Approved (name)",
+        "SEN1 (name)",
+        "SEN2 (name)",
+        "SEN3 (name)",
+        "SEN4 (name)",
+        "SEN5 (name)",
+        "SEN6 (name)",
+        "SEN7 (name)",
+        "SEN8 (name)",
+        "SEN9 (name)",
+        "SEN10 (name)",
+        "SEN11 (name)",
+        "SEN12 (name)",
+        "SEN13 (name)",
+        "TypeOfResourcedProvision (name)",
+        "ResourcedProvisionOnRoll",
+        "ResourcedProvisionCapacity",
+        "SenUnitOnRoll",
+        "SenUnitCapacity",
+        "GOR (code)",
+        "GOR (name)",
+        "DistrictAdministrative (code)",
+        "DistrictAdministrative (name)",
+        "AdministrativeWard (code)",
+        "AdministrativeWard (name)",
+        "ParliamentaryConstituency (code)",
+        "ParliamentaryConstituency (name)",
+        "UrbanRural (code)",
+        "UrbanRural (name)",
+        "GSSLACode (name)",
+        "Easting",
+        "Northing",
+        "MSOA (name)",
+        "LSOA (name)",
+        "InspectorateName (name)",
+        "SENStat",
+        "SENNoStat",
+        "BoardingEstablishment (name)",
+        "PropsName",
+        "PreviousLA (code)",
+        "PreviousLA (name)",
+        "PreviousEstablishmentNumber",
+        "Country (name)",
+        "UPRN",
+        "SiteName",
+        "QABName (code)",
+        "QABName (name)",
+        "EstablishmentAccredited (code)",
+        "EstablishmentAccredited (name)",
+        "QABReport",
+        "CHNumber",
+        "MSOA (code)",
+        "LSOA (code)",
+        "FSM",
+        "AccreditationExpiryDate"
+      ],
+      "dtypes": {
+        "URN": "int64",
+        "LA (code)": "int64",
+        "LA (name)": "str",
+        "EstablishmentNumber": "float64",
+        "EstablishmentName": "str",
+        "TypeOfEstablishment (code)": "int64",
+        "TypeOfEstablishment (name)": "str",
+        "EstablishmentTypeGroup (code)": "int64",
+        "EstablishmentTypeGroup (name)": "str",
+        "EstablishmentStatus (code)": "int64",
+        "EstablishmentStatus (name)": "str",
+        "ReasonEstablishmentOpened (code)": "int64",
+        "ReasonEstablishmentOpened (name)": "str",
+        "OpenDate": "str",
+        "ReasonEstablishmentClosed (code)": "int64",
+        "ReasonEstablishmentClosed (name)": "str",
+        "CloseDate": "str",
+        "PhaseOfEducation (code)": "int64",
+        "PhaseOfEducation (name)": "str",
+        "StatutoryLowAge": "float64",
+        "StatutoryHighAge": "float64",
+        "Boarders (code)": "int64",
+        "Boarders (name)": "str",
+        "NurseryProvision (name)": "str",
+        "OfficialSixthForm (code)": "int64",
+        "OfficialSixthForm (name)": "str",
+        "Gender (code)": "int64",
+        "Gender (name)": "str",
+        "ReligiousCharacter (code)": "int64",
+        "ReligiousCharacter (name)": "str",
+        "ReligiousEthos (name)": "str",
+        "Diocese (code)": "str",
+        "Diocese (name)": "str",
+        "AdmissionsPolicy (code)": "int64",
+        "AdmissionsPolicy (name)": "str",
+        "SchoolCapacity": "float64",
+        "SpecialClasses (code)": "int64",
+        "SpecialClasses (name)": "str",
+        "CensusDate": "str",
+        "NumberOfPupils": "float64",
+        "NumberOfBoys": "float64",
+        "NumberOfGirls": "float64",
+        "PercentageFSM": "float64",
+        "TrustSchoolFlag (code)": "int64",
+        "TrustSchoolFlag (name)": "str",
+        "Trusts (code)": "float64",
+        "Trusts (name)": "str",
+        "SchoolSponsorFlag (name)": "str",
+        "SchoolSponsors (name)": "str",
+        "FederationFlag (name)": "str",
+        "Federations (code)": "float64",
+        "Federations (name)": "str",
+        "UKPRN": "float64",
+        "FEHEIdentifier": "float64",
+        "FurtherEducationType (name)": "str",
+        "LastChangedDate": "str",
+        "Street": "str",
+        "Locality": "str",
+        "Address3": "str",
+        "Town": "str",
+        "County (name)": "str",
+        "Postcode": "str",
+        "SchoolWebsite": "str",
+        "TelephoneNum": "float64",
+        "HeadTitle (name)": "str",
+        "HeadFirstName": "str",
+        "HeadLastName": "str",
+        "HeadPreferredJobTitle": "str",
+        "BSOInspectorateName (name)": "str",
+        "InspectorateReport": "str",
+        "DateOfLastInspectionVisit": "str",
+        "NextInspectionVisit": "str",
+        "TeenMoth (name)": "str",
+        "TeenMothPlaces": "float64",
+        "CCF (name)": "str",
+        "SENPRU (name)": "str",
+        "EBD (name)": "str",
+        "PlacesPRU": "float64",
+        "FTProv (name)": "str",
+        "EdByOther (name)": "str",
+        "Section41Approved (name)": "str",
+        "SEN1 (name)": "str",
+        "SEN2 (name)": "str",
+        "SEN3 (name)": "str",
+        "SEN4 (name)": "str",
+        "SEN5 (name)": "str",
+        "SEN6 (name)": "str",
+        "SEN7 (name)": "str",
+        "SEN8 (name)": "str",
+        "SEN9 (name)": "str",
+        "SEN10 (name)": "str",
+        "SEN11 (name)": "str",
+        "SEN12 (name)": "str",
+        "SEN13 (name)": "float64",
+        "TypeOfResourcedProvision (name)": "str",
+        "ResourcedProvisionOnRoll": "float64",
+        "ResourcedProvisionCapacity": "float64",
+        "SenUnitOnRoll": "float64",
+        "SenUnitCapacity": "float64",
+        "GOR (code)": "str",
+        "GOR (name)": "str",
+        "DistrictAdministrative (code)": "str",
+        "DistrictAdministrative (name)": "str",
+        "AdministrativeWard (code)": "str",
+        "AdministrativeWard (name)": "str",
+        "ParliamentaryConstituency (code)": "str",
+        "ParliamentaryConstituency (name)": "str",
+        "UrbanRural (code)": "str",
+        "UrbanRural (name)": "str",
+        "GSSLACode (name)": "str",
+        "Easting": "float64",
+        "Northing": "float64",
+        "MSOA (name)": "str",
+        "LSOA (name)": "str",
+        "InspectorateName (name)": "str",
+        "SENStat": "float64",
+        "SENNoStat": "float64",
+        "BoardingEstablishment (name)": "str",
+        "PropsName": "str",
+        "PreviousLA (code)": "int64",
+        "PreviousLA (name)": "str",
+        "PreviousEstablishmentNumber": "float64",
+        "Country (name)": "str",
+        "UPRN": "float64",
+        "SiteName": "str",
+        "QABName (code)": "int64",
+        "QABName (name)": "str",
+        "EstablishmentAccredited (code)": "int64",
+        "EstablishmentAccredited (name)": "str",
+        "QABReport": "str",
+        "CHNumber": "float64",
+        "MSOA (code)": "str",
+        "LSOA (code)": "str",
+        "FSM": "float64",
+        "AccreditationExpiryDate": "str"
+      },
+      "missingness_percent": {
+        "URN": 0.0,
+        "LA (code)": 0.0,
+        "LA (name)": 0.0,
+        "EstablishmentNumber": 0.27,
+        "EstablishmentName": 0.0,
+        "TypeOfEstablishment (code)": 0.0,
+        "TypeOfEstablishment (name)": 0.0,
+        "EstablishmentTypeGroup (code)": 0.0,
+        "EstablishmentTypeGroup (name)": 0.0,
+        "EstablishmentStatus (code)": 0.0,
+        "EstablishmentStatus (name)": 0.0,
+        "ReasonEstablishmentOpened (code)": 0.0,
+        "ReasonEstablishmentOpened (name)": 1.386,
+        "OpenDate": 56.444,
+        "ReasonEstablishmentClosed (code)": 0.0,
+        "ReasonEstablishmentClosed (name)": 27.606,
+        "CloseDate": 51.394,
+        "PhaseOfEducation (code)": 0.0,
+        "PhaseOfEducation (name)": 0.0,
+        "StatutoryLowAge": 3.202,
+        "StatutoryHighAge": 3.194,
+        "Boarders (code)": 0.0,
+        "Boarders (name)": 2.666,
+        "NurseryProvision (name)": 0.074,
+        "OfficialSixthForm (code)": 0.0,
+        "OfficialSixthForm (name)": 0.018,
+        "Gender (code)": 0.0,
+        "Gender (name)": 2.176,
+        "ReligiousCharacter (code)": 0.0,
+        "ReligiousCharacter (name)": 20.978,
+        "ReligiousEthos (name)": 14.82,
+        "Diocese (code)": 0.0,
+        "Diocese (name)": 2.82,
+        "AdmissionsPolicy (code)": 0.0,
+        "AdmissionsPolicy (name)": 6.588,
+        "SchoolCapacity": 20.018,
+        "SpecialClasses (code)": 0.0,
+        "SpecialClasses (name)": 0.292,
+        "CensusDate": 39.078,
+        "NumberOfPupils": 39.054,
+        "NumberOfBoys": 39.104,
+        "NumberOfGirls": 39.114,
+        "PercentageFSM": 44.538,
+        "TrustSchoolFlag (code)": 0.0,
+        "TrustSchoolFlag (name)": 0.0,
+        "Trusts (code)": 75.064,
+        "Trusts (name)": 75.064,
+        "SchoolSponsorFlag (name)": 0.0,
+        "SchoolSponsors (name)": 81.59,
+        "FederationFlag (name)": 0.0,
+        "Federations (code)": 97.686,
+        "Federations (name)": 97.686,
+        "UKPRN": 33.548,
+        "FEHEIdentifier": 98.926,
+        "FurtherEducationType (name)": 11.86,
+        "LastChangedDate": 0.0,
+        "Street": 2.378,
+        "Locality": 46.918,
+        "Address3": 92.43,
+        "Town": 3.24,
+        "County (name)": 19.754,
+        "Postcode": 2.934,
+        "SchoolWebsite": 50.34,
+        "TelephoneNum": 49.158,
+        "HeadTitle (name)": 13.318,
+        "HeadFirstName": 10.602,
+        "HeadLastName": 10.488,
+        "HeadPreferredJobTitle": 12.29,
+        "BSOInspectorateName (name)": 0.0,
+        "InspectorateReport": 99.37,
+        "DateOfLastInspectionVisit": 99.366,
+        "NextInspectionVisit": 99.996,
+        "TeenMoth (name)": 0.018,
+        "TeenMothPlaces": 99.806,
+        "CCF (name)": 12.348,
+        "SENPRU (name)": 0.02,
+        "EBD (name)": 0.014,
+        "PlacesPRU": 98.792,
+        "FTProv (name)": 93.938,
+        "EdByOther (name)": 12.37,
+        "Section41Approved (name)": 0.0,
+        "SEN1 (name)": 87.634,
+        "SEN2 (name)": 95.478,
+        "SEN3 (name)": 97.42,
+        "SEN4 (name)": 98.194,
+        "SEN5 (name)": 98.674,
+        "SEN6 (name)": 98.852,
+        "SEN7 (name)": 98.99,
+        "SEN8 (name)": 99.13,
+        "SEN9 (name)": 99.302,
+        "SEN10 (name)": 99.524,
+        "SEN11 (name)": 99.68,
+        "SEN12 (name)": 99.792,
+        "SEN13 (name)": 100.0,
+        "TypeOfResourcedProvision (name)": 83.66,
+        "ResourcedProvisionOnRoll": 95.398,
+        "ResourcedProvisionCapacity": 95.346,
+        "SenUnitOnRoll": 97.718,
+        "SenUnitCapacity": 97.684,
+        "GOR (code)": 0.0,
+        "GOR (name)": 0.0,
+        "DistrictAdministrative (code)": 0.0,
+        "DistrictAdministrative (name)": 2.936,
+        "AdministrativeWard (code)": 0.0,
+        "AdministrativeWard (name)": 2.934,
+        "ParliamentaryConstituency (code)": 0.0,
+        "ParliamentaryConstituency (name)": 2.934,
+        "UrbanRural (code)": 0.0,
+        "UrbanRural (name)": 2.936,
+        "GSSLACode (name)": 0.0,
+        "Easting": 3.074,
+        "Northing": 3.074,
+        "MSOA (name)": 2.934,
+        "LSOA (name)": 2.94,
+        "InspectorateName (name)": 87.862,
+        "SENStat": 92.074,
+        "SENNoStat": 92.714,
+        "BoardingEstablishment (name)": 94.74,
+        "PropsName": 91.854,
+        "PreviousLA (code)": 0.0,
+        "PreviousLA (name)": 65.73,
+        "PreviousEstablishmentNumber": 83.354,
+        "Country (name)": 92.648,
+        "UPRN": 23.852,
+        "SiteName": 99.994,
+        "QABName (code)": 0.0,
+        "QABName (name)": 0.0,
+        "EstablishmentAccredited (code)": 0.0,
+        "EstablishmentAccredited (name)": 0.0,
+        "QABReport": 99.992,
+        "CHNumber": 99.976,
+        "MSOA (code)": 0.0,
+        "LSOA (code)": 0.0,
+        "FSM": 44.536,
+        "AccreditationExpiryDate": 99.968
+      },
+      "datetime_columns": [
+        "AccreditationExpiryDate",
+        "CensusDate",
+        "CloseDate",
+        "DateOfLastInspectionVisit"
+      ],
+      "datetime_ranges": {
+        "CloseDate": {
+          "minimum": "1900-01-01T00:00:00+00:00",
+          "maximum": "2027-10-31T00:00:00+00:00"
+        },
+        "CensusDate": {
+          "minimum": "2017-01-19T00:00:00+00:00",
+          "maximum": "2025-01-16T00:00:00+00:00"
+        },
+        "DateOfLastInspectionVisit": {
+          "minimum": "2016-10-27T00:00:00+00:00",
+          "maximum": "2026-02-11T00:00:00+00:00"
+        },
+        "AccreditationExpiryDate": {
+          "minimum": "2026-10-26T00:00:00+00:00",
+          "maximum": "2029-05-19T00:00:00+00:00"
+        }
+      },
+      "geography_columns": [
+        "DistrictAdministrative (code)",
+        "DistrictAdministrative (name)",
+        "LSOA (code)",
+        "LSOA (name)",
+        "MSOA (code)",
+        "MSOA (name)",
+        "Postcode"
+      ],
       "candidate_target_columns": [],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "NextInspectionVisit"
+      ],
       "derived_score_columns": [],
-      "numeric_columns": [],
-      "categorical_columns": [],
-      "duplicate_row_count": null,
-      "profile_status": "failed",
-      "profile_error": "UnicodeDecodeError: 'utf-8' codec can't decode byte 0x92 in position 6378: invalid start byte"
+      "numeric_columns": [
+        "AdmissionsPolicy (code)",
+        "Boarders (code)",
+        "CHNumber",
+        "Easting",
+        "EstablishmentAccredited (code)",
+        "EstablishmentNumber",
+        "EstablishmentStatus (code)",
+        "EstablishmentTypeGroup (code)",
+        "FEHEIdentifier",
+        "FSM",
+        "Federations (code)",
+        "Gender (code)",
+        "LA (code)",
+        "Northing",
+        "NumberOfBoys",
+        "NumberOfGirls",
+        "NumberOfPupils",
+        "OfficialSixthForm (code)",
+        "PercentageFSM",
+        "PhaseOfEducation (code)",
+        "PlacesPRU",
+        "PreviousEstablishmentNumber",
+        "PreviousLA (code)",
+        "QABName (code)",
+        "ReasonEstablishmentClosed (code)",
+        "ReasonEstablishmentOpened (code)",
+        "ReligiousCharacter (code)",
+        "ResourcedProvisionCapacity",
+        "ResourcedProvisionOnRoll",
+        "SEN13 (name)",
+        "SENNoStat",
+        "SENStat",
+        "SchoolCapacity",
+        "SenUnitCapacity",
+        "SenUnitOnRoll",
+        "SpecialClasses (code)",
+        "StatutoryHighAge",
+        "StatutoryLowAge",
+        "TeenMothPlaces",
+        "TelephoneNum",
+        "TrustSchoolFlag (code)",
+        "Trusts (code)",
+        "TypeOfEstablishment (code)",
+        "UKPRN",
+        "UPRN",
+        "URN"
+      ],
+      "categorical_columns": [
+        "AccreditationExpiryDate",
+        "Address3",
+        "AdministrativeWard (code)",
+        "AdministrativeWard (name)",
+        "AdmissionsPolicy (name)",
+        "BSOInspectorateName (name)",
+        "Boarders (name)",
+        "BoardingEstablishment (name)",
+        "CCF (name)",
+        "CensusDate",
+        "CloseDate",
+        "Country (name)",
+        "County (name)",
+        "DateOfLastInspectionVisit",
+        "Diocese (code)",
+        "Diocese (name)",
+        "DistrictAdministrative (code)",
+        "DistrictAdministrative (name)",
+        "EBD (name)",
+        "EdByOther (name)",
+        "EstablishmentAccredited (name)",
+        "EstablishmentName",
+        "EstablishmentStatus (name)",
+        "EstablishmentTypeGroup (name)",
+        "FTProv (name)",
+        "FederationFlag (name)",
+        "Federations (name)",
+        "FurtherEducationType (name)",
+        "GOR (code)",
+        "GOR (name)",
+        "GSSLACode (name)",
+        "Gender (name)",
+        "HeadFirstName",
+        "HeadLastName",
+        "HeadPreferredJobTitle",
+        "HeadTitle (name)",
+        "InspectorateName (name)",
+        "InspectorateReport",
+        "LA (name)",
+        "LSOA (code)",
+        "LSOA (name)",
+        "LastChangedDate",
+        "Locality",
+        "MSOA (code)",
+        "MSOA (name)",
+        "NextInspectionVisit",
+        "NurseryProvision (name)",
+        "OfficialSixthForm (name)",
+        "OpenDate",
+        "ParliamentaryConstituency (code)",
+        "ParliamentaryConstituency (name)",
+        "PhaseOfEducation (name)",
+        "Postcode",
+        "PreviousLA (name)",
+        "PropsName",
+        "QABName (name)",
+        "QABReport",
+        "ReasonEstablishmentClosed (name)",
+        "ReasonEstablishmentOpened (name)",
+        "ReligiousCharacter (name)",
+        "ReligiousEthos (name)",
+        "SEN1 (name)",
+        "SEN10 (name)",
+        "SEN11 (name)",
+        "SEN12 (name)",
+        "SEN2 (name)",
+        "SEN3 (name)",
+        "SEN4 (name)",
+        "SEN5 (name)",
+        "SEN6 (name)",
+        "SEN7 (name)",
+        "SEN8 (name)",
+        "SEN9 (name)",
+        "SENPRU (name)",
+        "SchoolSponsorFlag (name)",
+        "SchoolSponsors (name)",
+        "SchoolWebsite",
+        "Section41Approved (name)",
+        "SiteName",
+        "SpecialClasses (name)",
+        "Street",
+        "TeenMoth (name)",
+        "Town",
+        "TrustSchoolFlag (name)",
+        "Trusts (name)",
+        "TypeOfEstablishment (name)",
+        "TypeOfResourcedProvision (name)",
+        "UrbanRural (code)",
+        "UrbanRural (name)"
+      ],
+      "duplicate_row_count": 0,
+      "profile_status": "success",
+      "profile_error": null
     },
     {
       "path": "data/external/schools/wales/maintained_schools_wg.csv",
@@ -6509,13 +7106,13 @@
         "welsh_medium": 0.0,
         "school_type": 0.0,
         "religious_character": 0.0,
-        "address_1": 0.0694,
-        "address_2": 2.9167,
-        "address_3": 18.6111,
-        "address_4": 82.2222,
+        "address_1": 0.069444,
+        "address_2": 2.916667,
+        "address_3": 18.611111,
+        "address_4": 82.222222,
         "postcode": 0.0,
-        "phone_number": 0.4167,
-        "pupils": 0.0694,
+        "phone_number": 0.416667,
+        "pupils": 0.069444,
         "rhif_yr_ysgol": 0.0,
         "enwr_ysgol": 0.0,
         "cod_all": 0.0,
@@ -6525,19 +7122,18 @@
         "math_o_gyfrwng_cymraeg": 0.0,
         "math_o_ysgol": 0.0,
         "cymeriad_crefyddol": 0.0,
-        "cyfeiriad_1": 0.0694,
-        "cyfeiriad_2": 2.9167,
-        "cyfeiriad_3": 18.6111,
-        "cyfeiriad_4": 82.2222,
+        "cyfeiriad_1": 0.069444,
+        "cyfeiriad_2": 2.916667,
+        "cyfeiriad_3": 18.611111,
+        "cyfeiriad_4": 82.222222,
         "cod_post": 0.0,
-        "rhif_ffon": 0.4167,
-        "disgyblion": 0.0694,
+        "rhif_ffon": 0.416667,
+        "disgyblion": 0.069444,
         "geom": 0.0
       },
       "datetime_columns": [],
       "datetime_ranges": {},
       "geography_columns": [
-        "local_authority",
         "postcode"
       ],
       "candidate_target_columns": [],
@@ -6863,16 +7459,16 @@
       ],
       "datetime_ranges": {
         "month": {
-          "min": "2026-04-01T00:00:00",
-          "max": "2026-04-01T00:00:00"
+          "minimum": "2026-04-01T00:00:00+00:00",
+          "maximum": "2026-04-01T00:00:00+00:00"
         },
         "crime_year": {
-          "min": "1970-01-01T00:00:00.000002026",
-          "max": "1970-01-01T00:00:00.000002026"
+          "minimum": "1970-01-01T00:00:00.000002026+00:00",
+          "maximum": "1970-01-01T00:00:00.000002026+00:00"
         },
         "crime_month": {
-          "min": "1970-01-01T00:00:00.000000004",
-          "max": "1970-01-01T00:00:00.000000004"
+          "minimum": "1970-01-01T00:00:00.000000004+00:00",
+          "maximum": "1970-01-01T00:00:00.000000004+00:00"
         }
       },
       "geography_columns": [
@@ -6884,7 +7480,9 @@
       "candidate_target_columns": [
         "last_outcome_category"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "last_outcome_category"
+      ],
       "derived_score_columns": [],
       "numeric_columns": [
         "context",
@@ -6903,6 +7501,7 @@
         "location",
         "lsoa_code",
         "lsoa_name",
+        "month",
         "police_force",
         "reported_by",
         "source_file"
@@ -7134,23 +7733,21 @@
       ],
       "datetime_ranges": {
         "transfer_date": {
-          "min": "2023-01-03T00:00:00",
-          "max": "2023-12-29T00:00:00"
+          "minimum": "2023-01-03T00:00:00+00:00",
+          "maximum": "2023-12-29T00:00:00+00:00"
         },
         "transfer_year": {
-          "min": "1970-01-01T00:00:00.000002023",
-          "max": "1970-01-01T00:00:00.000002023"
+          "minimum": "1970-01-01T00:00:00.000002023+00:00",
+          "maximum": "1970-01-01T00:00:00.000002023+00:00"
         },
         "transfer_month": {
-          "min": "1970-01-01T00:00:00.000000001",
-          "max": "1970-01-01T00:00:00.000000012"
+          "minimum": "1970-01-01T00:00:00.000000001+00:00",
+          "maximum": "1970-01-01T00:00:00.000000012+00:00"
         }
       },
       "geography_columns": [
-        "country_code",
         "district",
         "latitude",
-        "local_authority_code",
         "longitude",
         "lsoa_code",
         "msoa_code",
@@ -7160,7 +7757,12 @@
         "price",
         "price_to_crime_ratio"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "crime_score",
+        "deprivation_index",
+        "price",
+        "price_to_crime_ratio"
+      ],
       "derived_score_columns": [
         "crime_score",
         "deprivation_index"
@@ -7201,7 +7803,8 @@
         "source_file",
         "street",
         "town_city",
-        "transaction_id"
+        "transaction_id",
+        "transfer_date"
       ],
       "duplicate_row_count": 0,
       "profile_status": "success",
@@ -7332,23 +7935,21 @@
       ],
       "datetime_ranges": {
         "transfer_date": {
-          "min": "2023-01-03T00:00:00",
-          "max": "2023-12-29T00:00:00"
+          "minimum": "2023-01-03T00:00:00+00:00",
+          "maximum": "2023-12-29T00:00:00+00:00"
         },
         "transfer_year": {
-          "min": "1970-01-01T00:00:00.000002023",
-          "max": "1970-01-01T00:00:00.000002023"
+          "minimum": "1970-01-01T00:00:00.000002023+00:00",
+          "maximum": "1970-01-01T00:00:00.000002023+00:00"
         },
         "transfer_month": {
-          "min": "1970-01-01T00:00:00.000000001",
-          "max": "1970-01-01T00:00:00.000000012"
+          "minimum": "1970-01-01T00:00:00.000000001+00:00",
+          "maximum": "1970-01-01T00:00:00.000000012+00:00"
         }
       },
       "geography_columns": [
-        "country_code",
         "district",
         "latitude",
-        "local_authority_code",
         "longitude",
         "lsoa_code",
         "msoa_code",
@@ -7358,7 +7959,12 @@
         "price",
         "price_to_crime_ratio"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "crime_score",
+        "deprivation_index",
+        "price",
+        "price_to_crime_ratio"
+      ],
       "derived_score_columns": [
         "crime_score",
         "deprivation_index"
@@ -7399,7 +8005,8 @@
         "source_file",
         "street",
         "town_city",
-        "transaction_id"
+        "transaction_id",
+        "transfer_date"
       ],
       "duplicate_row_count": 0,
       "profile_status": "success",
@@ -7445,16 +8052,16 @@
       "datetime_columns": [],
       "datetime_ranges": {},
       "geography_columns": [
-        "country_code",
         "latitude",
-        "local_authority_code",
         "longitude",
         "lsoa_code",
         "msoa_code",
         "postcode"
       ],
       "candidate_target_columns": [],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "deprivation_index"
+      ],
       "derived_score_columns": [
         "deprivation_index"
       ],
@@ -7514,16 +8121,16 @@
       "datetime_columns": [],
       "datetime_ranges": {},
       "geography_columns": [
-        "country_code",
         "latitude",
-        "local_authority_code",
         "longitude",
         "lsoa_code",
         "msoa_code",
         "postcode"
       ],
       "candidate_target_columns": [],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "deprivation_index"
+      ],
       "derived_score_columns": [
         "deprivation_index"
       ],
@@ -7650,23 +8257,21 @@
       ],
       "datetime_ranges": {
         "transfer_date": {
-          "min": "2023-01-03T00:00:00",
-          "max": "2023-12-29T00:00:00"
+          "minimum": "2023-01-03T00:00:00+00:00",
+          "maximum": "2023-12-29T00:00:00+00:00"
         },
         "transfer_year": {
-          "min": "1970-01-01T00:00:00.000002023",
-          "max": "1970-01-01T00:00:00.000002023"
+          "minimum": "1970-01-01T00:00:00.000002023+00:00",
+          "maximum": "1970-01-01T00:00:00.000002023+00:00"
         },
         "transfer_month": {
-          "min": "1970-01-01T00:00:00.000000001",
-          "max": "1970-01-01T00:00:00.000000012"
+          "minimum": "1970-01-01T00:00:00.000000001+00:00",
+          "maximum": "1970-01-01T00:00:00.000000012+00:00"
         }
       },
       "geography_columns": [
-        "country_code",
         "district",
         "latitude",
-        "local_authority_code",
         "longitude",
         "lsoa_code",
         "msoa_code",
@@ -7675,7 +8280,10 @@
       "candidate_target_columns": [
         "price"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "deprivation_index",
+        "price"
+      ],
       "derived_score_columns": [
         "deprivation_index"
       ],
@@ -7709,7 +8317,8 @@
         "source_file",
         "street",
         "town_city",
-        "transaction_id"
+        "transaction_id",
+        "transfer_date"
       ],
       "duplicate_row_count": 0,
       "profile_status": "success",
@@ -7822,23 +8431,21 @@
       ],
       "datetime_ranges": {
         "transfer_date": {
-          "min": "2023-01-03T00:00:00",
-          "max": "2023-12-29T00:00:00"
+          "minimum": "2023-01-03T00:00:00+00:00",
+          "maximum": "2023-12-29T00:00:00+00:00"
         },
         "transfer_year": {
-          "min": "1970-01-01T00:00:00.000002023",
-          "max": "1970-01-01T00:00:00.000002023"
+          "minimum": "1970-01-01T00:00:00.000002023+00:00",
+          "maximum": "1970-01-01T00:00:00.000002023+00:00"
         },
         "transfer_month": {
-          "min": "1970-01-01T00:00:00.000000001",
-          "max": "1970-01-01T00:00:00.000000012"
+          "minimum": "1970-01-01T00:00:00.000000001+00:00",
+          "maximum": "1970-01-01T00:00:00.000000012+00:00"
         }
       },
       "geography_columns": [
-        "country_code",
         "district",
         "latitude",
-        "local_authority_code",
         "longitude",
         "lsoa_code",
         "msoa_code",
@@ -7847,7 +8454,10 @@
       "candidate_target_columns": [
         "price"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "deprivation_index",
+        "price"
+      ],
       "derived_score_columns": [
         "deprivation_index"
       ],
@@ -7881,7 +8491,8 @@
         "source_file",
         "street",
         "town_city",
-        "transaction_id"
+        "transaction_id",
+        "transfer_date"
       ],
       "duplicate_row_count": 0,
       "profile_status": "success",
@@ -7973,16 +8584,16 @@
       ],
       "datetime_ranges": {
         "transfer_date": {
-          "min": "2023-01-03T00:00:00",
-          "max": "2023-12-29T00:00:00"
+          "minimum": "2023-01-03T00:00:00+00:00",
+          "maximum": "2023-12-29T00:00:00+00:00"
         },
         "transfer_year": {
-          "min": "1970-01-01T00:00:00.000002023",
-          "max": "1970-01-01T00:00:00.000002023"
+          "minimum": "1970-01-01T00:00:00.000002023+00:00",
+          "maximum": "1970-01-01T00:00:00.000002023+00:00"
         },
         "transfer_month": {
-          "min": "1970-01-01T00:00:00.000000001",
-          "max": "1970-01-01T00:00:00.000000012"
+          "minimum": "1970-01-01T00:00:00.000000001+00:00",
+          "maximum": "1970-01-01T00:00:00.000000012+00:00"
         }
       },
       "geography_columns": [
@@ -7992,7 +8603,9 @@
       "candidate_target_columns": [
         "price"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "price"
+      ],
       "derived_score_columns": [],
       "numeric_columns": [
         "price",
@@ -8017,7 +8630,8 @@
         "source_file",
         "street",
         "town_city",
-        "transaction_id"
+        "transaction_id",
+        "transfer_date"
       ],
       "duplicate_row_count": 0,
       "profile_status": "success",
@@ -8109,16 +8723,16 @@
       ],
       "datetime_ranges": {
         "transfer_date": {
-          "min": "2023-01-03T00:00:00",
-          "max": "2023-12-29T00:00:00"
+          "minimum": "2023-01-03T00:00:00+00:00",
+          "maximum": "2023-12-29T00:00:00+00:00"
         },
         "transfer_year": {
-          "min": "1970-01-01T00:00:00.000002023",
-          "max": "1970-01-01T00:00:00.000002023"
+          "minimum": "1970-01-01T00:00:00.000002023+00:00",
+          "maximum": "1970-01-01T00:00:00.000002023+00:00"
         },
         "transfer_month": {
-          "min": "1970-01-01T00:00:00.000000001",
-          "max": "1970-01-01T00:00:00.000000012"
+          "minimum": "1970-01-01T00:00:00.000000001+00:00",
+          "maximum": "1970-01-01T00:00:00.000000012+00:00"
         }
       },
       "geography_columns": [
@@ -8128,7 +8742,9 @@
       "candidate_target_columns": [
         "price"
       ],
-      "leakage_risk_columns": [],
+      "leakage_risk_columns": [
+        "price"
+      ],
       "derived_score_columns": [],
       "numeric_columns": [
         "price",
@@ -8153,7 +8769,8 @@
         "source_file",
         "street",
         "town_city",
-        "transaction_id"
+        "transaction_id",
+        "transfer_date"
       ],
       "duplicate_row_count": 0,
       "profile_status": "success",
@@ -8602,17 +9219,14 @@
         "country_code": 0.0,
         "latitude": 0.0,
         "longitude": 0.0,
-        "local_authority": 0.0046,
+        "local_authority": 0.004554,
         "region": 0.0,
         "country": 0.0
       },
       "datetime_columns": [],
       "datetime_ranges": {},
       "geography_columns": [
-        "country",
-        "country_code",
         "latitude",
-        "local_authority",
         "longitude",
         "lsoa_code",
         "region",
@@ -8660,7 +9274,7 @@
       "missingness_percent": {
         "LAD25CD": 0.0,
         "LAD25NM": 0.0,
-        "LAD25NMW": 93.9058,
+        "LAD25NMW": 93.905817,
         "ObjectId": 0.0
       },
       "datetime_columns": [],
@@ -8715,7 +9329,6 @@
       "datetime_columns": [],
       "datetime_ranges": {},
       "geography_columns": [
-        "country_code",
         "latitude",
         "longitude",
         "lsoa_code",
@@ -8812,7 +9425,6 @@
       "datetime_columns": [],
       "datetime_ranges": {},
       "geography_columns": [
-        "country",
         "lsoa_code",
         "postcode"
       ],
@@ -8856,7 +9468,7 @@
         "area_name": 0.0,
         "lad_code": 0.0,
         "median_weekly_income": 0.0,
-        "mean_weekly_income": 0.2809,
+        "mean_weekly_income": 0.280899,
         "estimated_annual_income": 0.0
       },
       "datetime_columns": [],
@@ -9209,7 +9821,6 @@
       "datetime_columns": [],
       "datetime_ranges": {},
       "geography_columns": [
-        "country",
         "lsoa_code"
       ],
       "candidate_target_columns": [],
@@ -9227,6 +9838,928 @@
       "duplicate_row_count": 1,
       "profile_status": "success",
       "profile_error": null
+    }
+  ],
+  "leakage_review": [
+    {
+      "dataset_path": "data/analytics/area_analytics_base.parquet",
+      "column": "affordability_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/area_analytics_base.parquet",
+      "column": "average_price",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/area_analytics_base.parquet",
+      "column": "income_affordability_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/area_analytics_base.parquet",
+      "column": "median_price",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/area_analytics_base.parquet",
+      "column": "price_to_income_ratio",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/bottom_100_areas.parquet",
+      "column": "affordability_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/bottom_100_areas.parquet",
+      "column": "area_rank",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/bottom_100_areas.parquet",
+      "column": "average_price",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/bottom_100_areas.parquet",
+      "column": "average_price_to_crime_ratio",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/bottom_100_areas.parquet",
+      "column": "crime_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/bottom_100_areas.parquet",
+      "column": "deprivation_opportunity_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/bottom_100_areas.parquet",
+      "column": "growth_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/bottom_100_areas.parquet",
+      "column": "housing_intelligence_index",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/bottom_100_areas.parquet",
+      "column": "income_affordability_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/bottom_100_areas.parquet",
+      "column": "investment_opportunity_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/bottom_100_areas.parquet",
+      "column": "investment_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/bottom_100_areas.parquet",
+      "column": "market_activity_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/bottom_100_areas.parquet",
+      "column": "median_price",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/bottom_100_areas.parquet",
+      "column": "percentile_rank",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/bottom_100_areas.parquet",
+      "column": "price_to_income_ratio",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/crime_scores.parquet",
+      "column": "affordability_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/crime_scores.parquet",
+      "column": "average_price",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/crime_scores.parquet",
+      "column": "crime_score_v2",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/crime_scores.parquet",
+      "column": "income_affordability_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/crime_scores.parquet",
+      "column": "median_price",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/crime_scores.parquet",
+      "column": "price_to_income_ratio",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/growth_scores.parquet",
+      "column": "affordability_percentile",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/growth_scores.parquet",
+      "column": "affordability_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/growth_scores.parquet",
+      "column": "affordability_score_v2",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/growth_scores.parquet",
+      "column": "average_price",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/growth_scores.parquet",
+      "column": "crime_percentile",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/growth_scores.parquet",
+      "column": "crime_score_v2",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/growth_scores.parquet",
+      "column": "crime_score_v3",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/growth_scores.parquet",
+      "column": "deprivation_opportunity_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/growth_scores.parquet",
+      "column": "growth_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/growth_scores.parquet",
+      "column": "income_affordability_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/growth_scores.parquet",
+      "column": "market_activity_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/growth_scores.parquet",
+      "column": "median_price",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/growth_scores.parquet",
+      "column": "price_to_income_ratio",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/healthcare_intelligence.parquet",
+      "column": "healthcare_accessibility_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/historical_housing_trends.parquet",
+      "column": "average_price",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/historical_housing_trends.parquet",
+      "column": "median_price",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/housing_intelligence.parquet",
+      "column": "affordability_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/housing_intelligence.parquet",
+      "column": "area_rank",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/housing_intelligence.parquet",
+      "column": "average_price",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/housing_intelligence.parquet",
+      "column": "crime_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/housing_intelligence.parquet",
+      "column": "growth_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/housing_intelligence.parquet",
+      "column": "healthcare_accessibility_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/housing_intelligence.parquet",
+      "column": "housing_intelligence_index",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/housing_intelligence.parquet",
+      "column": "income_affordability_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/housing_intelligence.parquet",
+      "column": "investment_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/housing_intelligence.parquet",
+      "column": "median_price",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/housing_intelligence.parquet",
+      "column": "percentile_rank",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/housing_intelligence.parquet",
+      "column": "price_to_income_ratio",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/housing_intelligence.parquet",
+      "column": "school_accessibility_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/housing_intelligence.parquet",
+      "column": "transport_accessibility_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/housing_map.parquet",
+      "column": "area_rank",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/housing_map.parquet",
+      "column": "growth_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/housing_map.parquet",
+      "column": "housing_intelligence_index",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/housing_map.parquet",
+      "column": "investment_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/investment_scores.parquet",
+      "column": "affordability_percentile",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/investment_scores.parquet",
+      "column": "affordability_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/investment_scores.parquet",
+      "column": "affordability_score_v2",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/investment_scores.parquet",
+      "column": "average_price",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/investment_scores.parquet",
+      "column": "average_price_to_crime_ratio",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/investment_scores.parquet",
+      "column": "crime_percentile",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/investment_scores.parquet",
+      "column": "crime_score_v2",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/investment_scores.parquet",
+      "column": "crime_score_v3",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/investment_scores.parquet",
+      "column": "deprivation_opportunity_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/investment_scores.parquet",
+      "column": "growth_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/investment_scores.parquet",
+      "column": "income_affordability_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/investment_scores.parquet",
+      "column": "investment_opportunity_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/investment_scores.parquet",
+      "column": "investment_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/investment_scores.parquet",
+      "column": "market_activity_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/investment_scores.parquet",
+      "column": "median_price",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/investment_scores.parquet",
+      "column": "price_to_income_ratio",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/local_authority_trends.parquet",
+      "column": "average_price",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/local_authority_trends.parquet",
+      "column": "median_price",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/local_authority_trends.parquet",
+      "column": "mom_price_growth_pct",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/local_authority_trends.parquet",
+      "column": "rolling_12m_average_price",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/local_authority_trends.parquet",
+      "column": "yoy_price_growth_pct",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/location_intelligence.parquet",
+      "column": "healthcare_accessibility_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/location_intelligence.parquet",
+      "column": "healthcare_percentile_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/location_intelligence.parquet",
+      "column": "location_intelligence_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/location_intelligence.parquet",
+      "column": "location_percentile_rank",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/location_intelligence.parquet",
+      "column": "location_rank",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/location_intelligence.parquet",
+      "column": "school_accessibility_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/location_intelligence.parquet",
+      "column": "school_percentile_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/location_intelligence.parquet",
+      "column": "transport_accessibility_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/location_intelligence.parquet",
+      "column": "transport_percentile_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/opportunity_explorer.parquet",
+      "column": "area_rank",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/opportunity_explorer.parquet",
+      "column": "average_price",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/opportunity_explorer.parquet",
+      "column": "growth_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/opportunity_explorer.parquet",
+      "column": "housing_intelligence_index",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/opportunity_explorer.parquet",
+      "column": "investment_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/rankings.parquet",
+      "column": "area_rank",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/rankings.parquet",
+      "column": "housing_intelligence_index",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/rankings.parquet",
+      "column": "percentile_rank",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/regional_housing_trends.parquet",
+      "column": "average_price",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/regional_housing_trends.parquet",
+      "column": "median_price",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/regional_housing_trends.parquet",
+      "column": "mom_price_growth_pct",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/regional_housing_trends.parquet",
+      "column": "rolling_12m_average_price",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/regional_housing_trends.parquet",
+      "column": "yoy_price_growth_pct",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/regional_intelligence.parquet",
+      "column": "average_price",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/regional_intelligence.parquet",
+      "column": "growth_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/regional_intelligence.parquet",
+      "column": "housing_intelligence_index",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/regional_intelligence.parquet",
+      "column": "investment_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/regional_intelligence.parquet",
+      "column": "regional_rank",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/school_intelligence.parquet",
+      "column": "school_accessibility_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/top_100_areas.parquet",
+      "column": "affordability_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/top_100_areas.parquet",
+      "column": "area_rank",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/top_100_areas.parquet",
+      "column": "average_price",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/top_100_areas.parquet",
+      "column": "average_price_to_crime_ratio",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/top_100_areas.parquet",
+      "column": "crime_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/top_100_areas.parquet",
+      "column": "deprivation_opportunity_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/top_100_areas.parquet",
+      "column": "growth_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/top_100_areas.parquet",
+      "column": "housing_intelligence_index",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/top_100_areas.parquet",
+      "column": "income_affordability_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/top_100_areas.parquet",
+      "column": "investment_opportunity_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/top_100_areas.parquet",
+      "column": "investment_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/top_100_areas.parquet",
+      "column": "market_activity_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/top_100_areas.parquet",
+      "column": "median_price",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/top_100_areas.parquet",
+      "column": "percentile_rank",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/top_100_areas.parquet",
+      "column": "price_to_income_ratio",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/analytics/transport_intelligence.parquet",
+      "column": "transport_accessibility_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/external/crime/2026-04/2026-04-avon-and-somerset-street.csv",
+      "column": "Last outcome category",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/external/crime/2026-04/2026-04-bedfordshire-street.csv",
+      "column": "Last outcome category",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/external/crime/2026-04/2026-04-cambridgeshire-street.csv",
+      "column": "Last outcome category",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/external/crime/2026-04/2026-04-cheshire-street.csv",
+      "column": "Last outcome category",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/external/crime/2026-04/2026-04-city-of-london-street.csv",
+      "column": "Last outcome category",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/external/crime/2026-04/2026-04-cleveland-street.csv",
+      "column": "Last outcome category",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/external/crime/2026-04/2026-04-cumbria-street.csv",
+      "column": "Last outcome category",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/external/crime/2026-04/2026-04-derbyshire-street.csv",
+      "column": "Last outcome category",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/external/crime/2026-04/2026-04-devon-and-cornwall-street.csv",
+      "column": "Last outcome category",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/external/crime/2026-04/2026-04-dorset-street.csv",
+      "column": "Last outcome category",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/external/crime/2026-04/2026-04-durham-street.csv",
+      "column": "Last outcome category",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/external/crime/2026-04/2026-04-dyfed-powys-street.csv",
+      "column": "Last outcome category",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/external/crime/2026-04/2026-04-essex-street.csv",
+      "column": "Last outcome category",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/external/crime/2026-04/2026-04-hampshire-street.csv",
+      "column": "Last outcome category",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/external/crime/2026-04/2026-04-hertfordshire-street.csv",
+      "column": "Last outcome category",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/external/crime/2026-04/2026-04-humberside-street.csv",
+      "column": "Last outcome category",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/external/crime/2026-04/2026-04-kent-street.csv",
+      "column": "Last outcome category",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/external/crime/2026-04/2026-04-lancashire-street.csv",
+      "column": "Last outcome category",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/external/crime/2026-04/2026-04-leicestershire-street.csv",
+      "column": "Last outcome category",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/external/crime/2026-04/2026-04-lincolnshire-street.csv",
+      "column": "Last outcome category",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/external/crime/2026-04/2026-04-merseyside-street.csv",
+      "column": "Last outcome category",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/external/crime/2026-04/2026-04-metropolitan-street.csv",
+      "column": "Last outcome category",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/external/crime/2026-04/2026-04-norfolk-street.csv",
+      "column": "Last outcome category",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/external/crime/2026-04/2026-04-north-wales-street.csv",
+      "column": "Last outcome category",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/external/crime/2026-04/2026-04-north-yorkshire-street.csv",
+      "column": "Last outcome category",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/external/crime/2026-04/2026-04-northamptonshire-street.csv",
+      "column": "Last outcome category",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/external/crime/2026-04/2026-04-northern-ireland-street.csv",
+      "column": "Last outcome category",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/external/crime/2026-04/2026-04-northumbria-street.csv",
+      "column": "Last outcome category",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/external/crime/2026-04/2026-04-nottinghamshire-street.csv",
+      "column": "Last outcome category",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/external/crime/2026-04/2026-04-south-wales-street.csv",
+      "column": "Last outcome category",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/external/crime/2026-04/2026-04-south-yorkshire-street.csv",
+      "column": "Last outcome category",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/external/crime/2026-04/2026-04-staffordshire-street.csv",
+      "column": "Last outcome category",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/external/crime/2026-04/2026-04-suffolk-street.csv",
+      "column": "Last outcome category",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/external/crime/2026-04/2026-04-surrey-street.csv",
+      "column": "Last outcome category",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/external/crime/2026-04/2026-04-sussex-street.csv",
+      "column": "Last outcome category",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/external/crime/2026-04/2026-04-thames-valley-street.csv",
+      "column": "Last outcome category",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/external/crime/2026-04/2026-04-warwickshire-street.csv",
+      "column": "Last outcome category",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/external/crime/2026-04/2026-04-west-mercia-street.csv",
+      "column": "Last outcome category",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/external/crime/2026-04/2026-04-west-midlands-street.csv",
+      "column": "Last outcome category",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/external/crime/2026-04/2026-04-west-yorkshire-street.csv",
+      "column": "Last outcome category",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/external/crime/2026-04/2026-04-wiltshire-street.csv",
+      "column": "Last outcome category",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/external/schools/edubasealldata20260615.csv",
+      "column": "NextInspectionVisit",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/processed/crime_clean.csv",
+      "column": "last_outcome_category",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/processed/housing_master_dataset.csv",
+      "column": "crime_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/processed/housing_master_dataset.csv",
+      "column": "deprivation_index",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/processed/housing_master_dataset.csv",
+      "column": "price",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/processed/housing_master_dataset.csv",
+      "column": "price_to_crime_ratio",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/processed/housing_master_dataset.parquet",
+      "column": "crime_score",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/processed/housing_master_dataset.parquet",
+      "column": "deprivation_index",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/processed/housing_master_dataset.parquet",
+      "column": "price",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/processed/housing_master_dataset.parquet",
+      "column": "price_to_crime_ratio",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/processed/postcodes_clean.csv",
+      "column": "deprivation_index",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/processed/postcodes_clean.parquet",
+      "column": "deprivation_index",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/processed/property_geography.csv",
+      "column": "deprivation_index",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/processed/property_geography.csv",
+      "column": "price",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/processed/property_geography.parquet",
+      "column": "deprivation_index",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/processed/property_geography.parquet",
+      "column": "price",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/processed/property_prices_clean.csv",
+      "column": "price",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
+    },
+    {
+      "dataset_path": "data/processed/property_prices_clean.parquet",
+      "column": "price",
+      "reason": "Column name or derived analytical role indicates potential target leakage and requires lineage review."
     }
   ]
 }

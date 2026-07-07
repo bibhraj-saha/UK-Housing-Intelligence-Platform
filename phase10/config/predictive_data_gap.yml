@@ -1,0 +1,285 @@
+project:
+  name: "UK Housing Intelligence Platform"
+  phase: 10
+  component: "Machine Learning Layer"
+  assessment_name: "Predictive Data-Gap Assessment"
+
+paths:
+  readiness_report: "phase10/reports/audits/ml_readiness_audit.json"
+  output_directory: "phase10/reports/audits"
+
+assessment:
+  sample_rows_per_dataset: 250000
+  full_profile_row_threshold: 500000
+
+  candidate_horizons_months:
+    - 3
+    - 6
+    - 12
+    - 24
+
+  minimum_history_months:
+    price_prediction: 24
+    growth_prediction: 24
+    forecasting: 36
+    investment_opportunity_prediction: 24
+
+  minimum_entity_coverage_ratio: 0.70
+
+  minimum_entities_for_area_modelling: 100
+
+  minimum_periods_per_entity:
+    price_prediction: 12
+    growth_prediction: 12
+    forecasting: 24
+    investment_opportunity_prediction: 12
+
+  sparsity_thresholds:
+    low_missingness_percent: 5.0
+    moderate_missingness_percent: 20.0
+    high_missingness_percent: 40.0
+
+temporal_detection:
+  explicit_name_tokens:
+    - "date"
+    - "time"
+    - "timestamp"
+    - "month"
+    - "year"
+    - "period"
+
+  minimum_parse_success_ratio: 0.90
+
+geography_candidates:
+  priority_order:
+    - "lsoa_code"
+    - "lsoa"
+    - "msoa_code"
+    - "msoa"
+    - "postcode"
+    - "postcode_clean"
+    - "local_authority_code"
+    - "local_authority"
+    - "district"
+    - "region"
+    - "country"
+
+  exact_columns:
+    - "lsoa_code"
+    - "lsoa"
+    - "msoa_code"
+    - "msoa"
+    - "postcode"
+    - "postcode_clean"
+    - "local_authority_code"
+    - "local_authority"
+    - "district"
+    - "region"
+    - "country"
+
+price_detection:
+  exact_columns:
+    - "price"
+    - "price_paid"
+    - "transaction_price"
+    - "average_price"
+    - "median_price"
+    - "mean_price"
+
+  name_tokens:
+    - "price"
+
+growth_detection:
+  exact_columns:
+    - "growth"
+    - "growth_rate"
+    - "price_growth"
+    - "growth_score"
+
+  name_tokens:
+    - "growth"
+
+investment_detection:
+  exact_columns:
+    - "investment_score"
+    - "investment_opportunity"
+    - "investment_rank"
+
+  name_tokens:
+    - "investment"
+
+derived_analytics_detection:
+  name_tokens:
+    - "score"
+    - "index"
+    - "rank"
+    - "ranking"
+    - "percentile"
+
+feature_domain_detection:
+  price:
+    tokens:
+      - "price"
+      - "transaction"
+
+  crime:
+    tokens:
+      - "crime"
+      - "offence"
+      - "offense"
+
+  affordability:
+    tokens:
+      - "affordability"
+      - "income"
+      - "earning"
+      - "salary"
+      - "wage"
+
+  deprivation:
+    tokens:
+      - "deprivation"
+      - "imd"
+
+  geography:
+    tokens:
+      - "lsoa"
+      - "msoa"
+      - "postcode"
+      - "district"
+      - "authority"
+      - "region"
+      - "country"
+      - "latitude"
+      - "longitude"
+
+  temporal:
+    tokens:
+      - "date"
+      - "time"
+      - "timestamp"
+      - "month"
+      - "year"
+      - "period"
+
+  housing:
+    tokens:
+      - "property"
+      - "house"
+      - "flat"
+      - "tenure"
+      - "dwelling"
+      - "transaction"
+
+  growth:
+    tokens:
+      - "growth"
+
+  investment:
+    tokens:
+      - "investment"
+
+task_requirements:
+  price_prediction:
+    required_domains:
+      - "price"
+      - "geography"
+      - "temporal"
+
+    recommended_domains:
+      - "crime"
+      - "affordability"
+      - "deprivation"
+      - "housing"
+
+    target_requirement:
+      target_type: "future_price"
+      requires_future_horizon: true
+
+  growth_prediction:
+    required_domains:
+      - "price"
+      - "geography"
+      - "temporal"
+
+    recommended_domains:
+      - "crime"
+      - "affordability"
+      - "deprivation"
+      - "housing"
+
+    target_requirement:
+      target_type: "future_price_growth"
+      requires_future_horizon: true
+
+  area_recommendation:
+    required_domains:
+      - "geography"
+
+    recommended_domains:
+      - "price"
+      - "crime"
+      - "affordability"
+      - "deprivation"
+      - "housing"
+      - "growth"
+      - "investment"
+
+    target_requirement:
+      target_type: "ranking_or_preference_relevance"
+      requires_future_horizon: false
+
+  forecasting:
+    required_domains:
+      - "price"
+      - "geography"
+      - "temporal"
+
+    recommended_domains:
+      - "crime"
+      - "affordability"
+      - "housing"
+
+    target_requirement:
+      target_type: "future_time_series_value"
+      requires_future_horizon: true
+
+  investment_opportunity_prediction:
+    required_domains:
+      - "price"
+      - "geography"
+      - "temporal"
+
+    recommended_domains:
+      - "crime"
+      - "affordability"
+      - "deprivation"
+      - "housing"
+      - "growth"
+
+    target_requirement:
+      target_type: "future_investment_outcome"
+      requires_future_horizon: true
+
+gap_severity:
+  blocking:
+    - "missing_required_domain"
+    - "no_temporal_history"
+    - "no_geography_entity"
+    - "no_price_signal"
+
+  high:
+    - "insufficient_history"
+    - "insufficient_repeated_entity_coverage"
+    - "future_target_not_defined"
+    - "unstable_time_frequency"
+    - "derived_score_target_risk"
+
+  medium:
+    - "recommended_domain_missing"
+    - "high_missingness"
+    - "limited_geography_coverage"
+
+  low:
+    - "moderate_missingness"
+    - "optional_enrichment_missing"

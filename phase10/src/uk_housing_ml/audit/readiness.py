@@ -10,6 +10,10 @@ from typing import Any
 import pandas as pd
 import yaml
 
+from uk_housing_ml.io.csv_reader import (
+    read_csv_sample_with_row_count,
+)
+
 
 SUPPORTED_EXTENSIONS = {".parquet", ".csv"}
 
@@ -153,26 +157,15 @@ def _read_dataset_sample(
         return dataframe, row_count
 
     if extension == ".csv":
-        dataframe = pd.read_csv(
+        (
+            dataframe,
+            row_count,
+            _encoding,
+        ) = read_csv_sample_with_row_count(
             dataset_path,
-            nrows=sample_rows,
+            sample_rows=sample_rows,
             low_memory=False,
         )
-
-        row_count = None
-
-        try:
-            with dataset_path.open(
-                "r",
-                encoding="utf-8",
-                errors="ignore",
-            ) as file:
-                row_count = max(
-                    sum(1 for _ in file) - 1,
-                    0,
-                )
-        except OSError:
-            row_count = None
 
         return dataframe, row_count
 
@@ -213,20 +206,29 @@ def _detect_datetime_columns(
         {},
     )
 
-    explicit_tokens = datetime_config.get(
-        "explicit_name_tokens",
-        [],
-    )
+    name_tokens = [
+        str(token).lower()
+        for token in datetime_config.get(
+            "name_tokens",
+            [
+                "date",
+                "time",
+                "timestamp",
+                "month",
+                "year",
+            ],
+        )
+    ]
 
-    minimum_parse_success_ratio = float(
+    minimum_parse_ratio = float(
         datetime_config.get(
             "minimum_parse_success_ratio",
-            0.90,
+            0.80,
         )
     )
 
-    detected_columns: list[str] = []
-    ranges: dict[
+    datetime_columns: list[str] = []
+    datetime_ranges: dict[
         str,
         dict[str, str | None],
     ] = {}
@@ -234,225 +236,272 @@ def _detect_datetime_columns(
     for column in dataframe.columns:
         series = dataframe[column]
 
-        normalised_name = _normalise_column_name(
-            column
-        )
-
         is_native_datetime = (
             pd.api.types.is_datetime64_any_dtype(
                 series
             )
         )
 
-        name_suggests_datetime = any(
-            str(token).lower() in normalised_name
-            for token in explicit_tokens
+        name_matches = _contains_any_token(
+            str(column),
+            name_tokens,
         )
 
-        parsed_series: pd.Series | None = None
-
-        if is_native_datetime:
-            parsed_series = pd.to_datetime(
-                series,
-                errors="coerce",
-            )
-
-        elif name_suggests_datetime:
-            non_null_series = series.dropna()
-
-            if len(non_null_series) == 0:
-                continue
-
-            parsed_candidate = pd.to_datetime(
-                non_null_series,
-                errors="coerce",
-            )
-
-            parse_success_ratio = float(
-                parsed_candidate.notna().mean()
-            )
-
-            if (
-                parse_success_ratio
-                >= minimum_parse_success_ratio
-            ):
-                parsed_series = pd.to_datetime(
-                    series,
-                    errors="coerce",
-                )
-
-        if parsed_series is None:
+        if not is_native_datetime and not name_matches:
             continue
 
-        detected_columns.append(
+        if is_native_datetime:
+            parsed = pd.to_datetime(
+                series,
+                errors="coerce",
+                utc=True,
+            )
+        else:
+            non_null_count = int(
+                series.notna().sum()
+            )
+
+            if non_null_count == 0:
+                continue
+
+            parsed = pd.to_datetime(
+                series,
+                errors="coerce",
+                utc=True,
+            )
+
+            parse_ratio = (
+                float(
+                    parsed.notna().sum()
+                )
+                / non_null_count
+            )
+
+            if parse_ratio < minimum_parse_ratio:
+                continue
+
+        datetime_columns.append(
             str(column)
         )
 
-        valid_values = parsed_series.dropna()
+        valid_values = parsed.dropna()
 
-        if valid_values.empty:
-            ranges[str(column)] = {
-                "min": None,
-                "max": None,
-            }
-        else:
-            ranges[str(column)] = {
-                "min": _safe_json_value(
-                    valid_values.min()
-                ),
-                "max": _safe_json_value(
-                    valid_values.max()
-                ),
-            }
+        minimum_value: str | None = None
+        maximum_value: str | None = None
+
+        if not valid_values.empty:
+            minimum_value = (
+                valid_values.min().isoformat()
+            )
+
+            maximum_value = (
+                valid_values.max().isoformat()
+            )
+
+        datetime_ranges[
+            str(column)
+        ] = {
+            "minimum": minimum_value,
+            "maximum": maximum_value,
+        }
 
     return (
-        sorted(detected_columns),
-        ranges,
+        sorted(datetime_columns),
+        datetime_ranges,
     )
 
 
 def _detect_geography_columns(
-    dataframe: pd.DataFrame,
+    columns: list[str],
     config: dict[str, Any],
 ) -> list[str]:
-    geography_config = config.get(
-        "geography_detection",
-        {},
-    )
-
-    exact_columns = {
-        _normalise_column_name(column)
-        for column in geography_config.get(
-            "exact_columns",
-            [],
+    geography_tokens = [
+        str(token).lower()
+        for token in config.get(
+            "geography_detection",
+            {},
+        ).get(
+            "tokens",
+            [
+                "lsoa",
+                "msoa",
+                "postcode",
+                "district",
+                "region",
+                "latitude",
+                "longitude",
+            ],
         )
-    }
+    ]
 
-    name_tokens = geography_config.get(
-        "name_tokens",
-        [],
-    )
-
-    detected: list[str] = []
-
-    for column in dataframe.columns:
-        normalised = _normalise_column_name(
-            column
-        )
-
-        if normalised in exact_columns:
-            detected.append(str(column))
-            continue
-
+    return sorted(
+        str(column)
+        for column in columns
         if _contains_any_token(
             str(column),
-            name_tokens,
-        ):
-            detected.append(str(column))
-
-    return sorted(set(detected))
+            geography_tokens,
+        )
+    )
 
 
-def _detect_candidate_targets(
-    dataframe: pd.DataFrame,
+def _detect_candidate_target_columns(
+    columns: list[str],
     config: dict[str, Any],
 ) -> list[str]:
-    target_config = config.get(
-        "candidate_target_detection",
-        {},
-    )
-
-    exact_columns = {
-        _normalise_column_name(column)
-        for column in target_config.get(
-            "exact_columns",
-            [],
+    target_tokens = [
+        str(token).lower()
+        for token in config.get(
+            "target_detection",
+            {},
+        ).get(
+            "tokens",
+            [
+                "price",
+                "growth",
+                "investment",
+                "target",
+                "label",
+                "outcome",
+            ],
         )
-    }
+    ]
 
-    name_tokens = target_config.get(
-        "name_tokens",
-        [],
-    )
-
-    detected: list[str] = []
-
-    for column in dataframe.columns:
-        normalised = _normalise_column_name(
-            column
-        )
-
-        if normalised in exact_columns:
-            detected.append(str(column))
-            continue
-
+    return sorted(
+        str(column)
+        for column in columns
         if _contains_any_token(
             str(column),
-            name_tokens,
-        ):
-            detected.append(str(column))
-
-    return sorted(set(detected))
+            target_tokens,
+        )
+    )
 
 
-def _detect_leakage_risks(
-    dataframe: pd.DataFrame,
+def _detect_derived_score_columns(
+    columns: list[str],
     config: dict[str, Any],
-) -> tuple[list[str], list[str]]:
-    leakage_config = config.get(
-        "leakage_detection",
-        {},
+) -> list[str]:
+    derived_tokens = [
+        str(token).lower()
+        for token in config.get(
+            "derived_score_detection",
+            {},
+        ).get(
+            "tokens",
+            [
+                "score",
+                "rank",
+                "index",
+                "rating",
+                "percentile",
+            ],
+        )
+    ]
+
+    return sorted(
+        str(column)
+        for column in columns
+        if _contains_any_token(
+            str(column),
+            derived_tokens,
+        )
     )
 
-    high_risk_exact_columns = {
-        _normalise_column_name(column)
-        for column in leakage_config.get(
-            "high_risk_exact_columns",
-            [],
+
+def _detect_leakage_risk_columns(
+    columns: list[str],
+    candidate_target_columns: list[str],
+    derived_score_columns: list[str],
+    config: dict[str, Any],
+) -> list[str]:
+    leakage_tokens = [
+        str(token).lower()
+        for token in config.get(
+            "leakage_detection",
+            {},
+        ).get(
+            "tokens",
+            [
+                "future",
+                "next",
+                "target",
+                "label",
+                "prediction",
+                "predicted",
+                "forecast",
+                "rank",
+                "score",
+                "index",
+            ],
+        )
+    ]
+
+    detected = {
+        str(column)
+        for column in columns
+        if _contains_any_token(
+            str(column),
+            leakage_tokens,
         )
     }
 
-    high_risk_name_tokens = (
-        leakage_config.get(
-            "high_risk_name_tokens",
-            [],
+    detected.update(
+        candidate_target_columns
+    )
+
+    detected.update(
+        derived_score_columns
+    )
+
+    return sorted(detected)
+
+
+def _detect_numeric_columns(
+    dataframe: pd.DataFrame,
+) -> list[str]:
+    return sorted(
+        str(column)
+        for column in dataframe.select_dtypes(
+            include="number"
+        ).columns
+    )
+
+
+def _detect_categorical_columns(
+    dataframe: pd.DataFrame,
+) -> list[str]:
+    numeric_columns = set(
+        _detect_numeric_columns(
+            dataframe
         )
     )
 
-    derived_score_tokens = (
-        leakage_config.get(
-            "derived_score_tokens",
-            [],
-        )
+    return sorted(
+        str(column)
+        for column in dataframe.columns
+        if str(column) not in numeric_columns
     )
 
-    high_risk: list[str] = []
-    derived_scores: list[str] = []
 
-    for column in dataframe.columns:
-        normalised = _normalise_column_name(
-            column
-        )
+def _calculate_missingness_percent(
+    dataframe: pd.DataFrame,
+) -> dict[str, float]:
+    if dataframe.empty:
+        return {
+            str(column): 0.0
+            for column in dataframe.columns
+        }
 
-        if normalised in high_risk_exact_columns:
-            high_risk.append(str(column))
-
-        elif _contains_any_token(
-            str(column),
-            high_risk_name_tokens,
-        ):
-            high_risk.append(str(column))
-
-        if _contains_any_token(
-            str(column),
-            derived_score_tokens,
-        ):
-            derived_scores.append(str(column))
-
-    return (
-        sorted(set(high_risk)),
-        sorted(set(derived_scores)),
+    missingness = (
+        dataframe.isna().mean() * 100.0
     )
+
+    return {
+        str(column): round(
+            float(value),
+            6,
+        )
+        for column, value in missingness.items()
+    }
 
 
 def profile_dataset(
@@ -460,15 +509,13 @@ def profile_dataset(
     project_root: Path,
     config: dict[str, Any],
 ) -> DatasetProfile:
-    profiling_config = config.get(
-        "profiling",
-        {},
-    )
-
     sample_rows = int(
-        profiling_config.get(
+        config.get(
+            "profiling",
+            {},
+        ).get(
             "sample_rows",
-            50000,
+            100000,
         )
     )
 
@@ -486,6 +533,11 @@ def profile_dataset(
             )
         )
 
+        columns = [
+            str(column)
+            for column in dataframe.columns
+        ]
+
         (
             datetime_columns,
             datetime_ranges,
@@ -496,53 +548,49 @@ def profile_dataset(
 
         geography_columns = (
             _detect_geography_columns(
-                dataframe=dataframe,
+                columns=columns,
                 config=config,
             )
         )
 
         candidate_target_columns = (
-            _detect_candidate_targets(
-                dataframe=dataframe,
+            _detect_candidate_target_columns(
+                columns=columns,
                 config=config,
             )
         )
 
-        (
-            leakage_risk_columns,
-            derived_score_columns,
-        ) = _detect_leakage_risks(
-            dataframe=dataframe,
-            config=config,
+        derived_score_columns = (
+            _detect_derived_score_columns(
+                columns=columns,
+                config=config,
+            )
         )
 
-        numeric_columns = [
-            str(column)
-            for column
-            in dataframe.select_dtypes(
-                include="number"
-            ).columns
-        ]
-
-        categorical_columns = [
-            str(column)
-            for column in dataframe.columns
-            if str(column) not in numeric_columns
-            and str(column) not in datetime_columns
-        ]
-
-        missingness_percent = {
-            str(column): round(
-                float(
-                    dataframe[column]
-                    .isna()
-                    .mean()
-                    * 100
+        leakage_risk_columns = (
+            _detect_leakage_risk_columns(
+                columns=columns,
+                candidate_target_columns=(
+                    candidate_target_columns
                 ),
-                4,
+                derived_score_columns=(
+                    derived_score_columns
+                ),
+                config=config,
             )
-            for column in dataframe.columns
-        }
+        )
+
+        numeric_columns = (
+            _detect_numeric_columns(
+                dataframe
+            )
+        )
+
+        categorical_columns = (
+            _detect_categorical_columns(
+                dataframe
+            )
+        )
 
         duplicate_row_count = int(
             dataframe.duplicated().sum()
@@ -556,23 +604,24 @@ def profile_dataset(
                 dataset_path.stat().st_size
             ),
             row_count=row_count,
-            column_count=len(
-                dataframe.columns
-            ),
-            columns=[
-                str(column)
-                for column in dataframe.columns
-            ],
+            column_count=len(columns),
+            columns=columns,
             dtypes={
                 str(column): str(dtype)
                 for column, dtype
                 in dataframe.dtypes.items()
             },
             missingness_percent=(
-                missingness_percent
+                _calculate_missingness_percent(
+                    dataframe
+                )
             ),
-            datetime_columns=datetime_columns,
-            datetime_ranges=datetime_ranges,
+            datetime_columns=(
+                datetime_columns
+            ),
+            datetime_ranges=(
+                datetime_ranges
+            ),
             geography_columns=(
                 geography_columns
             ),
@@ -585,10 +634,10 @@ def profile_dataset(
             derived_score_columns=(
                 derived_score_columns
             ),
-            numeric_columns=sorted(
+            numeric_columns=(
                 numeric_columns
             ),
-            categorical_columns=sorted(
+            categorical_columns=(
                 categorical_columns
             ),
             duplicate_row_count=(
@@ -621,111 +670,100 @@ def profile_dataset(
             categorical_columns=[],
             duplicate_row_count=None,
             profile_status="failed",
-            profile_error=(
-                f"{type(exc).__name__}: {exc}"
-            ),
+            profile_error=str(exc),
         )
-
-
-def _profile_contains_column_token(
-    profile: DatasetProfile,
-    tokens: list[str],
-) -> bool:
-    return any(
-        _contains_any_token(
-            column,
-            tokens,
-        )
-        for column in profile.columns
-    )
-
-
-def _detect_repeated_observation_signal(
-    profiles: list[DatasetProfile],
-) -> bool:
-    for profile in profiles:
-        if (
-            profile.datetime_columns
-            and profile.geography_columns
-        ):
-            return True
-
-    return False
 
 
 def build_observed_signals(
     profiles: list[DatasetProfile],
     config: dict[str, Any],
-) -> dict[str, bool]:
+) -> dict[str, Any]:
     successful_profiles = [
         profile
         for profile in profiles
         if profile.profile_status == "success"
     ]
 
+    all_columns = {
+        str(column).lower()
+        for profile in successful_profiles
+        for column in profile.columns
+    }
+
+    all_numeric_columns = {
+        str(column).lower()
+        for profile in successful_profiles
+        for column in profile.numeric_columns
+    }
+
+    all_derived_columns = {
+        str(column).lower()
+        for profile in successful_profiles
+        for column in profile.derived_score_columns
+    }
+
     signal_config = config.get(
         "signal_detection",
         {},
     )
 
-    price_tokens = (
-        signal_config
-        .get("price", {})
-        .get(
-            "column_name_tokens",
-            ["price"],
+    price_tokens = [
+        str(token).lower()
+        for token in signal_config.get(
+            "price_tokens",
+            [
+                "price",
+                "transaction",
+            ],
         )
-    )
+    ]
 
-    growth_tokens = (
-        signal_config
-        .get("growth", {})
-        .get(
-            "column_name_tokens",
-            ["growth"],
+    growth_tokens = [
+        str(token).lower()
+        for token in signal_config.get(
+            "growth_tokens",
+            [
+                "growth",
+                "change",
+                "appreciation",
+            ],
         )
-    )
+    ]
 
-    investment_tokens = (
-        signal_config
-        .get("investment", {})
-        .get(
-            "column_name_tokens",
-            ["investment"],
+    investment_tokens = [
+        str(token).lower()
+        for token in signal_config.get(
+            "investment_tokens",
+            [
+                "investment",
+                "yield",
+                "opportunity",
+            ],
         )
-    )
-
-    minimum_numeric_feature_columns = int(
-        signal_config
-        .get("feature", {})
-        .get(
-            "minimum_numeric_feature_columns",
-            2,
-        )
-    )
+    ]
 
     has_price_signal = any(
-        _profile_contains_column_token(
-            profile,
-            price_tokens,
+        any(
+            token in column
+            for token in price_tokens
         )
-        for profile in successful_profiles
+        for column in all_columns
     )
 
     has_growth_signal = any(
-        _profile_contains_column_token(
-            profile,
-            growth_tokens,
+        any(
+            token in column
+            for token in growth_tokens
         )
-        for profile in successful_profiles
+        for column in all_columns
     )
 
     has_investment_signal = any(
-        _profile_contains_column_token(
-            profile,
-            investment_tokens,
+        any(
+            token in column
+            for token in investment_tokens
         )
-        for profile in successful_profiles
+        for column in all_columns
     )
 
     has_geography_signal = any(
@@ -738,41 +776,19 @@ def build_observed_signals(
         for profile in successful_profiles
     )
 
-    has_candidate_targets = any(
-        bool(profile.candidate_target_columns)
-        for profile in successful_profiles
-    )
-
-    has_feature_signal = any(
-        len(profile.numeric_columns)
-        >= minimum_numeric_feature_columns
-        for profile in successful_profiles
+    has_feature_signal = bool(
+        all_numeric_columns
+        or all_derived_columns
     )
 
     has_repeated_observation_signal = (
-        _detect_repeated_observation_signal(
-            successful_profiles
-        )
-    )
-
-    has_leakage_risks_to_review = any(
-        bool(profile.leakage_risk_columns)
-        or bool(profile.derived_score_columns)
-        for profile in successful_profiles
+        has_temporal_signal
+        and has_geography_signal
     )
 
     return {
-        "has_datasets": (
-            len(successful_profiles) > 0
-        ),
-        "has_temporal_signal": (
-            has_temporal_signal
-        ),
-        "has_geography_signal": (
-            has_geography_signal
-        ),
-        "has_candidate_targets": (
-            has_candidate_targets
+        "has_datasets": bool(
+            successful_profiles
         ),
         "has_price_signal": (
             has_price_signal
@@ -783,14 +799,17 @@ def build_observed_signals(
         "has_investment_signal": (
             has_investment_signal
         ),
+        "has_geography_signal": (
+            has_geography_signal
+        ),
+        "has_temporal_signal": (
+            has_temporal_signal
+        ),
         "has_feature_signal": (
             has_feature_signal
         ),
         "has_repeated_observation_signal": (
             has_repeated_observation_signal
-        ),
-        "has_leakage_risks_to_review": (
-            has_leakage_risks_to_review
         ),
     }
 
@@ -798,186 +817,319 @@ def build_observed_signals(
 def evaluate_task_requirements(
     task_name: str,
     task_config: dict[str, Any],
-    observed_signals: dict[str, bool],
+    observed_signals: dict[str, Any],
     signal_to_flag_mapping: dict[str, str],
     control_registry: dict[str, Any],
 ) -> dict[str, Any]:
-    required_signals = task_config.get(
-        "required_signals",
-        [],
-    )
+    required_signals = [
+        str(signal)
+        for signal in task_config.get(
+            "required_signals",
+            [],
+        )
+    ]
 
-    required_controls = task_config.get(
-        "required_controls",
-        [],
-    )
+    required_controls = [
+        str(control)
+        for control in task_config.get(
+            "required_controls",
+            [],
+        )
+    ]
 
     met_signals: list[str] = []
     missing_signals: list[str] = []
 
-    for signal_name in required_signals:
-        flag_name = signal_to_flag_mapping.get(
-            signal_name
-        )
-
-        if flag_name is None:
-            raise ValueError(
-                "No readiness flag mapping exists for "
-                f"signal '{signal_name}' required by "
-                f"task '{task_name}'."
+    for signal in required_signals:
+        if signal not in signal_to_flag_mapping:
+            raise KeyError(
+                "Unknown signal requirement "
+                f"'{signal}' for task "
+                f"'{task_name}'."
             )
 
-        signal_is_present = bool(
+        observed_flag = (
+            signal_to_flag_mapping[
+                signal
+            ]
+        )
+
+        if bool(
             observed_signals.get(
-                flag_name,
+                observed_flag,
                 False,
             )
-        )
-
-        if signal_is_present:
-            met_signals.append(signal_name)
+        ):
+            met_signals.append(signal)
         else:
-            missing_signals.append(signal_name)
+            missing_signals.append(signal)
 
     met_controls: list[str] = []
     missing_controls: list[str] = []
 
-    control_details: dict[str, Any] = {}
-
-    for control_name in required_controls:
-        control_config = control_registry.get(
-            control_name
-        )
-
-        if control_config is None:
-            raise ValueError(
-                "No control registry entry exists for "
-                f"control '{control_name}' required by "
-                f"task '{task_name}'."
+    for control in required_controls:
+        if control not in control_registry:
+            raise KeyError(
+                "Unknown engineering control "
+                f"'{control}' for task "
+                f"'{task_name}'."
             )
 
-        satisfied = bool(
-            control_config.get(
+        control_definition = (
+            control_registry[
+                control
+            ]
+        )
+
+        if not isinstance(
+            control_definition,
+            dict,
+        ):
+            raise ValueError(
+                "Engineering control "
+                f"'{control}' must be "
+                "configured as a mapping."
+            )
+
+        if bool(
+            control_definition.get(
                 "satisfied",
                 False,
             )
-        )
-
-        description = str(
-            control_config.get(
-                "description",
-                "",
-            )
-        )
-
-        control_details[control_name] = {
-            "description": description,
-            "satisfied": satisfied,
-        }
-
-        if satisfied:
-            met_controls.append(control_name)
+        ):
+            met_controls.append(control)
         else:
-            missing_controls.append(control_name)
+            missing_controls.append(
+                control
+            )
 
     if missing_signals:
         status = "not_ready"
 
+        reason = (
+            "Required data signals are missing: "
+            + ", ".join(
+                missing_signals
+            )
+            + "."
+        )
+
     elif missing_controls:
         status = "conditional_go"
+
+        reason = (
+            "Required data signals are present, "
+            "but engineering controls remain "
+            "incomplete: "
+            + ", ".join(
+                missing_controls
+            )
+            + "."
+        )
 
     else:
         status = "go"
 
-    if status == "not_ready":
         reason = (
-            "Fundamental data signals are missing: "
-            + ", ".join(missing_signals)
-            + "."
-        )
-
-    elif status == "conditional_go":
-        reason = (
-            "Required data signals are present, but "
-            "engineering controls remain incomplete: "
-            + ", ".join(missing_controls)
-            + "."
-        )
-
-    else:
-        reason = (
-            "All configured data signals and engineering "
-            "controls are satisfied."
+            "Required data signals and "
+            "engineering controls are satisfied."
         )
 
     return {
+        "task": task_name,
         "status": status,
+        "required_signals": (
+            required_signals
+        ),
+        "met_signals": (
+            met_signals
+        ),
+        "missing_signals": (
+            missing_signals
+        ),
+        "required_controls": (
+            required_controls
+        ),
+        "met_controls": (
+            met_controls
+        ),
+        "missing_controls": (
+            missing_controls
+        ),
         "reason": reason,
-        "required_signals": required_signals,
-        "met_signals": met_signals,
-        "missing_signals": missing_signals,
-        "required_controls": required_controls,
-        "met_controls": met_controls,
-        "missing_controls": missing_controls,
-        "control_details": control_details,
     }
-
-
-def build_task_assessment(
-    config: dict[str, Any],
-    observed_signals: dict[str, bool],
-) -> dict[str, Any]:
-    readiness_rules = config.get(
-        "readiness_rules",
-        {},
-    )
-
-    signal_to_flag_mapping = (
-        readiness_rules.get(
-            "signal_to_flag_mapping",
-            {},
-        )
-    )
-
-    task_requirements = (
-        readiness_rules.get(
-            "task_requirements",
-            {},
-        )
-    )
-
-    control_registry = config.get(
-        "control_registry",
-        {},
-    )
-
-    assessments: dict[str, Any] = {}
-
-    for task_name, task_config in (
-        task_requirements.items()
-    ):
-        assessments[task_name] = (
-            evaluate_task_requirements(
-                task_name=task_name,
-                task_config=task_config,
-                observed_signals=(
-                    observed_signals
-                ),
-                signal_to_flag_mapping=(
-                    signal_to_flag_mapping
-                ),
-                control_registry=(
-                    control_registry
-                ),
-            )
-        )
-
-    return assessments
 
 
 def build_readiness_summary(
     profiles: list[DatasetProfile],
     config: dict[str, Any],
+) -> dict[str, Any]:
+    observed_signals = (
+        build_observed_signals(
+            profiles=profiles,
+            config=config,
+        )
+    )
+
+    readiness_config = config.get(
+        "readiness",
+        {},
+    )
+
+    if not isinstance(
+        readiness_config,
+        dict,
+    ):
+        readiness_config = {}
+
+    signal_to_flag_mapping = (
+        readiness_config.get(
+            "signal_to_flag_mapping"
+        )
+    )
+
+    if signal_to_flag_mapping is None:
+        signal_to_flag_mapping = config.get(
+            "signal_to_flag_mapping",
+            {},
+        )
+
+    control_registry = (
+        readiness_config.get(
+            "control_registry"
+        )
+    )
+
+    if control_registry is None:
+        control_registry = config.get(
+            "control_registry",
+            {},
+        )
+
+    task_requirements = (
+        readiness_config.get(
+            "task_requirements"
+        )
+    )
+
+    if task_requirements is None:
+        task_requirements = config.get(
+            "task_requirements",
+            {},
+        )
+
+    if not isinstance(
+        signal_to_flag_mapping,
+        dict,
+    ):
+        raise ValueError(
+            "signal_to_flag_mapping must be "
+            "a mapping."
+        )
+
+    if not isinstance(
+        control_registry,
+        dict,
+    ):
+        raise ValueError(
+            "control_registry must be "
+            "a mapping."
+        )
+
+    if not isinstance(
+        task_requirements,
+        dict,
+    ):
+        raise ValueError(
+            "task_requirements must be "
+            "a mapping."
+        )
+
+    if not task_requirements:
+        raise ValueError(
+            "No task requirements were found. "
+            "Expected task_requirements either "
+            "under readiness.task_requirements "
+            "or at the top level of the "
+            "readiness audit configuration."
+        )
+
+    if not signal_to_flag_mapping:
+        raise ValueError(
+            "No signal-to-flag mapping was found. "
+            "Expected signal_to_flag_mapping "
+            "either under readiness or at the "
+            "top level of the readiness audit "
+            "configuration."
+        )
+
+    task_assessments = {
+        str(task_name): (
+            evaluate_task_requirements(
+                task_name=str(
+                    task_name
+                ),
+                task_config=(
+                    task_config
+                ),
+                observed_signals=(
+                    observed_signals
+                ),
+                signal_to_flag_mapping={
+                    str(key): str(value)
+                    for key, value
+                    in signal_to_flag_mapping.items()
+                },
+                control_registry=(
+                    control_registry
+                ),
+            )
+        )
+        for task_name, task_config
+        in task_requirements.items()
+    }
+
+    return {
+        "observed_signals": (
+            observed_signals
+        ),
+        "task_assessments": (
+            task_assessments
+        ),
+    }
+
+
+def determine_overall_decision(
+    task_assessments: dict[str, Any],
+) -> str:
+    if not task_assessments:
+        return "NO_GO"
+
+    statuses = {
+        str(
+            assessment.get(
+                "status",
+                "not_ready",
+            )
+        )
+        for assessment
+        in task_assessments.values()
+    }
+
+    if statuses == {"go"}:
+        return "GO"
+
+    if "conditional_go" in statuses:
+        return "CONDITIONAL_GO"
+
+    if "go" in statuses:
+        return "CONDITIONAL_GO"
+
+    return "NO_GO"
+
+
+def _build_summary(
+    profiles: list[DatasetProfile],
 ) -> dict[str, Any]:
     successful_profiles = [
         profile
@@ -991,90 +1143,28 @@ def build_readiness_summary(
         if profile.profile_status == "failed"
     ]
 
-    temporal_profiles = [
-        profile
+    temporal_dataset_count = sum(
+        1
         for profile in successful_profiles
         if profile.datetime_columns
-    ]
-
-    geography_profiles = [
-        profile
-        for profile in successful_profiles
-        if profile.geography_columns
-    ]
-
-    target_profiles = [
-        profile
-        for profile in successful_profiles
-        if profile.candidate_target_columns
-    ]
-
-    leakage_profiles = [
-        profile
-        for profile in successful_profiles
-        if profile.leakage_risk_columns
-        or profile.derived_score_columns
-    ]
-
-    price_signal_profiles = [
-        profile
-        for profile in successful_profiles
-        if _profile_contains_column_token(
-            profile,
-            config.get(
-                "signal_detection",
-                {},
-            )
-            .get("price", {})
-            .get(
-                "column_name_tokens",
-                ["price"],
-            ),
-        )
-    ]
-
-    growth_signal_profiles = [
-        profile
-        for profile in successful_profiles
-        if _profile_contains_column_token(
-            profile,
-            config.get(
-                "signal_detection",
-                {},
-            )
-            .get("growth", {})
-            .get(
-                "column_name_tokens",
-                ["growth"],
-            ),
-        )
-    ]
-
-    investment_signal_profiles = [
-        profile
-        for profile in successful_profiles
-        if _profile_contains_column_token(
-            profile,
-            config.get(
-                "signal_detection",
-                {},
-            )
-            .get("investment", {})
-            .get(
-                "column_name_tokens",
-                ["investment"],
-            ),
-        )
-    ]
-
-    observed_signals = build_observed_signals(
-        profiles=profiles,
-        config=config,
     )
 
-    task_assessment = build_task_assessment(
-        config=config,
-        observed_signals=observed_signals,
+    geography_dataset_count = sum(
+        1
+        for profile in successful_profiles
+        if profile.geography_columns
+    )
+
+    candidate_target_dataset_count = sum(
+        1
+        for profile in successful_profiles
+        if profile.candidate_target_columns
+    )
+
+    leakage_review_dataset_count = sum(
+        1
+        for profile in successful_profiles
+        if profile.leakage_risk_columns
     )
 
     return {
@@ -1085,69 +1175,60 @@ def build_readiness_summary(
         "failed_dataset_count": len(
             failed_profiles
         ),
-        "temporal_dataset_count": len(
-            temporal_profiles
+        "temporal_dataset_count": (
+            temporal_dataset_count
         ),
-        "geography_dataset_count": len(
-            geography_profiles
+        "geography_dataset_count": (
+            geography_dataset_count
         ),
-        "candidate_target_dataset_count": len(
-            target_profiles
+        "candidate_target_dataset_count": (
+            candidate_target_dataset_count
         ),
-        "leakage_review_dataset_count": len(
-            leakage_profiles
+        "leakage_review_dataset_count": (
+            leakage_review_dataset_count
         ),
-        "price_signal_dataset_count": len(
-            price_signal_profiles
-        ),
-        "growth_signal_dataset_count": len(
-            growth_signal_profiles
-        ),
-        "investment_signal_dataset_count": len(
-            investment_signal_profiles
-        ),
-        "readiness_flags": observed_signals,
-        "task_assessment": task_assessment,
     }
 
 
-def determine_overall_decision(
-    summary: dict[str, Any],
-) -> str:
-    task_assessment = summary.get(
-        "task_assessment",
-        {},
-    )
+def _build_leakage_review(
+    profiles: list[DatasetProfile],
+) -> list[dict[str, Any]]:
+    review_items: list[
+        dict[str, Any]
+    ] = []
 
-    if not task_assessment:
-        return "NO_GO"
+    for profile in profiles:
+        if profile.profile_status != "success":
+            continue
 
-    statuses = {
-        assessment.get(
-            "status",
-            "not_ready",
-        )
-        for assessment
-        in task_assessment.values()
-    }
+        for column in (
+            profile.leakage_risk_columns
+        ):
+            review_items.append(
+                {
+                    "dataset_path": (
+                        profile.path
+                    ),
+                    "column": column,
+                    "reason": (
+                        "Column name or derived "
+                        "analytical role indicates "
+                        "potential target leakage "
+                        "and requires lineage review."
+                    ),
+                }
+            )
 
-    if statuses == {"go"}:
-        return "GO"
-
-    if "go" in statuses:
-        return "CONDITIONAL_GO"
-
-    if "conditional_go" in statuses:
-        return "CONDITIONAL_GO"
-
-    return "NO_GO"
+    return review_items
 
 
 def build_audit_report(
     project_root: Path,
     config_path: Path,
 ) -> dict[str, Any]:
-    config = load_config(config_path)
+    config = load_config(
+        config_path
+    )
 
     dataset_paths = discover_datasets(
         project_root=project_root,
@@ -1163,60 +1244,68 @@ def build_audit_report(
         for dataset_path in dataset_paths
     ]
 
-    summary = build_readiness_summary(
-        profiles=profiles,
-        config=config,
+    readiness_summary = (
+        build_readiness_summary(
+            profiles=profiles,
+            config=config,
+        )
+    )
+
+    task_assessments = (
+        readiness_summary[
+            "task_assessments"
+        ]
     )
 
     overall_decision = (
         determine_overall_decision(
-            summary
+            task_assessments
         )
     )
 
     return {
         "audit_metadata": {
-            "project_name": config.get(
-                "project",
-                {},
-            ).get(
-                "name",
-                "UK Housing Intelligence Platform",
+            "project": (
+                "UK Housing Intelligence Platform"
             ),
-            "phase": config.get(
-                "project",
-                {},
-            ).get(
-                "phase",
-                10,
+            "phase": 10,
+            "audit": (
+                "ML Readiness Audit"
             ),
-            "audit_name": config.get(
-                "project",
-                {},
-            ).get(
-                "audit_name",
-                "ML Readiness Audit",
-            ),
-            "generated_at_utc": datetime.now(
-                timezone.utc
-            ).isoformat(),
-            "project_root": str(
-                project_root.resolve()
+            "generated_at_utc": (
+                datetime.now(
+                    timezone.utc
+                ).isoformat()
             ),
             "config_path": str(
-                config_path
-                .resolve()
-                .relative_to(
+                config_path.resolve().relative_to(
                     project_root.resolve()
                 )
             ),
         },
-        "overall_decision": overall_decision,
-        "summary": summary,
+        "overall_decision": (
+            overall_decision
+        ),
+        "summary": _build_summary(
+            profiles
+        ),
+        "observed_signals": (
+            readiness_summary[
+                "observed_signals"
+            ]
+        ),
+        "task_assessments": (
+            task_assessments
+        ),
         "datasets": [
             asdict(profile)
             for profile in profiles
         ],
+        "leakage_review": (
+            _build_leakage_review(
+                profiles
+            )
+        ),
     }
 
 
@@ -1229,37 +1318,16 @@ def write_json_report(
         exist_ok=True,
     )
 
-    with output_path.open(
-        "w",
-        encoding="utf-8",
-    ) as file:
-        json.dump(
+    output_path.write_text(
+        json.dumps(
             report,
-            file,
             indent=2,
             ensure_ascii=False,
+            default=_safe_json_value,
         )
-
-
-def _markdown_escape(
-    value: Any,
-) -> str:
-    text = str(value)
-
-    return (
-        text
-        .replace("|", "\\|")
-        .replace("\n", " ")
+        + "\n",
+        encoding="utf-8",
     )
-
-
-def _format_items(
-    items: list[str],
-) -> str:
-    if not items:
-        return "None"
-
-    return ", ".join(items)
 
 
 def write_markdown_report(
@@ -1271,15 +1339,24 @@ def write_markdown_report(
         exist_ok=True,
     )
 
-    metadata = report["audit_metadata"]
-    summary = report["summary"]
-
-    task_assessment = summary[
-        "task_assessment"
+    metadata = report[
+        "audit_metadata"
     ]
 
-    readiness_flags = summary[
-        "readiness_flags"
+    summary = report[
+        "summary"
+    ]
+
+    task_assessments = report[
+        "task_assessments"
+    ]
+
+    datasets = report[
+        "datasets"
+    ]
+
+    leakage_review = report[
+        "leakage_review"
     ]
 
     lines: list[str] = []
@@ -1289,12 +1366,14 @@ def write_markdown_report(
     )
     lines.append("")
 
-    lines.append("## Audit Metadata")
+    lines.append(
+        "## Audit Metadata"
+    )
     lines.append("")
 
     lines.append(
         f"- **Project:** "
-        f"{metadata['project_name']}"
+        f"{metadata['project']}"
     )
 
     lines.append(
@@ -1314,11 +1393,13 @@ def write_markdown_report(
 
     lines.append("")
 
-    lines.append("## Executive Summary")
+    lines.append(
+        "## Executive Summary"
+    )
     lines.append("")
 
     lines.append(
-        f"- Discovered datasets: "
+        f"- Datasets discovered: "
         f"{summary['dataset_count']}"
     )
 
@@ -1333,78 +1414,111 @@ def write_markdown_report(
     )
 
     lines.append(
-        f"- Datasets with temporal signals: "
+        f"- Temporal datasets: "
         f"{summary['temporal_dataset_count']}"
     )
 
     lines.append(
-        f"- Datasets with geography signals: "
+        f"- Geography datasets: "
         f"{summary['geography_dataset_count']}"
     )
 
     lines.append(
-        f"- Datasets with candidate target signals: "
+        f"- Candidate-target datasets: "
         f"{summary['candidate_target_dataset_count']}"
     )
 
     lines.append(
-        f"- Datasets requiring leakage review: "
+        f"- Leakage-review datasets: "
         f"{summary['leakage_review_dataset_count']}"
     )
 
     lines.append("")
 
-    lines.append("## Observed Readiness Signals")
-    lines.append("")
-    lines.append("| Signal | Observed |")
-    lines.append("|---|---|")
-
-    for flag_name, observed in (
-        readiness_flags.items()
-    ):
-        lines.append(
-            f"| {_markdown_escape(flag_name)} "
-            f"| {_markdown_escape(observed)} |"
-        )
-
-    lines.append("")
-
-    lines.append("## Task Readiness")
+    lines.append(
+        "## Observed Data Signals"
+    )
     lines.append("")
 
     lines.append(
-        "| ML Task | Status | Met Signals "
-        "| Missing Signals | Missing Controls |"
+        "| Signal | Observed |"
     )
 
     lines.append(
-        "|---|---|---|---|---|"
+        "|---|---|"
     )
 
-    for task_name, assessment in (
-        task_assessment.items()
-    ):
+    for (
+        signal_name,
+        observed,
+    ) in report[
+        "observed_signals"
+    ].items():
         lines.append(
-            f"| {_markdown_escape(task_name)} "
-            f"| {_markdown_escape(assessment['status'])} "
-            f"| {_markdown_escape(_format_items(assessment['met_signals']))} "
-            f"| {_markdown_escape(_format_items(assessment['missing_signals']))} "
-            f"| {_markdown_escape(_format_items(assessment['missing_controls']))} |"
+            f"| `{signal_name}` | "
+            f"{'Yes' if observed else 'No'} |"
         )
 
     lines.append("")
 
     lines.append(
-        "## Task Assessment Details"
+        "## Task Readiness"
     )
     lines.append("")
 
-    for task_name, assessment in (
-        task_assessment.items()
-    ):
+    lines.append(
+        "| Task | Status | Missing Signals | "
+        "Missing Controls |"
+    )
+
+    lines.append(
+        "|---|---|---|---|"
+    )
+
+    for (
+        task_name,
+        assessment,
+    ) in task_assessments.items():
+        missing_signals = (
+            ", ".join(
+                assessment[
+                    "missing_signals"
+                ]
+            )
+            or "None"
+        )
+
+        missing_controls = (
+            ", ".join(
+                assessment[
+                    "missing_controls"
+                ]
+            )
+            or "None"
+        )
+
+        lines.append(
+            f"| `{task_name}` | "
+            f"{assessment['status']} | "
+            f"{missing_signals} | "
+            f"{missing_controls} |"
+        )
+
+    lines.append("")
+
+    lines.append(
+        "## Detailed Task Assessments"
+    )
+    lines.append("")
+
+    for (
+        task_name,
+        assessment,
+    ) in task_assessments.items():
         lines.append(
             f"### {task_name}"
         )
+
         lines.append("")
 
         lines.append(
@@ -1418,94 +1532,110 @@ def write_markdown_report(
         )
 
         lines.append(
-            f"- **Required signals:** "
-            f"{_format_items(assessment['required_signals'])}"
-        )
-
-        lines.append(
-            f"- **Met signals:** "
-            f"{_format_items(assessment['met_signals'])}"
-        )
-
-        lines.append(
-            f"- **Missing signals:** "
-            f"{_format_items(assessment['missing_signals'])}"
-        )
-
-        lines.append(
-            f"- **Required controls:** "
-            f"{_format_items(assessment['required_controls'])}"
-        )
-
-        lines.append(
-            f"- **Met controls:** "
-            f"{_format_items(assessment['met_controls'])}"
-        )
-
-        lines.append(
-            f"- **Missing controls:** "
-            f"{_format_items(assessment['missing_controls'])}"
-        )
-
-        lines.append("")
-
-        lines.append(
-            "#### Control Evidence"
-        )
-        lines.append("")
-
-        for control_name, control_detail in (
-            assessment[
-                "control_details"
-            ].items()
-        ):
-            lines.append(
-                f"- **{control_name}:** "
-                f"{control_detail['description']} "
-                f"Current satisfaction state: "
-                f"`{control_detail['satisfied']}`."
+            "- **Required signals:** "
+            + (
+                ", ".join(
+                    assessment[
+                        "required_signals"
+                    ]
+                )
+                or "None"
             )
+        )
+
+        lines.append(
+            "- **Met signals:** "
+            + (
+                ", ".join(
+                    assessment[
+                        "met_signals"
+                    ]
+                )
+                or "None"
+            )
+        )
+
+        lines.append(
+            "- **Missing signals:** "
+            + (
+                ", ".join(
+                    assessment[
+                        "missing_signals"
+                    ]
+                )
+                or "None"
+            )
+        )
+
+        lines.append(
+            "- **Required controls:** "
+            + (
+                ", ".join(
+                    assessment[
+                        "required_controls"
+                    ]
+                )
+                or "None"
+            )
+        )
+
+        lines.append(
+            "- **Met controls:** "
+            + (
+                ", ".join(
+                    assessment[
+                        "met_controls"
+                    ]
+                )
+                or "None"
+            )
+        )
+
+        lines.append(
+            "- **Missing controls:** "
+            + (
+                ", ".join(
+                    assessment[
+                        "missing_controls"
+                    ]
+                )
+                or "None"
+            )
+        )
 
         lines.append("")
 
-    lines.append("## Dataset Inventory")
+    lines.append(
+        "## Dataset Inventory"
+    )
     lines.append("")
 
     lines.append(
-        "| Dataset | Rows | Columns | Temporal "
-        "| Geography | Candidate Targets "
-        "| Leakage Review | Status |"
+        "| Dataset | Status | Rows | Columns | "
+        "Temporal | Geography | Candidate Targets |"
     )
 
     lines.append(
-        "|---|---:|---:|---|---|---|---|---|"
+        "|---|---|---:|---:|---|---|---|"
     )
 
-    for dataset in report["datasets"]:
-        rows = (
-            dataset["row_count"]
-            if dataset["row_count"] is not None
-            else "unknown"
-        )
-
-        columns = (
-            dataset["column_count"]
-            if dataset["column_count"] is not None
-            else "unknown"
-        )
-
+    for dataset in datasets:
         temporal = (
             ", ".join(
-                dataset["datetime_columns"]
+                dataset[
+                    "datetime_columns"
+                ]
             )
-            or "None detected"
+            or "None"
         )
 
         geography = (
             ", ".join(
-                dataset["geography_columns"]
+                dataset[
+                    "geography_columns"
+                ]
             )
-            or "None detected"
+            or "None"
         )
 
         targets = (
@@ -1514,37 +1644,71 @@ def write_markdown_report(
                     "candidate_target_columns"
                 ]
             )
-            or "None detected"
-        )
-
-        leakage_review_columns = sorted(
-            set(
-                dataset[
-                    "leakage_risk_columns"
-                ]
-                + dataset[
-                    "derived_score_columns"
-                ]
-            )
-        )
-
-        leakage_review = (
-            ", ".join(
-                leakage_review_columns
-            )
-            or "None detected"
+            or "None"
         )
 
         lines.append(
-            f"| {_markdown_escape(dataset['path'])} "
-            f"| {_markdown_escape(rows)} "
-            f"| {_markdown_escape(columns)} "
-            f"| {_markdown_escape(temporal)} "
-            f"| {_markdown_escape(geography)} "
-            f"| {_markdown_escape(targets)} "
-            f"| {_markdown_escape(leakage_review)} "
-            f"| {_markdown_escape(dataset['profile_status'])} |"
+            f"| `{dataset['path']}` | "
+            f"{dataset['profile_status']} | "
+            f"{dataset['row_count']} | "
+            f"{dataset['column_count']} | "
+            f"{temporal} | "
+            f"{geography} | "
+            f"{targets} |"
         )
+
+    lines.append("")
+
+    lines.append(
+        "## Dataset Profile Failures"
+    )
+    lines.append("")
+
+    failed_datasets = [
+        dataset
+        for dataset in datasets
+        if dataset[
+            "profile_status"
+        ] == "failed"
+    ]
+
+    if not failed_datasets:
+        lines.append(
+            "No dataset profile failures were detected."
+        )
+    else:
+        for dataset in failed_datasets:
+            lines.append(
+                f"- `{dataset['path']}`: "
+                f"{dataset['profile_error']}"
+            )
+
+    lines.append("")
+
+    lines.append(
+        "## Leakage Review Candidates"
+    )
+    lines.append("")
+
+    if not leakage_review:
+        lines.append(
+            "No leakage-review candidates were detected."
+        )
+    else:
+        lines.append(
+            "| Dataset | Column | Reason |"
+        )
+
+        lines.append(
+            "|---|---|---|"
+        )
+
+        for item in leakage_review:
+            lines.append(
+                f"| `{item['dataset_path']}` | "
+                f"`{item['column']}` | "
+                f"{item['reason']} |"
+            )
 
     lines.append("")
 

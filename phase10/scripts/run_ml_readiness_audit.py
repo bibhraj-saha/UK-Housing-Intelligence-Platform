@@ -95,10 +95,8 @@ def _format_items(
 def print_task_assessments(
     report: dict,
 ) -> None:
-    task_assessment = report[
-        "summary"
-    ][
-        "task_assessment"
+    task_assessments = report[
+        "task_assessments"
     ]
 
     print()
@@ -106,7 +104,7 @@ def print_task_assessments(
     print("-" * 72)
 
     for task_name, assessment in (
-        task_assessment.items()
+        task_assessments.items()
     ):
         print(
             f"{task_name}: "

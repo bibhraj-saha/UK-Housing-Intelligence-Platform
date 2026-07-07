@@ -60,6 +60,7 @@ def discover_datasets(
     config: dict[str, Any],
 ) -> list[Path]:
     discovery_config = config.get("discovery", {})
+
     configured_extensions = discovery_config.get(
         "supported_extensions",
         list(SUPPORTED_EXTENSIONS),
@@ -70,8 +71,14 @@ def discover_datasets(
         for extension in configured_extensions
     }
 
-    recursive = bool(discovery_config.get("recursive", True))
-    directories = discovery_config.get("directories", [])
+    recursive = bool(
+        discovery_config.get("recursive", True)
+    )
+
+    directories = discovery_config.get(
+        "directories",
+        [],
+    )
 
     discovered_paths: set[Path] = set()
 
@@ -84,7 +91,11 @@ def discover_datasets(
         if not directory.is_dir():
             continue
 
-        iterator = directory.rglob("*") if recursive else directory.glob("*")
+        iterator = (
+            directory.rglob("*")
+            if recursive
+            else directory.glob("*")
+        )
 
         for path in iterator:
             if not path.is_file():
@@ -108,15 +119,20 @@ def _safe_json_value(value: Any) -> Any:
     if isinstance(value, float):
         if math.isnan(value) or math.isinf(value):
             return None
+
         return value
 
     if isinstance(value, pd.Timestamp):
         if pd.isna(value):
             return None
+
         return value.isoformat()
 
-    if pd.isna(value):
-        return None
+    try:
+        if pd.isna(value):
+            return None
+    except (TypeError, ValueError):
+        pass
 
     return str(value)
 
@@ -151,7 +167,10 @@ def _read_dataset_sample(
                 encoding="utf-8",
                 errors="ignore",
             ) as file:
-                row_count = max(sum(1 for _ in file) - 1, 0)
+                row_count = max(
+                    sum(1 for _ in file) - 1,
+                    0,
+                )
         except OSError:
             row_count = None
 
@@ -162,7 +181,9 @@ def _read_dataset_sample(
     )
 
 
-def _normalise_column_name(column_name: str) -> str:
+def _normalise_column_name(
+    column_name: str,
+) -> str:
     return str(column_name).strip().lower()
 
 
@@ -170,9 +191,12 @@ def _contains_any_token(
     column_name: str,
     tokens: list[str],
 ) -> bool:
-    normalised = _normalise_column_name(column_name)
+    normalised = _normalise_column_name(
+        column_name
+    )
+
     return any(
-        token.lower() in normalised
+        str(token).lower() in normalised
         for token in tokens
     )
 
@@ -180,12 +204,20 @@ def _contains_any_token(
 def _detect_datetime_columns(
     dataframe: pd.DataFrame,
     config: dict[str, Any],
-) -> tuple[list[str], dict[str, dict[str, str | None]]]:
-    datetime_config = config.get("datetime_detection", {})
+) -> tuple[
+    list[str],
+    dict[str, dict[str, str | None]],
+]:
+    datetime_config = config.get(
+        "datetime_detection",
+        {},
+    )
+
     explicit_tokens = datetime_config.get(
         "explicit_name_tokens",
         [],
     )
+
     minimum_parse_success_ratio = float(
         datetime_config.get(
             "minimum_parse_success_ratio",
@@ -194,18 +226,26 @@ def _detect_datetime_columns(
     )
 
     detected_columns: list[str] = []
-    ranges: dict[str, dict[str, str | None]] = {}
+    ranges: dict[
+        str,
+        dict[str, str | None],
+    ] = {}
 
     for column in dataframe.columns:
         series = dataframe[column]
-        normalised_name = _normalise_column_name(column)
 
-        is_native_datetime = pd.api.types.is_datetime64_any_dtype(
-            series
+        normalised_name = _normalise_column_name(
+            column
+        )
+
+        is_native_datetime = (
+            pd.api.types.is_datetime64_any_dtype(
+                series
+            )
         )
 
         name_suggests_datetime = any(
-            token.lower() in normalised_name
+            str(token).lower() in normalised_name
             for token in explicit_tokens
         )
 
@@ -232,7 +272,10 @@ def _detect_datetime_columns(
                 parsed_candidate.notna().mean()
             )
 
-            if parse_success_ratio >= minimum_parse_success_ratio:
+            if (
+                parse_success_ratio
+                >= minimum_parse_success_ratio
+            ):
                 parsed_series = pd.to_datetime(
                     series,
                     errors="coerce",
@@ -241,7 +284,9 @@ def _detect_datetime_columns(
         if parsed_series is None:
             continue
 
-        detected_columns.append(str(column))
+        detected_columns.append(
+            str(column)
+        )
 
         valid_values = parsed_series.dropna()
 
@@ -252,11 +297,18 @@ def _detect_datetime_columns(
             }
         else:
             ranges[str(column)] = {
-                "min": _safe_json_value(valid_values.min()),
-                "max": _safe_json_value(valid_values.max()),
+                "min": _safe_json_value(
+                    valid_values.min()
+                ),
+                "max": _safe_json_value(
+                    valid_values.max()
+                ),
             }
 
-    return sorted(detected_columns), ranges
+    return (
+        sorted(detected_columns),
+        ranges,
+    )
 
 
 def _detect_geography_columns(
@@ -284,13 +336,18 @@ def _detect_geography_columns(
     detected: list[str] = []
 
     for column in dataframe.columns:
-        normalised = _normalise_column_name(column)
+        normalised = _normalise_column_name(
+            column
+        )
 
         if normalised in exact_columns:
             detected.append(str(column))
             continue
 
-        if _contains_any_token(str(column), name_tokens):
+        if _contains_any_token(
+            str(column),
+            name_tokens,
+        ):
             detected.append(str(column))
 
     return sorted(set(detected))
@@ -321,13 +378,18 @@ def _detect_candidate_targets(
     detected: list[str] = []
 
     for column in dataframe.columns:
-        normalised = _normalise_column_name(column)
+        normalised = _normalise_column_name(
+            column
+        )
 
         if normalised in exact_columns:
             detected.append(str(column))
             continue
 
-        if _contains_any_token(str(column), name_tokens):
+        if _contains_any_token(
+            str(column),
+            name_tokens,
+        ):
             detected.append(str(column))
 
     return sorted(set(detected))
@@ -350,24 +412,31 @@ def _detect_leakage_risks(
         )
     }
 
-    high_risk_name_tokens = leakage_config.get(
-        "high_risk_name_tokens",
-        [],
+    high_risk_name_tokens = (
+        leakage_config.get(
+            "high_risk_name_tokens",
+            [],
+        )
     )
 
-    derived_score_tokens = leakage_config.get(
-        "derived_score_tokens",
-        [],
+    derived_score_tokens = (
+        leakage_config.get(
+            "derived_score_tokens",
+            [],
+        )
     )
 
     high_risk: list[str] = []
     derived_scores: list[str] = []
 
     for column in dataframe.columns:
-        normalised = _normalise_column_name(column)
+        normalised = _normalise_column_name(
+            column
+        )
 
         if normalised in high_risk_exact_columns:
             high_risk.append(str(column))
+
         elif _contains_any_token(
             str(column),
             high_risk_name_tokens,
@@ -391,9 +460,16 @@ def profile_dataset(
     project_root: Path,
     config: dict[str, Any],
 ) -> DatasetProfile:
-    profiling_config = config.get("profiling", {})
+    profiling_config = config.get(
+        "profiling",
+        {},
+    )
+
     sample_rows = int(
-        profiling_config.get("sample_rows", 50000)
+        profiling_config.get(
+            "sample_rows",
+            50000,
+        )
     )
 
     relative_path = str(
@@ -403,26 +479,33 @@ def profile_dataset(
     )
 
     try:
-        dataframe, row_count = _read_dataset_sample(
-            dataset_path=dataset_path,
-            sample_rows=sample_rows,
+        dataframe, row_count = (
+            _read_dataset_sample(
+                dataset_path=dataset_path,
+                sample_rows=sample_rows,
+            )
         )
 
-        datetime_columns, datetime_ranges = (
-            _detect_datetime_columns(
+        (
+            datetime_columns,
+            datetime_ranges,
+        ) = _detect_datetime_columns(
+            dataframe=dataframe,
+            config=config,
+        )
+
+        geography_columns = (
+            _detect_geography_columns(
                 dataframe=dataframe,
                 config=config,
             )
         )
 
-        geography_columns = _detect_geography_columns(
-            dataframe=dataframe,
-            config=config,
-        )
-
-        candidate_target_columns = _detect_candidate_targets(
-            dataframe=dataframe,
-            config=config,
+        candidate_target_columns = (
+            _detect_candidate_targets(
+                dataframe=dataframe,
+                config=config,
+            )
         )
 
         (
@@ -435,7 +518,8 @@ def profile_dataset(
 
         numeric_columns = [
             str(column)
-            for column in dataframe.select_dtypes(
+            for column
+            in dataframe.select_dtypes(
                 include="number"
             ).columns
         ]
@@ -449,7 +533,12 @@ def profile_dataset(
 
         missingness_percent = {
             str(column): round(
-                float(dataframe[column].isna().mean() * 100),
+                float(
+                    dataframe[column]
+                    .isna()
+                    .mean()
+                    * 100
+                ),
                 4,
             )
             for column in dataframe.columns
@@ -463,27 +552,48 @@ def profile_dataset(
             path=relative_path,
             file_name=dataset_path.name,
             extension=dataset_path.suffix.lower(),
-            file_size_bytes=dataset_path.stat().st_size,
+            file_size_bytes=(
+                dataset_path.stat().st_size
+            ),
             row_count=row_count,
-            column_count=len(dataframe.columns),
+            column_count=len(
+                dataframe.columns
+            ),
             columns=[
                 str(column)
                 for column in dataframe.columns
             ],
             dtypes={
                 str(column): str(dtype)
-                for column, dtype in dataframe.dtypes.items()
+                for column, dtype
+                in dataframe.dtypes.items()
             },
-            missingness_percent=missingness_percent,
+            missingness_percent=(
+                missingness_percent
+            ),
             datetime_columns=datetime_columns,
             datetime_ranges=datetime_ranges,
-            geography_columns=geography_columns,
-            candidate_target_columns=candidate_target_columns,
-            leakage_risk_columns=leakage_risk_columns,
-            derived_score_columns=derived_score_columns,
-            numeric_columns=sorted(numeric_columns),
-            categorical_columns=sorted(categorical_columns),
-            duplicate_row_count=duplicate_row_count,
+            geography_columns=(
+                geography_columns
+            ),
+            candidate_target_columns=(
+                candidate_target_columns
+            ),
+            leakage_risk_columns=(
+                leakage_risk_columns
+            ),
+            derived_score_columns=(
+                derived_score_columns
+            ),
+            numeric_columns=sorted(
+                numeric_columns
+            ),
+            categorical_columns=sorted(
+                categorical_columns
+            ),
+            duplicate_row_count=(
+                duplicate_row_count
+            ),
             profile_status="success",
             profile_error=None,
         )
@@ -493,7 +603,9 @@ def profile_dataset(
             path=relative_path,
             file_name=dataset_path.name,
             extension=dataset_path.suffix.lower(),
-            file_size_bytes=dataset_path.stat().st_size,
+            file_size_bytes=(
+                dataset_path.stat().st_size
+            ),
             row_count=None,
             column_count=None,
             columns=[],
@@ -509,12 +621,363 @@ def profile_dataset(
             categorical_columns=[],
             duplicate_row_count=None,
             profile_status="failed",
-            profile_error=f"{type(exc).__name__}: {exc}",
+            profile_error=(
+                f"{type(exc).__name__}: {exc}"
+            ),
         )
+
+
+def _profile_contains_column_token(
+    profile: DatasetProfile,
+    tokens: list[str],
+) -> bool:
+    return any(
+        _contains_any_token(
+            column,
+            tokens,
+        )
+        for column in profile.columns
+    )
+
+
+def _detect_repeated_observation_signal(
+    profiles: list[DatasetProfile],
+) -> bool:
+    for profile in profiles:
+        if (
+            profile.datetime_columns
+            and profile.geography_columns
+        ):
+            return True
+
+    return False
+
+
+def build_observed_signals(
+    profiles: list[DatasetProfile],
+    config: dict[str, Any],
+) -> dict[str, bool]:
+    successful_profiles = [
+        profile
+        for profile in profiles
+        if profile.profile_status == "success"
+    ]
+
+    signal_config = config.get(
+        "signal_detection",
+        {},
+    )
+
+    price_tokens = (
+        signal_config
+        .get("price", {})
+        .get(
+            "column_name_tokens",
+            ["price"],
+        )
+    )
+
+    growth_tokens = (
+        signal_config
+        .get("growth", {})
+        .get(
+            "column_name_tokens",
+            ["growth"],
+        )
+    )
+
+    investment_tokens = (
+        signal_config
+        .get("investment", {})
+        .get(
+            "column_name_tokens",
+            ["investment"],
+        )
+    )
+
+    minimum_numeric_feature_columns = int(
+        signal_config
+        .get("feature", {})
+        .get(
+            "minimum_numeric_feature_columns",
+            2,
+        )
+    )
+
+    has_price_signal = any(
+        _profile_contains_column_token(
+            profile,
+            price_tokens,
+        )
+        for profile in successful_profiles
+    )
+
+    has_growth_signal = any(
+        _profile_contains_column_token(
+            profile,
+            growth_tokens,
+        )
+        for profile in successful_profiles
+    )
+
+    has_investment_signal = any(
+        _profile_contains_column_token(
+            profile,
+            investment_tokens,
+        )
+        for profile in successful_profiles
+    )
+
+    has_geography_signal = any(
+        bool(profile.geography_columns)
+        for profile in successful_profiles
+    )
+
+    has_temporal_signal = any(
+        bool(profile.datetime_columns)
+        for profile in successful_profiles
+    )
+
+    has_candidate_targets = any(
+        bool(profile.candidate_target_columns)
+        for profile in successful_profiles
+    )
+
+    has_feature_signal = any(
+        len(profile.numeric_columns)
+        >= minimum_numeric_feature_columns
+        for profile in successful_profiles
+    )
+
+    has_repeated_observation_signal = (
+        _detect_repeated_observation_signal(
+            successful_profiles
+        )
+    )
+
+    has_leakage_risks_to_review = any(
+        bool(profile.leakage_risk_columns)
+        or bool(profile.derived_score_columns)
+        for profile in successful_profiles
+    )
+
+    return {
+        "has_datasets": (
+            len(successful_profiles) > 0
+        ),
+        "has_temporal_signal": (
+            has_temporal_signal
+        ),
+        "has_geography_signal": (
+            has_geography_signal
+        ),
+        "has_candidate_targets": (
+            has_candidate_targets
+        ),
+        "has_price_signal": (
+            has_price_signal
+        ),
+        "has_growth_signal": (
+            has_growth_signal
+        ),
+        "has_investment_signal": (
+            has_investment_signal
+        ),
+        "has_feature_signal": (
+            has_feature_signal
+        ),
+        "has_repeated_observation_signal": (
+            has_repeated_observation_signal
+        ),
+        "has_leakage_risks_to_review": (
+            has_leakage_risks_to_review
+        ),
+    }
+
+
+def evaluate_task_requirements(
+    task_name: str,
+    task_config: dict[str, Any],
+    observed_signals: dict[str, bool],
+    signal_to_flag_mapping: dict[str, str],
+    control_registry: dict[str, Any],
+) -> dict[str, Any]:
+    required_signals = task_config.get(
+        "required_signals",
+        [],
+    )
+
+    required_controls = task_config.get(
+        "required_controls",
+        [],
+    )
+
+    met_signals: list[str] = []
+    missing_signals: list[str] = []
+
+    for signal_name in required_signals:
+        flag_name = signal_to_flag_mapping.get(
+            signal_name
+        )
+
+        if flag_name is None:
+            raise ValueError(
+                "No readiness flag mapping exists for "
+                f"signal '{signal_name}' required by "
+                f"task '{task_name}'."
+            )
+
+        signal_is_present = bool(
+            observed_signals.get(
+                flag_name,
+                False,
+            )
+        )
+
+        if signal_is_present:
+            met_signals.append(signal_name)
+        else:
+            missing_signals.append(signal_name)
+
+    met_controls: list[str] = []
+    missing_controls: list[str] = []
+
+    control_details: dict[str, Any] = {}
+
+    for control_name in required_controls:
+        control_config = control_registry.get(
+            control_name
+        )
+
+        if control_config is None:
+            raise ValueError(
+                "No control registry entry exists for "
+                f"control '{control_name}' required by "
+                f"task '{task_name}'."
+            )
+
+        satisfied = bool(
+            control_config.get(
+                "satisfied",
+                False,
+            )
+        )
+
+        description = str(
+            control_config.get(
+                "description",
+                "",
+            )
+        )
+
+        control_details[control_name] = {
+            "description": description,
+            "satisfied": satisfied,
+        }
+
+        if satisfied:
+            met_controls.append(control_name)
+        else:
+            missing_controls.append(control_name)
+
+    if missing_signals:
+        status = "not_ready"
+
+    elif missing_controls:
+        status = "conditional_go"
+
+    else:
+        status = "go"
+
+    if status == "not_ready":
+        reason = (
+            "Fundamental data signals are missing: "
+            + ", ".join(missing_signals)
+            + "."
+        )
+
+    elif status == "conditional_go":
+        reason = (
+            "Required data signals are present, but "
+            "engineering controls remain incomplete: "
+            + ", ".join(missing_controls)
+            + "."
+        )
+
+    else:
+        reason = (
+            "All configured data signals and engineering "
+            "controls are satisfied."
+        )
+
+    return {
+        "status": status,
+        "reason": reason,
+        "required_signals": required_signals,
+        "met_signals": met_signals,
+        "missing_signals": missing_signals,
+        "required_controls": required_controls,
+        "met_controls": met_controls,
+        "missing_controls": missing_controls,
+        "control_details": control_details,
+    }
+
+
+def build_task_assessment(
+    config: dict[str, Any],
+    observed_signals: dict[str, bool],
+) -> dict[str, Any]:
+    readiness_rules = config.get(
+        "readiness_rules",
+        {},
+    )
+
+    signal_to_flag_mapping = (
+        readiness_rules.get(
+            "signal_to_flag_mapping",
+            {},
+        )
+    )
+
+    task_requirements = (
+        readiness_rules.get(
+            "task_requirements",
+            {},
+        )
+    )
+
+    control_registry = config.get(
+        "control_registry",
+        {},
+    )
+
+    assessments: dict[str, Any] = {}
+
+    for task_name, task_config in (
+        task_requirements.items()
+    ):
+        assessments[task_name] = (
+            evaluate_task_requirements(
+                task_name=task_name,
+                task_config=task_config,
+                observed_signals=(
+                    observed_signals
+                ),
+                signal_to_flag_mapping=(
+                    signal_to_flag_mapping
+                ),
+                control_registry=(
+                    control_registry
+                ),
+            )
+        )
+
+    return assessments
 
 
 def build_readiness_summary(
     profiles: list[DatasetProfile],
+    config: dict[str, Any],
 ) -> dict[str, Any]:
     successful_profiles = [
         profile
@@ -556,124 +1019,94 @@ def build_readiness_summary(
     price_signal_profiles = [
         profile
         for profile in successful_profiles
-        if any(
-            "price" in column.lower()
-            for column in profile.columns
+        if _profile_contains_column_token(
+            profile,
+            config.get(
+                "signal_detection",
+                {},
+            )
+            .get("price", {})
+            .get(
+                "column_name_tokens",
+                ["price"],
+            ),
         )
     ]
 
     growth_signal_profiles = [
         profile
         for profile in successful_profiles
-        if any(
-            "growth" in column.lower()
-            for column in profile.columns
+        if _profile_contains_column_token(
+            profile,
+            config.get(
+                "signal_detection",
+                {},
+            )
+            .get("growth", {})
+            .get(
+                "column_name_tokens",
+                ["growth"],
+            ),
         )
     ]
 
     investment_signal_profiles = [
         profile
         for profile in successful_profiles
-        if any(
-            "investment" in column.lower()
-            for column in profile.columns
+        if _profile_contains_column_token(
+            profile,
+            config.get(
+                "signal_detection",
+                {},
+            )
+            .get("investment", {})
+            .get(
+                "column_name_tokens",
+                ["investment"],
+            ),
         )
     ]
 
-    readiness_flags = {
-        "has_datasets": len(successful_profiles) > 0,
-        "has_temporal_signal": len(temporal_profiles) > 0,
-        "has_geography_signal": len(geography_profiles) > 0,
-        "has_candidate_targets": len(target_profiles) > 0,
-        "has_price_signal": len(price_signal_profiles) > 0,
-        "has_growth_signal": len(growth_signal_profiles) > 0,
-        "has_investment_signal": (
-            len(investment_signal_profiles) > 0
-        ),
-        "has_leakage_risks_to_review": (
-            len(leakage_profiles) > 0
-        ),
-    }
+    observed_signals = build_observed_signals(
+        profiles=profiles,
+        config=config,
+    )
 
-    task_assessment = {
-        "price_prediction": {
-            "status": (
-                "conditional_go"
-                if readiness_flags["has_price_signal"]
-                and readiness_flags["has_geography_signal"]
-                and readiness_flags["has_temporal_signal"]
-                else "not_ready"
-            ),
-            "reason": (
-                "Requires a formally engineered future price target "
-                "and point-in-time feature validation before training."
-            ),
-        },
-        "growth_prediction": {
-            "status": (
-                "conditional_go"
-                if readiness_flags["has_price_signal"]
-                and readiness_flags["has_geography_signal"]
-                and readiness_flags["has_temporal_signal"]
-                else "not_ready"
-            ),
-            "reason": (
-                "Requires future growth target engineering from "
-                "historically ordered price observations."
-            ),
-        },
-        "area_recommendation": {
-            "status": (
-                "conditional_go"
-                if readiness_flags["has_geography_signal"]
-                else "not_ready"
-            ),
-            "reason": (
-                "Requires explicit user preference contracts, "
-                "feature scaling, ranking logic, and offline evaluation."
-            ),
-        },
-        "forecasting": {
-            "status": (
-                "conditional_go"
-                if readiness_flags["has_temporal_signal"]
-                else "not_ready"
-            ),
-            "reason": (
-                "Requires repeated observations through time at a "
-                "stable geography and frequency."
-            ),
-        },
-        "investment_opportunity_prediction": {
-            "status": (
-                "conditional_go"
-                if readiness_flags["has_investment_signal"]
-                and readiness_flags["has_geography_signal"]
-                and readiness_flags["has_temporal_signal"]
-                else "not_ready"
-            ),
-            "reason": (
-                "Existing investment scores are not automatically "
-                "valid predictive labels. A future-outcome target "
-                "must be defined."
-            ),
-        },
-    }
+    task_assessment = build_task_assessment(
+        config=config,
+        observed_signals=observed_signals,
+    )
 
     return {
         "dataset_count": len(profiles),
-        "successful_dataset_count": len(successful_profiles),
-        "failed_dataset_count": len(failed_profiles),
-        "temporal_dataset_count": len(temporal_profiles),
-        "geography_dataset_count": len(geography_profiles),
-        "candidate_target_dataset_count": len(target_profiles),
-        "leakage_review_dataset_count": len(leakage_profiles),
-        "price_signal_dataset_count": len(price_signal_profiles),
-        "growth_signal_dataset_count": len(growth_signal_profiles),
+        "successful_dataset_count": len(
+            successful_profiles
+        ),
+        "failed_dataset_count": len(
+            failed_profiles
+        ),
+        "temporal_dataset_count": len(
+            temporal_profiles
+        ),
+        "geography_dataset_count": len(
+            geography_profiles
+        ),
+        "candidate_target_dataset_count": len(
+            target_profiles
+        ),
+        "leakage_review_dataset_count": len(
+            leakage_profiles
+        ),
+        "price_signal_dataset_count": len(
+            price_signal_profiles
+        ),
+        "growth_signal_dataset_count": len(
+            growth_signal_profiles
+        ),
         "investment_signal_dataset_count": len(
             investment_signal_profiles
         ),
-        "readiness_flags": readiness_flags,
+        "readiness_flags": observed_signals,
         "task_assessment": task_assessment,
     }
 
@@ -681,18 +1114,33 @@ def build_readiness_summary(
 def determine_overall_decision(
     summary: dict[str, Any],
 ) -> str:
-    flags = summary["readiness_flags"]
+    task_assessment = summary.get(
+        "task_assessment",
+        {},
+    )
 
-    if not flags["has_datasets"]:
+    if not task_assessment:
         return "NO_GO"
 
-    if not flags["has_geography_signal"]:
-        return "NO_GO"
+    statuses = {
+        assessment.get(
+            "status",
+            "not_ready",
+        )
+        for assessment
+        in task_assessment.values()
+    }
 
-    if not flags["has_temporal_signal"]:
+    if statuses == {"go"}:
+        return "GO"
+
+    if "go" in statuses:
         return "CONDITIONAL_GO"
 
-    return "CONDITIONAL_GO"
+    if "conditional_go" in statuses:
+        return "CONDITIONAL_GO"
+
+    return "NO_GO"
 
 
 def build_audit_report(
@@ -715,8 +1163,16 @@ def build_audit_report(
         for dataset_path in dataset_paths
     ]
 
-    summary = build_readiness_summary(profiles)
-    overall_decision = determine_overall_decision(summary)
+    summary = build_readiness_summary(
+        profiles=profiles,
+        config=config,
+    )
+
+    overall_decision = (
+        determine_overall_decision(
+            summary
+        )
+    )
 
     return {
         "audit_metadata": {
@@ -730,7 +1186,10 @@ def build_audit_report(
             "phase": config.get(
                 "project",
                 {},
-            ).get("phase", 10),
+            ).get(
+                "phase",
+                10,
+            ),
             "audit_name": config.get(
                 "project",
                 {},
@@ -741,9 +1200,13 @@ def build_audit_report(
             "generated_at_utc": datetime.now(
                 timezone.utc
             ).isoformat(),
-            "project_root": str(project_root.resolve()),
+            "project_root": str(
+                project_root.resolve()
+            ),
             "config_path": str(
-                config_path.resolve().relative_to(
+                config_path
+                .resolve()
+                .relative_to(
                     project_root.resolve()
                 )
             ),
@@ -778,9 +1241,25 @@ def write_json_report(
         )
 
 
-def _markdown_escape(value: Any) -> str:
+def _markdown_escape(
+    value: Any,
+) -> str:
     text = str(value)
-    return text.replace("|", "\\|").replace("\n", " ")
+
+    return (
+        text
+        .replace("|", "\\|")
+        .replace("\n", " ")
+    )
+
+
+def _format_items(
+    items: list[str],
+) -> str:
+    if not items:
+        return "None"
+
+    return ", ".join(items)
 
 
 def write_markdown_report(
@@ -794,81 +1273,210 @@ def write_markdown_report(
 
     metadata = report["audit_metadata"]
     summary = report["summary"]
-    task_assessment = summary["task_assessment"]
+
+    task_assessment = summary[
+        "task_assessment"
+    ]
+
+    readiness_flags = summary[
+        "readiness_flags"
+    ]
 
     lines: list[str] = []
 
-    lines.append("# Phase 10 ML Readiness Audit")
+    lines.append(
+        "# Phase 10 ML Readiness Audit"
+    )
     lines.append("")
+
     lines.append("## Audit Metadata")
     lines.append("")
+
     lines.append(
-        f"- **Project:** {metadata['project_name']}"
+        f"- **Project:** "
+        f"{metadata['project_name']}"
     )
+
     lines.append(
-        f"- **Phase:** {metadata['phase']}"
+        f"- **Phase:** "
+        f"{metadata['phase']}"
     )
+
     lines.append(
         f"- **Generated at UTC:** "
         f"{metadata['generated_at_utc']}"
     )
+
     lines.append(
         f"- **Overall decision:** "
         f"**{report['overall_decision']}**"
     )
+
     lines.append("")
 
     lines.append("## Executive Summary")
     lines.append("")
+
     lines.append(
         f"- Discovered datasets: "
         f"{summary['dataset_count']}"
     )
+
     lines.append(
         f"- Successfully profiled datasets: "
         f"{summary['successful_dataset_count']}"
     )
+
     lines.append(
         f"- Failed dataset profiles: "
         f"{summary['failed_dataset_count']}"
     )
+
     lines.append(
         f"- Datasets with temporal signals: "
         f"{summary['temporal_dataset_count']}"
     )
+
     lines.append(
         f"- Datasets with geography signals: "
         f"{summary['geography_dataset_count']}"
     )
+
     lines.append(
         f"- Datasets with candidate target signals: "
         f"{summary['candidate_target_dataset_count']}"
     )
+
     lines.append(
         f"- Datasets requiring leakage review: "
         f"{summary['leakage_review_dataset_count']}"
     )
+
+    lines.append("")
+
+    lines.append("## Observed Readiness Signals")
+    lines.append("")
+    lines.append("| Signal | Observed |")
+    lines.append("|---|---|")
+
+    for flag_name, observed in (
+        readiness_flags.items()
+    ):
+        lines.append(
+            f"| {_markdown_escape(flag_name)} "
+            f"| {_markdown_escape(observed)} |"
+        )
+
     lines.append("")
 
     lines.append("## Task Readiness")
     lines.append("")
-    lines.append("| ML Task | Status | Engineering Requirement |")
-    lines.append("|---|---|---|")
 
-    for task_name, assessment in task_assessment.items():
+    lines.append(
+        "| ML Task | Status | Met Signals "
+        "| Missing Signals | Missing Controls |"
+    )
+
+    lines.append(
+        "|---|---|---|---|---|"
+    )
+
+    for task_name, assessment in (
+        task_assessment.items()
+    ):
         lines.append(
             f"| {_markdown_escape(task_name)} "
             f"| {_markdown_escape(assessment['status'])} "
-            f"| {_markdown_escape(assessment['reason'])} |"
+            f"| {_markdown_escape(_format_items(assessment['met_signals']))} "
+            f"| {_markdown_escape(_format_items(assessment['missing_signals']))} "
+            f"| {_markdown_escape(_format_items(assessment['missing_controls']))} |"
         )
 
     lines.append("")
+
+    lines.append(
+        "## Task Assessment Details"
+    )
+    lines.append("")
+
+    for task_name, assessment in (
+        task_assessment.items()
+    ):
+        lines.append(
+            f"### {task_name}"
+        )
+        lines.append("")
+
+        lines.append(
+            f"- **Status:** "
+            f"{assessment['status']}"
+        )
+
+        lines.append(
+            f"- **Reason:** "
+            f"{assessment['reason']}"
+        )
+
+        lines.append(
+            f"- **Required signals:** "
+            f"{_format_items(assessment['required_signals'])}"
+        )
+
+        lines.append(
+            f"- **Met signals:** "
+            f"{_format_items(assessment['met_signals'])}"
+        )
+
+        lines.append(
+            f"- **Missing signals:** "
+            f"{_format_items(assessment['missing_signals'])}"
+        )
+
+        lines.append(
+            f"- **Required controls:** "
+            f"{_format_items(assessment['required_controls'])}"
+        )
+
+        lines.append(
+            f"- **Met controls:** "
+            f"{_format_items(assessment['met_controls'])}"
+        )
+
+        lines.append(
+            f"- **Missing controls:** "
+            f"{_format_items(assessment['missing_controls'])}"
+        )
+
+        lines.append("")
+
+        lines.append(
+            "#### Control Evidence"
+        )
+        lines.append("")
+
+        for control_name, control_detail in (
+            assessment[
+                "control_details"
+            ].items()
+        ):
+            lines.append(
+                f"- **{control_name}:** "
+                f"{control_detail['description']} "
+                f"Current satisfaction state: "
+                f"`{control_detail['satisfied']}`."
+            )
+
+        lines.append("")
+
     lines.append("## Dataset Inventory")
     lines.append("")
+
     lines.append(
-        "| Dataset | Rows | Columns | Temporal | Geography "
-        "| Candidate Targets | Leakage Review | Status |"
+        "| Dataset | Rows | Columns | Temporal "
+        "| Geography | Candidate Targets "
+        "| Leakage Review | Status |"
     )
+
     lines.append(
         "|---|---:|---:|---|---|---|---|---|"
     )
@@ -886,28 +1494,46 @@ def write_markdown_report(
             else "unknown"
         )
 
-        temporal = ", ".join(
-            dataset["datetime_columns"]
-        ) or "None detected"
+        temporal = (
+            ", ".join(
+                dataset["datetime_columns"]
+            )
+            or "None detected"
+        )
 
-        geography = ", ".join(
-            dataset["geography_columns"]
-        ) or "None detected"
+        geography = (
+            ", ".join(
+                dataset["geography_columns"]
+            )
+            or "None detected"
+        )
 
-        targets = ", ".join(
-            dataset["candidate_target_columns"]
-        ) or "None detected"
+        targets = (
+            ", ".join(
+                dataset[
+                    "candidate_target_columns"
+                ]
+            )
+            or "None detected"
+        )
 
         leakage_review_columns = sorted(
             set(
-                dataset["leakage_risk_columns"]
-                + dataset["derived_score_columns"]
+                dataset[
+                    "leakage_risk_columns"
+                ]
+                + dataset[
+                    "derived_score_columns"
+                ]
             )
         )
 
-        leakage_review = ", ".join(
-            leakage_review_columns
-        ) or "None detected"
+        leakage_review = (
+            ", ".join(
+                leakage_review_columns
+            )
+            or "None detected"
+        )
 
         lines.append(
             f"| {_markdown_escape(dataset['path'])} "
@@ -921,8 +1547,12 @@ def write_markdown_report(
         )
 
     lines.append("")
-    lines.append("## Leakage Interpretation")
+
+    lines.append(
+        "## Leakage Interpretation"
+    )
     lines.append("")
+
     lines.append(
         "Columns flagged by this audit are **review candidates**, "
         "not automatically confirmed leakage. Derived scores, ranks, "
@@ -930,40 +1560,66 @@ def write_markdown_report(
         "columns must be traced to their source calculations before "
         "being admitted into a training feature set."
     )
+
     lines.append("")
 
-    lines.append("## Architectural Decision")
+    lines.append(
+        "## Architectural Decision"
+    )
     lines.append("")
+
+    lines.append(
+        "Task readiness is evaluated from configuration-defined "
+        "requirements. Fundamental data signals are derived from "
+        "observed dataset evidence. Engineering controls are read "
+        "from the control registry and remain incomplete until the "
+        "corresponding Phase 10 engineering work is implemented "
+        "and validated."
+    )
+
+    lines.append("")
+
     lines.append(
         "The ML layer must not train directly from analytical tables "
         "without explicit prediction contracts, target engineering, "
         "temporal cutoffs, and point-in-time feature validation."
     )
+
     lines.append("")
 
-    lines.append("## Required Next Actions")
+    lines.append(
+        "## Required Next Actions"
+    )
     lines.append("")
+
     lines.append(
         "1. Complete the predictive data-gap assessment."
     )
+
     lines.append(
         "2. Define prediction contracts for every ML task."
     )
+
     lines.append(
         "3. Define canonical geography entities and observation time."
     )
+
     lines.append(
         "4. Engineer future-looking targets separately from features."
     )
+
     lines.append(
         "5. Create a temporal leakage policy."
     )
+
     lines.append(
         "6. Build point-in-time-correct feature datasets."
     )
+
     lines.append(
         "7. Construct temporal train, validation, and test datasets."
     )
+
     lines.append("")
 
     output_path.write_text(

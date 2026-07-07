@@ -118,31 +118,142 @@ leakage_detection:
     - "rank"
     - "ranking"
 
+signal_detection:
+  price:
+    column_name_tokens:
+      - "price"
+
+  growth:
+    column_name_tokens:
+      - "growth"
+
+  investment:
+    column_name_tokens:
+      - "investment"
+
+  feature:
+    minimum_numeric_feature_columns: 2
+
+  repeated_observations:
+    requires_temporal_signal: true
+    requires_geography_signal: true
+
 readiness_rules:
-  minimum_dataset_count: 1
-  minimum_temporal_dataset_count: 1
-  minimum_geography_dataset_count: 1
+  signal_to_flag_mapping:
+    price_signal: "has_price_signal"
+    growth_signal: "has_growth_signal"
+    investment_signal: "has_investment_signal"
+    geography_signal: "has_geography_signal"
+    temporal_signal: "has_temporal_signal"
+    feature_signal: "has_feature_signal"
+    repeated_observations: "has_repeated_observation_signal"
 
   task_requirements:
     price_prediction:
-      requires_price_signal: true
-      requires_geography_signal: true
-      requires_temporal_signal: true
+      required_signals:
+        - "price_signal"
+        - "geography_signal"
+        - "temporal_signal"
+
+      required_controls:
+        - "future_price_target_defined"
+        - "point_in_time_features_validated"
+        - "temporal_split_policy_defined"
 
     growth_prediction:
-      requires_price_signal: true
-      requires_geography_signal: true
-      requires_temporal_signal: true
+      required_signals:
+        - "price_signal"
+        - "geography_signal"
+        - "temporal_signal"
+
+      required_controls:
+        - "future_growth_target_defined"
+        - "historical_ordering_validated"
+        - "point_in_time_features_validated"
+        - "temporal_split_policy_defined"
 
     area_recommendation:
-      requires_geography_signal: true
-      requires_feature_signal: true
+      required_signals:
+        - "geography_signal"
+        - "feature_signal"
+
+      required_controls:
+        - "user_preference_contract_defined"
+        - "feature_scaling_policy_defined"
+        - "ranking_policy_defined"
+        - "offline_evaluation_policy_defined"
 
     forecasting:
-      requires_temporal_signal: true
-      requires_repeated_observations: true
+      required_signals:
+        - "temporal_signal"
+        - "geography_signal"
+        - "repeated_observations"
+
+      required_controls:
+        - "stable_time_frequency_validated"
+        - "forecast_horizon_defined"
+        - "backtesting_policy_defined"
 
     investment_opportunity_prediction:
-      requires_geography_signal: true
-      requires_temporal_signal: true
-      requires_target_definition: true
+      required_signals:
+        - "geography_signal"
+        - "temporal_signal"
+        - "investment_signal"
+
+      required_controls:
+        - "future_investment_outcome_target_defined"
+        - "point_in_time_features_validated"
+        - "temporal_split_policy_defined"
+
+control_registry:
+  future_price_target_defined:
+    description: "A future price outcome is formally defined relative to prediction time and forecast horizon."
+    satisfied: false
+
+  point_in_time_features_validated:
+    description: "Every training feature is proven to have been available at or before the prediction cutoff."
+    satisfied: false
+
+  temporal_split_policy_defined:
+    description: "Train, validation, and test periods are explicitly ordered through time."
+    satisfied: false
+
+  future_growth_target_defined:
+    description: "A future growth outcome is formally engineered from historically ordered observations."
+    satisfied: false
+
+  historical_ordering_validated:
+    description: "Historical observations are validated for chronological ordering within each prediction entity."
+    satisfied: false
+
+  user_preference_contract_defined:
+    description: "Recommendation inputs and user preference semantics are formally defined."
+    satisfied: false
+
+  feature_scaling_policy_defined:
+    description: "Feature scaling and comparability rules are formally defined for recommendation features."
+    satisfied: false
+
+  ranking_policy_defined:
+    description: "Recommendation ranking logic and tie-breaking behaviour are formally defined."
+    satisfied: false
+
+  offline_evaluation_policy_defined:
+    description: "Offline recommendation evaluation metrics and validation procedures are formally defined."
+    satisfied: false
+
+  stable_time_frequency_validated:
+    description: "Repeated historical observations are validated at a stable modelling frequency."
+    satisfied: false
+
+  forecast_horizon_defined:
+    description: "The forecasting horizon is explicitly defined."
+    satisfied: false
+
+  backtesting_policy_defined:
+    description: "Rolling or expanding-window forecast backtesting is formally defined."
+    satisfied: false
+
+  future_investment_outcome_target_defined:
+    description: "Investment opportunity is defined as an observable future outcome rather than a contemporaneous analytical score."
+    satisfied: false

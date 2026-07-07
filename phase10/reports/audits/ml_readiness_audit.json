@@ -3,7 +3,7 @@
     "project_name": "UK Housing Intelligence Platform",
     "phase": 10,
     "audit_name": "ML Readiness Audit",
-    "generated_at_utc": "2026-07-06T10:00:58.627216+00:00",
+    "generated_at_utc": "2026-07-07T07:42:54.765234+00:00",
     "project_root": "/Users/bibhrajsaha/uk-housing-intelligence-platform",
     "config_path": "phase10/config/readiness_audit.yml"
   },
@@ -27,28 +27,220 @@
       "has_price_signal": true,
       "has_growth_signal": true,
       "has_investment_signal": true,
+      "has_feature_signal": true,
+      "has_repeated_observation_signal": true,
       "has_leakage_risks_to_review": true
     },
     "task_assessment": {
       "price_prediction": {
         "status": "conditional_go",
-        "reason": "Requires a formally engineered future price target and point-in-time feature validation before training."
+        "reason": "Required data signals are present, but engineering controls remain incomplete: future_price_target_defined, point_in_time_features_validated, temporal_split_policy_defined.",
+        "required_signals": [
+          "price_signal",
+          "geography_signal",
+          "temporal_signal"
+        ],
+        "met_signals": [
+          "price_signal",
+          "geography_signal",
+          "temporal_signal"
+        ],
+        "missing_signals": [],
+        "required_controls": [
+          "future_price_target_defined",
+          "point_in_time_features_validated",
+          "temporal_split_policy_defined"
+        ],
+        "met_controls": [],
+        "missing_controls": [
+          "future_price_target_defined",
+          "point_in_time_features_validated",
+          "temporal_split_policy_defined"
+        ],
+        "control_details": {
+          "future_price_target_defined": {
+            "description": "A future price outcome is formally defined relative to prediction time and forecast horizon.",
+            "satisfied": false
+          },
+          "point_in_time_features_validated": {
+            "description": "Every training feature is proven to have been available at or before the prediction cutoff.",
+            "satisfied": false
+          },
+          "temporal_split_policy_defined": {
+            "description": "Train, validation, and test periods are explicitly ordered through time.",
+            "satisfied": false
+          }
+        }
       },
       "growth_prediction": {
         "status": "conditional_go",
-        "reason": "Requires future growth target engineering from historically ordered price observations."
+        "reason": "Required data signals are present, but engineering controls remain incomplete: future_growth_target_defined, historical_ordering_validated, point_in_time_features_validated, temporal_split_policy_defined.",
+        "required_signals": [
+          "price_signal",
+          "geography_signal",
+          "temporal_signal"
+        ],
+        "met_signals": [
+          "price_signal",
+          "geography_signal",
+          "temporal_signal"
+        ],
+        "missing_signals": [],
+        "required_controls": [
+          "future_growth_target_defined",
+          "historical_ordering_validated",
+          "point_in_time_features_validated",
+          "temporal_split_policy_defined"
+        ],
+        "met_controls": [],
+        "missing_controls": [
+          "future_growth_target_defined",
+          "historical_ordering_validated",
+          "point_in_time_features_validated",
+          "temporal_split_policy_defined"
+        ],
+        "control_details": {
+          "future_growth_target_defined": {
+            "description": "A future growth outcome is formally engineered from historically ordered observations.",
+            "satisfied": false
+          },
+          "historical_ordering_validated": {
+            "description": "Historical observations are validated for chronological ordering within each prediction entity.",
+            "satisfied": false
+          },
+          "point_in_time_features_validated": {
+            "description": "Every training feature is proven to have been available at or before the prediction cutoff.",
+            "satisfied": false
+          },
+          "temporal_split_policy_defined": {
+            "description": "Train, validation, and test periods are explicitly ordered through time.",
+            "satisfied": false
+          }
+        }
       },
       "area_recommendation": {
         "status": "conditional_go",
-        "reason": "Requires explicit user preference contracts, feature scaling, ranking logic, and offline evaluation."
+        "reason": "Required data signals are present, but engineering controls remain incomplete: user_preference_contract_defined, feature_scaling_policy_defined, ranking_policy_defined, offline_evaluation_policy_defined.",
+        "required_signals": [
+          "geography_signal",
+          "feature_signal"
+        ],
+        "met_signals": [
+          "geography_signal",
+          "feature_signal"
+        ],
+        "missing_signals": [],
+        "required_controls": [
+          "user_preference_contract_defined",
+          "feature_scaling_policy_defined",
+          "ranking_policy_defined",
+          "offline_evaluation_policy_defined"
+        ],
+        "met_controls": [],
+        "missing_controls": [
+          "user_preference_contract_defined",
+          "feature_scaling_policy_defined",
+          "ranking_policy_defined",
+          "offline_evaluation_policy_defined"
+        ],
+        "control_details": {
+          "user_preference_contract_defined": {
+            "description": "Recommendation inputs and user preference semantics are formally defined.",
+            "satisfied": false
+          },
+          "feature_scaling_policy_defined": {
+            "description": "Feature scaling and comparability rules are formally defined for recommendation features.",
+            "satisfied": false
+          },
+          "ranking_policy_defined": {
+            "description": "Recommendation ranking logic and tie-breaking behaviour are formally defined.",
+            "satisfied": false
+          },
+          "offline_evaluation_policy_defined": {
+            "description": "Offline recommendation evaluation metrics and validation procedures are formally defined.",
+            "satisfied": false
+          }
+        }
       },
       "forecasting": {
         "status": "conditional_go",
-        "reason": "Requires repeated observations through time at a stable geography and frequency."
+        "reason": "Required data signals are present, but engineering controls remain incomplete: stable_time_frequency_validated, forecast_horizon_defined, backtesting_policy_defined.",
+        "required_signals": [
+          "temporal_signal",
+          "geography_signal",
+          "repeated_observations"
+        ],
+        "met_signals": [
+          "temporal_signal",
+          "geography_signal",
+          "repeated_observations"
+        ],
+        "missing_signals": [],
+        "required_controls": [
+          "stable_time_frequency_validated",
+          "forecast_horizon_defined",
+          "backtesting_policy_defined"
+        ],
+        "met_controls": [],
+        "missing_controls": [
+          "stable_time_frequency_validated",
+          "forecast_horizon_defined",
+          "backtesting_policy_defined"
+        ],
+        "control_details": {
+          "stable_time_frequency_validated": {
+            "description": "Repeated historical observations are validated at a stable modelling frequency.",
+            "satisfied": false
+          },
+          "forecast_horizon_defined": {
+            "description": "The forecasting horizon is explicitly defined.",
+            "satisfied": false
+          },
+          "backtesting_policy_defined": {
+            "description": "Rolling or expanding-window forecast backtesting is formally defined.",
+            "satisfied": false
+          }
+        }
       },
       "investment_opportunity_prediction": {
         "status": "conditional_go",
-        "reason": "Existing investment scores are not automatically valid predictive labels. A future-outcome target must be defined."
+        "reason": "Required data signals are present, but engineering controls remain incomplete: future_investment_outcome_target_defined, point_in_time_features_validated, temporal_split_policy_defined.",
+        "required_signals": [
+          "geography_signal",
+          "temporal_signal",
+          "investment_signal"
+        ],
+        "met_signals": [
+          "geography_signal",
+          "temporal_signal",
+          "investment_signal"
+        ],
+        "missing_signals": [],
+        "required_controls": [
+          "future_investment_outcome_target_defined",
+          "point_in_time_features_validated",
+          "temporal_split_policy_defined"
+        ],
+        "met_controls": [],
+        "missing_controls": [
+          "future_investment_outcome_target_defined",
+          "point_in_time_features_validated",
+          "temporal_split_policy_defined"
+        ],
+        "control_details": {
+          "future_investment_outcome_target_defined": {
+            "description": "Investment opportunity is defined as an observable future outcome rather than a contemporaneous analytical score.",
+            "satisfied": false
+          },
+          "point_in_time_features_validated": {
+            "description": "Every training feature is proven to have been available at or before the prediction cutoff.",
+            "satisfied": false
+          },
+          "temporal_split_policy_defined": {
+            "description": "Train, validation, and test periods are explicitly ordered through time.",
+            "satisfied": false
+          }
+        }
       }
     }
   },

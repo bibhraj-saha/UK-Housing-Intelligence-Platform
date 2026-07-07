@@ -4,7 +4,7 @@
 
 - **Project:** UK Housing Intelligence Platform
 - **Phase:** 10
-- **Generated at UTC:** 2026-07-06T10:00:58.627216+00:00
+- **Generated at UTC:** 2026-07-07T07:42:54.765234+00:00
 - **Overall decision:** **CONDITIONAL_GO**
 
 ## Executive Summary
@@ -17,15 +17,119 @@
 - Datasets with candidate target signals: 62
 - Datasets requiring leakage review: 21
 
+## Observed Readiness Signals
+
+| Signal | Observed |
+|---|---|
+| has_datasets | True |
+| has_temporal_signal | True |
+| has_geography_signal | True |
+| has_candidate_targets | True |
+| has_price_signal | True |
+| has_growth_signal | True |
+| has_investment_signal | True |
+| has_feature_signal | True |
+| has_repeated_observation_signal | True |
+| has_leakage_risks_to_review | True |
+
 ## Task Readiness
 
-| ML Task | Status | Engineering Requirement |
-|---|---|---|
-| price_prediction | conditional_go | Requires a formally engineered future price target and point-in-time feature validation before training. |
-| growth_prediction | conditional_go | Requires future growth target engineering from historically ordered price observations. |
-| area_recommendation | conditional_go | Requires explicit user preference contracts, feature scaling, ranking logic, and offline evaluation. |
-| forecasting | conditional_go | Requires repeated observations through time at a stable geography and frequency. |
-| investment_opportunity_prediction | conditional_go | Existing investment scores are not automatically valid predictive labels. A future-outcome target must be defined. |
+| ML Task | Status | Met Signals | Missing Signals | Missing Controls |
+|---|---|---|---|---|
+| price_prediction | conditional_go | price_signal, geography_signal, temporal_signal | None | future_price_target_defined, point_in_time_features_validated, temporal_split_policy_defined |
+| growth_prediction | conditional_go | price_signal, geography_signal, temporal_signal | None | future_growth_target_defined, historical_ordering_validated, point_in_time_features_validated, temporal_split_policy_defined |
+| area_recommendation | conditional_go | geography_signal, feature_signal | None | user_preference_contract_defined, feature_scaling_policy_defined, ranking_policy_defined, offline_evaluation_policy_defined |
+| forecasting | conditional_go | temporal_signal, geography_signal, repeated_observations | None | stable_time_frequency_validated, forecast_horizon_defined, backtesting_policy_defined |
+| investment_opportunity_prediction | conditional_go | geography_signal, temporal_signal, investment_signal | None | future_investment_outcome_target_defined, point_in_time_features_validated, temporal_split_policy_defined |
+
+## Task Assessment Details
+
+### price_prediction
+
+- **Status:** conditional_go
+- **Reason:** Required data signals are present, but engineering controls remain incomplete: future_price_target_defined, point_in_time_features_validated, temporal_split_policy_defined.
+- **Required signals:** price_signal, geography_signal, temporal_signal
+- **Met signals:** price_signal, geography_signal, temporal_signal
+- **Missing signals:** None
+- **Required controls:** future_price_target_defined, point_in_time_features_validated, temporal_split_policy_defined
+- **Met controls:** None
+- **Missing controls:** future_price_target_defined, point_in_time_features_validated, temporal_split_policy_defined
+
+#### Control Evidence
+
+- **future_price_target_defined:** A future price outcome is formally defined relative to prediction time and forecast horizon. Current satisfaction state: `False`.
+- **point_in_time_features_validated:** Every training feature is proven to have been available at or before the prediction cutoff. Current satisfaction state: `False`.
+- **temporal_split_policy_defined:** Train, validation, and test periods are explicitly ordered through time. Current satisfaction state: `False`.
+
+### growth_prediction
+
+- **Status:** conditional_go
+- **Reason:** Required data signals are present, but engineering controls remain incomplete: future_growth_target_defined, historical_ordering_validated, point_in_time_features_validated, temporal_split_policy_defined.
+- **Required signals:** price_signal, geography_signal, temporal_signal
+- **Met signals:** price_signal, geography_signal, temporal_signal
+- **Missing signals:** None
+- **Required controls:** future_growth_target_defined, historical_ordering_validated, point_in_time_features_validated, temporal_split_policy_defined
+- **Met controls:** None
+- **Missing controls:** future_growth_target_defined, historical_ordering_validated, point_in_time_features_validated, temporal_split_policy_defined
+
+#### Control Evidence
+
+- **future_growth_target_defined:** A future growth outcome is formally engineered from historically ordered observations. Current satisfaction state: `False`.
+- **historical_ordering_validated:** Historical observations are validated for chronological ordering within each prediction entity. Current satisfaction state: `False`.
+- **point_in_time_features_validated:** Every training feature is proven to have been available at or before the prediction cutoff. Current satisfaction state: `False`.
+- **temporal_split_policy_defined:** Train, validation, and test periods are explicitly ordered through time. Current satisfaction state: `False`.
+
+### area_recommendation
+
+- **Status:** conditional_go
+- **Reason:** Required data signals are present, but engineering controls remain incomplete: user_preference_contract_defined, feature_scaling_policy_defined, ranking_policy_defined, offline_evaluation_policy_defined.
+- **Required signals:** geography_signal, feature_signal
+- **Met signals:** geography_signal, feature_signal
+- **Missing signals:** None
+- **Required controls:** user_preference_contract_defined, feature_scaling_policy_defined, ranking_policy_defined, offline_evaluation_policy_defined
+- **Met controls:** None
+- **Missing controls:** user_preference_contract_defined, feature_scaling_policy_defined, ranking_policy_defined, offline_evaluation_policy_defined
+
+#### Control Evidence
+
+- **user_preference_contract_defined:** Recommendation inputs and user preference semantics are formally defined. Current satisfaction state: `False`.
+- **feature_scaling_policy_defined:** Feature scaling and comparability rules are formally defined for recommendation features. Current satisfaction state: `False`.
+- **ranking_policy_defined:** Recommendation ranking logic and tie-breaking behaviour are formally defined. Current satisfaction state: `False`.
+- **offline_evaluation_policy_defined:** Offline recommendation evaluation metrics and validation procedures are formally defined. Current satisfaction state: `False`.
+
+### forecasting
+
+- **Status:** conditional_go
+- **Reason:** Required data signals are present, but engineering controls remain incomplete: stable_time_frequency_validated, forecast_horizon_defined, backtesting_policy_defined.
+- **Required signals:** temporal_signal, geography_signal, repeated_observations
+- **Met signals:** temporal_signal, geography_signal, repeated_observations
+- **Missing signals:** None
+- **Required controls:** stable_time_frequency_validated, forecast_horizon_defined, backtesting_policy_defined
+- **Met controls:** None
+- **Missing controls:** stable_time_frequency_validated, forecast_horizon_defined, backtesting_policy_defined
+
+#### Control Evidence
+
+- **stable_time_frequency_validated:** Repeated historical observations are validated at a stable modelling frequency. Current satisfaction state: `False`.
+- **forecast_horizon_defined:** The forecasting horizon is explicitly defined. Current satisfaction state: `False`.
+- **backtesting_policy_defined:** Rolling or expanding-window forecast backtesting is formally defined. Current satisfaction state: `False`.
+
+### investment_opportunity_prediction
+
+- **Status:** conditional_go
+- **Reason:** Required data signals are present, but engineering controls remain incomplete: future_investment_outcome_target_defined, point_in_time_features_validated, temporal_split_policy_defined.
+- **Required signals:** geography_signal, temporal_signal, investment_signal
+- **Met signals:** geography_signal, temporal_signal, investment_signal
+- **Missing signals:** None
+- **Required controls:** future_investment_outcome_target_defined, point_in_time_features_validated, temporal_split_policy_defined
+- **Met controls:** None
+- **Missing controls:** future_investment_outcome_target_defined, point_in_time_features_validated, temporal_split_policy_defined
+
+#### Control Evidence
+
+- **future_investment_outcome_target_defined:** Investment opportunity is defined as an observable future outcome rather than a contemporaneous analytical score. Current satisfaction state: `False`.
+- **point_in_time_features_validated:** Every training feature is proven to have been available at or before the prediction cutoff. Current satisfaction state: `False`.
+- **temporal_split_policy_defined:** Train, validation, and test periods are explicitly ordered through time. Current satisfaction state: `False`.
 
 ## Dataset Inventory
 
@@ -128,6 +232,8 @@
 Columns flagged by this audit are **review candidates**, not automatically confirmed leakage. Derived scores, ranks, indices, future-labelled columns, predictions, and target-like columns must be traced to their source calculations before being admitted into a training feature set.
 
 ## Architectural Decision
+
+Task readiness is evaluated from configuration-defined requirements. Fundamental data signals are derived from observed dataset evidence. Engineering controls are read from the control registry and remain incomplete until the corresponding Phase 10 engineering work is implemented and validated.
 
 The ML layer must not train directly from analytical tables without explicit prediction contracts, target engineering, temporal cutoffs, and point-in-time feature validation.
 

@@ -1,0 +1,32 @@
+version: 1
+
+contract:
+  name: area_recommendation
+  task_type: ranking
+
+  entity_key: lsoa_code
+  event_timestamp: period_end
+
+  target:
+    name: recommendation_relevance
+    construction: none
+    required: false
+
+  eligibility:
+    minimum_history_periods: 1
+    require_non_null_target: false
+
+  leakage_policy:
+    forbid_future_columns: true
+    forbidden_name_tokens:
+      - future
+      - target
+      - label
+      - prediction
+      - predicted
+
+  split:
+    strategy: chronological
+    train_fraction: 0.70
+    validation_fraction: 0.15
+    test_fraction: 0.15

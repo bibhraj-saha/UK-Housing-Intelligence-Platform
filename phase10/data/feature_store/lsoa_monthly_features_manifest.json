@@ -1,0 +1,28 @@
+{
+  "generated_at_utc": "2026-07-09T07:43:21.684853+00:00",
+  "feature_store": "uk_housing_feature_store",
+  "entity_key": "lsoa_code",
+  "event_timestamp": "period_end",
+  "source_dataset": "/Users/bibhrajsaha/uk-housing-intelligence-platform/data/analytics/historical_housing_trends.parquet",
+  "result": {
+    "output_path": "/Users/bibhrajsaha/uk-housing-intelligence-platform/phase10/data/feature_store/lsoa_monthly_features.parquet",
+    "manifest_path": "/Users/bibhrajsaha/uk-housing-intelligence-platform/phase10/data/feature_store/lsoa_monthly_features_manifest.json",
+    "row_count": 1106405,
+    "column_count": 12,
+    "entity_count": 35671,
+    "minimum_timestamp": "2023-01-31T00:00:00",
+    "maximum_timestamp": "2026-04-30T00:00:00",
+    "source_price_column": "average_price",
+    "source_transaction_column": "transaction_count",
+    "feature_columns": [
+      "price_growth_1m",
+      "price_growth_3m",
+      "price_lag_1m",
+      "price_lag_3m",
+      "price_rolling_mean_3m",
+      "price_rolling_std_3m",
+      "transaction_lag_1m",
+      "transaction_rolling_mean_3m"
+    ]
+  }
+}

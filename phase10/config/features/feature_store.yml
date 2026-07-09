@@ -1,0 +1,81 @@
+version: 1
+
+feature_store:
+  name: uk_housing_feature_store
+  entity_key: lsoa_code
+  event_timestamp: period_end
+  source_dataset: data/analytics/historical_housing_trends.parquet
+
+  output:
+    feature_store_path: phase10/data/feature_store/lsoa_monthly_features.parquet
+    manifest_path: phase10/data/feature_store/lsoa_monthly_features_manifest.json
+
+  source_columns:
+    entity:
+      - lsoa_code
+
+    temporal:
+      - year
+      - month
+
+    price_candidates:
+      - average_price
+      - avg_price
+      - median_price
+
+    transaction_candidates:
+      - transaction_count
+      - transactions
+      - sales_count
+
+  features:
+    price_lag_1m:
+      enabled: true
+      source_role: price
+      operation: lag
+      periods: 1
+
+    price_lag_3m:
+      enabled: true
+      source_role: price
+      operation: lag
+      periods: 3
+
+    price_rolling_mean_3m:
+      enabled: true
+      source_role: price
+      operation: rolling_mean
+      window: 3
+      shift: 1
+
+    price_rolling_std_3m:
+      enabled: true
+      source_role: price
+      operation: rolling_std
+      window: 3
+      shift: 1
+
+    price_growth_1m:
+      enabled: true
+      source_role: price
+      operation: pct_change
+      periods: 1
+
+    price_growth_3m:
+      enabled: true
+      source_role: price
+      operation: pct_change
+      periods: 3
+
+    transaction_lag_1m:
+      enabled: true
+      source_role: transaction
+      operation: lag
+      periods: 1
+
+    transaction_rolling_mean_3m:
+      enabled: true
+      source_role: transaction
+      operation: rolling_mean
+      window: 3
+      shift: 1

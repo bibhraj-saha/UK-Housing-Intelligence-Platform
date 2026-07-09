@@ -1,0 +1,34 @@
+version: 1
+
+contract:
+  name: growth_prediction
+  task_type: regression
+
+  entity_key: lsoa_code
+  event_timestamp: period_end
+
+  target:
+    name: future_price_growth
+    source_role: price
+    horizon_months: 3
+    construction: future_percentage_growth
+
+  eligibility:
+    minimum_history_periods: 4
+    require_non_null_target: true
+
+  leakage_policy:
+    forbid_current_target_source_as_feature: true
+    forbid_future_columns: true
+    forbidden_name_tokens:
+      - future
+      - target
+      - label
+      - prediction
+      - predicted
+
+  split:
+    strategy: chronological
+    train_fraction: 0.70
+    validation_fraction: 0.15
+    test_fraction: 0.15

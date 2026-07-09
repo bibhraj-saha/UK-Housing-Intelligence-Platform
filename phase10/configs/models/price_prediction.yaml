@@ -1,0 +1,55 @@
+task_name: price_prediction
+
+dataset_directory: phase10/data/training/price_prediction
+
+artifact_directory: phase10/artifacts/models/price_prediction
+
+report_directory: phase10/reports/model_evaluation/price_prediction
+
+prediction_directory: phase10/data/predictions/price_prediction
+
+target_column: future_price
+
+identifier_columns:
+  - lsoa_code
+  - timestamp
+
+feature_columns:
+  - price_growth_1m
+  - price_growth_3m
+  - price_lag_1m
+  - price_lag_3m
+  - price_rolling_mean_3m
+  - price_rolling_std_3m
+  - transaction_count
+  - transaction_lag_1m
+  - transaction_rolling_mean_3m
+
+models:
+  mean_baseline:
+    enabled: true
+    parameters: {}
+
+  naive_feature_baseline:
+    enabled: true
+    parameters:
+      feature_name: price_lag_1m
+
+  linear_regression:
+    enabled: true
+    parameters: {}
+
+  ridge_regression:
+    enabled: true
+    parameters:
+      alpha: 1.0
+
+  random_forest:
+    enabled: true
+    parameters:
+      n_estimators: 100
+      max_depth: 12
+      min_samples_leaf: 5
+      max_features: 0.8
+      n_jobs: -1
+      random_state: 42

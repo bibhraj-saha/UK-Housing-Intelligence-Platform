@@ -1,0 +1,73 @@
+{
+  "task_name": "growth_prediction",
+  "generated_at_utc": "2026-07-09T10:52:42.631426+00:00",
+  "selection_metric": "validation_rmse",
+  "target_column": "future_price_growth",
+  "feature_columns": [
+    "price_growth_1m",
+    "price_growth_3m",
+    "price_lag_1m",
+    "price_lag_3m",
+    "price_rolling_mean_3m",
+    "price_rolling_std_3m",
+    "transaction_count",
+    "transaction_lag_1m",
+    "transaction_rolling_mean_3m"
+  ],
+  "best_model_name": "random_forest",
+  "validation_results": {
+    "mean_baseline": {
+      "metrics": {
+        "mae": 5.103806905794471,
+        "rmse": 1510.3558524664575,
+        "r2": -6.988079698899696e-06,
+        "evaluated_rows": 139971
+      }
+    },
+    "naive_feature_baseline": {
+      "metrics": {
+        "mae": 11.353614662431353,
+        "rmse": 2601.842881612166,
+        "r2": -1.9676084812970012,
+        "evaluated_rows": 139971
+      }
+    },
+    "linear_regression": {
+      "metrics": {
+        "mae": 5.112610157437736,
+        "rmse": 1510.3575047544366,
+        "r2": -9.176041465108753e-06,
+        "evaluated_rows": 139971
+      }
+    },
+    "ridge_regression": {
+      "metrics": {
+        "mae": 5.112610034467912,
+        "rmse": 1510.3575047508361,
+        "r2": -9.176036697366996e-06,
+        "evaluated_rows": 139971
+      }
+    },
+    "random_forest": {
+      "metrics": {
+        "mae": 4.546692684650048,
+        "rmse": 1500.722211080781,
+        "r2": 0.012709200501073492,
+        "evaluated_rows": 139971
+      }
+    }
+  },
+  "test_metrics": {
+    "mae": 0.42578754492110227,
+    "rmse": 4.2694610349332045,
+    "r2": 0.858932192945403,
+    "evaluated_rows": 118334
+  },
+  "row_counts": {
+    "train": 634155,
+    "validation": 139971,
+    "test": 118334
+  },
+  "model_path": "phase10/artifacts/models/growth_prediction/best_model.joblib",
+  "prediction_path": "phase10/data/predictions/growth_prediction/test_predictions.parquet"
+}

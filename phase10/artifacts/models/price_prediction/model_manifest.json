@@ -1,0 +1,31 @@
+{
+  "task_name": "price_prediction",
+  "generated_at_utc": "2026-07-09T10:51:42.554920+00:00",
+  "model_name": "random_forest",
+  "target_column": "future_price",
+  "feature_columns": [
+    "price_growth_1m",
+    "price_growth_3m",
+    "price_lag_1m",
+    "price_lag_3m",
+    "price_rolling_mean_3m",
+    "price_rolling_std_3m",
+    "transaction_count",
+    "transaction_lag_1m",
+    "transaction_rolling_mean_3m"
+  ],
+  "selection_metric": "validation_rmse",
+  "validation_metrics": {
+    "mae": 136578.22119557243,
+    "rmse": 911621.6801794852,
+    "r2": 0.06817399225747922,
+    "evaluated_rows": 139971
+  },
+  "test_metrics": {
+    "mae": 127549.26752306047,
+    "rmse": 496938.1613554248,
+    "r2": 0.10039752853150807,
+    "evaluated_rows": 118334
+  },
+  "artifact": "phase10/artifacts/models/price_prediction/best_model.joblib"
+}

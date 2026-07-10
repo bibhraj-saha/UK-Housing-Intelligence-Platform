@@ -1,0 +1,319 @@
+{
+  "task_name": "housing_market_forecasting",
+  "generated_at_utc": "2026-07-10T14:20:46.111558+00:00",
+  "selection_metric": "rmse",
+  "horizons": {
+    "3": {
+      "status": "trained",
+      "horizon_months": 3,
+      "target_column": "future_average_price_3m",
+      "feature_columns": [
+        "price_lag_1m",
+        "price_lag_3m",
+        "price_rolling_mean_3m",
+        "price_rolling_std_3m",
+        "price_growth_1m",
+        "price_growth_3m",
+        "transaction_count",
+        "transaction_lag_1m",
+        "transaction_rolling_mean_3m"
+      ],
+      "best_model_name": "random_forest",
+      "validation_results": {
+        "mean_baseline": {
+          "metrics": {
+            "mae": 208740.58372221695,
+            "rmse": 944416.1691575662,
+            "r2": -7.45270980750945e-05,
+            "mape": 93.58455991623056,
+            "evaluated_rows": 139971
+          }
+        },
+        "naive_last_value": {
+          "metrics": {
+            "mae": 176891.49383889372,
+            "rmse": 1061482.5863867628,
+            "r2": -0.2633721108799114,
+            "mape": 60.0229148936969,
+            "evaluated_rows": 139971
+          }
+        },
+        "linear_regression": {
+          "metrics": {
+            "mae": 142967.42376563064,
+            "rmse": 997216.3302721652,
+            "r2": -0.11502422071710194,
+            "mape": 56.98733482199122,
+            "evaluated_rows": 139971
+          }
+        },
+        "ridge_regression": {
+          "metrics": {
+            "mae": 142911.75717497576,
+            "rmse": 996935.067857069,
+            "r2": -0.1143953297360687,
+            "mape": 56.97790037392144,
+            "evaluated_rows": 139971
+          }
+        },
+        "random_forest": {
+          "metrics": {
+            "mae": 138853.00571968115,
+            "rmse": 914125.3200541093,
+            "r2": 0.06304870757482761,
+            "mape": 53.62228024914091,
+            "evaluated_rows": 139971
+          }
+        }
+      },
+      "test_metrics": {
+        "mae": 128011.2965302343,
+        "rmse": 498140.726070813,
+        "r2": 0.09603827717622482,
+        "mape": 54.960765710438096,
+        "evaluated_rows": 118334
+      },
+      "row_counts": {
+        "train": 634155,
+        "validation": 139971,
+        "test": 118334
+      },
+      "model_path": "phase10/artifacts/models/forecasting/3_months/best_model.joblib",
+      "prediction_path": "phase10/data/predictions/forecasting/3_months/test_predictions.parquet"
+    },
+    "6": {
+      "status": "trained",
+      "horizon_months": 6,
+      "target_column": "future_average_price_6m",
+      "feature_columns": [
+        "price_lag_1m",
+        "price_lag_3m",
+        "price_rolling_mean_3m",
+        "price_rolling_std_3m",
+        "price_growth_1m",
+        "price_growth_3m",
+        "transaction_count",
+        "transaction_lag_1m",
+        "transaction_rolling_mean_3m"
+      ],
+      "best_model_name": "random_forest",
+      "validation_results": {
+        "mean_baseline": {
+          "metrics": {
+            "mae": 201977.38348693875,
+            "rmse": 917745.1283316909,
+            "r2": -0.0002141723612114621,
+            "mape": 83.01480099764504,
+            "evaluated_rows": 134118
+          }
+        },
+        "naive_last_value": {
+          "metrics": {
+            "mae": 175626.75933052565,
+            "rmse": 1078529.1767435416,
+            "r2": -0.38137828547351593,
+            "mape": 53.64654458607434,
+            "evaluated_rows": 134118
+          }
+        },
+        "linear_regression": {
+          "metrics": {
+            "mae": 139419.19171969855,
+            "rmse": 892923.1506035854,
+            "r2": 0.05315913349651036,
+            "mape": 50.29173156084256,
+            "evaluated_rows": 134118
+          }
+        },
+        "ridge_regression": {
+          "metrics": {
+            "mae": 139332.1207879771,
+            "rmse": 892926.1779127404,
+            "r2": 0.05315271326901261,
+            "mape": 50.24885481677741,
+            "evaluated_rows": 134118
+          }
+        },
+        "random_forest": {
+          "metrics": {
+            "mae": 136552.42876803526,
+            "rmse": 888632.0469431467,
+            "r2": 0.06223769660299627,
+            "mape": 46.83716792679176,
+            "evaluated_rows": 134118
+          }
+        }
+      },
+      "test_metrics": {
+        "mae": 125555.15751209458,
+        "rmse": 492601.8579519538,
+        "r2": 0.08676550703011732,
+        "mape": 56.815533302334046,
+        "evaluated_rows": 76438
+      },
+      "row_counts": {
+        "train": 575068,
+        "validation": 134118,
+        "test": 76438
+      },
+      "model_path": "phase10/artifacts/models/forecasting/6_months/best_model.joblib",
+      "prediction_path": "phase10/data/predictions/forecasting/6_months/test_predictions.parquet"
+    },
+    "12": {
+      "status": "trained",
+      "horizon_months": 12,
+      "target_column": "future_average_price_12m",
+      "feature_columns": [
+        "price_lag_1m",
+        "price_lag_3m",
+        "price_rolling_mean_3m",
+        "price_rolling_std_3m",
+        "price_growth_1m",
+        "price_growth_3m",
+        "transaction_count",
+        "transaction_lag_1m",
+        "transaction_rolling_mean_3m"
+      ],
+      "best_model_name": "ridge_regression",
+      "validation_results": {
+        "mean_baseline": {
+          "metrics": {
+            "mae": 190868.00639197617,
+            "rmse": 807903.8509810837,
+            "r2": -0.0009221945613964166,
+            "mape": 87.33836367313023,
+            "evaluated_rows": 93457
+          }
+        },
+        "naive_last_value": {
+          "metrics": {
+            "mae": 166703.38961668208,
+            "rmse": 902779.4923140364,
+            "r2": -0.24981097192438817,
+            "mape": 59.640711752988196,
+            "evaluated_rows": 93457
+          }
+        },
+        "linear_regression": {
+          "metrics": {
+            "mae": 136686.41972928392,
+            "rmse": 782428.848672707,
+            "r2": 0.061205206120465205,
+            "mape": 56.732161637985946,
+            "evaluated_rows": 93457
+          }
+        },
+        "ridge_regression": {
+          "metrics": {
+            "mae": 136627.1483589131,
+            "rmse": 782423.10486301,
+            "r2": 0.06121898945388249,
+            "mape": 56.7036957586579,
+            "evaluated_rows": 93457
+          }
+        },
+        "random_forest": {
+          "metrics": {
+            "mae": 134546.234735069,
+            "rmse": 786077.2944286371,
+            "r2": 0.05242964125769356,
+            "mape": 53.16732428615877,
+            "evaluated_rows": 93457
+          }
+        }
+      },
+      "test_metrics": {
+        "mae": 120944.26851372022,
+        "rmse": 303904.4087799886,
+        "r2": 0.21111565682758693,
+        "mape": 55.967749280452836,
+        "evaluated_rows": 33823
+      },
+      "row_counts": {
+        "train": 446010,
+        "validation": 93457,
+        "test": 33823
+      },
+      "model_path": "phase10/artifacts/models/forecasting/12_months/best_model.joblib",
+      "prediction_path": "phase10/data/predictions/forecasting/12_months/test_predictions.parquet"
+    },
+    "24": {
+      "status": "trained",
+      "horizon_months": 24,
+      "target_column": "future_average_price_24m",
+      "feature_columns": [
+        "price_lag_1m",
+        "price_lag_3m",
+        "price_rolling_mean_3m",
+        "price_rolling_std_3m",
+        "price_growth_1m",
+        "price_growth_3m",
+        "transaction_count",
+        "transaction_lag_1m",
+        "transaction_rolling_mean_3m"
+      ],
+      "best_model_name": "linear_regression",
+      "validation_results": {
+        "mean_baseline": {
+          "metrics": {
+            "mae": 164483.35280230237,
+            "rmse": 395478.2442871274,
+            "r2": -0.011446829090240529,
+            "mape": 83.46204401933743,
+            "evaluated_rows": 14546
+          }
+        },
+        "naive_last_value": {
+          "metrics": {
+            "mae": 162605.11307710796,
+            "rmse": 591797.7646410331,
+            "r2": -1.2648763824999807,
+            "mape": 64.81779810814444,
+            "evaluated_rows": 14546
+          }
+        },
+        "linear_regression": {
+          "metrics": {
+            "mae": 118449.79588144585,
+            "rmse": 354327.1811137598,
+            "r2": 0.18809203744566327,
+            "mape": 55.44766409918982,
+            "evaluated_rows": 14546
+          }
+        },
+        "ridge_regression": {
+          "metrics": {
+            "mae": 118450.75743570906,
+            "rmse": 354327.4049230169,
+            "r2": 0.18809101176891585,
+            "mape": 55.44864413330844,
+            "evaluated_rows": 14546
+          }
+        },
+        "random_forest": {
+          "metrics": {
+            "mae": 117749.70766118415,
+            "rmse": 369433.8951998237,
+            "r2": 0.1173849260768205,
+            "mape": 50.401148379219215,
+            "evaluated_rows": 14546
+          }
+        }
+      },
+      "test_metrics": {
+        "mae": 105605.7864649127,
+        "rmse": 172606.4954617531,
+        "r2": 0.30900469534179487,
+        "mape": 48.75672423986608,
+        "evaluated_rows": 4215
+      },
+      "row_counts": {
+        "train": 158949,
+        "validation": 14546,
+        "test": 4215
+      },
+      "model_path": "phase10/artifacts/models/forecasting/24_months/best_model.joblib",
+      "prediction_path": "phase10/data/predictions/forecasting/24_months/test_predictions.parquet"
+    }
+  }
+}

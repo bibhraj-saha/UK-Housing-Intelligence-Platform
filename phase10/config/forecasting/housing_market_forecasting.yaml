@@ -1,0 +1,74 @@
+task_name: housing_market_forecasting
+
+data:
+  feature_store_path: phase10/data/feature_store/lsoa_monthly_features.parquet
+
+columns:
+  entity: lsoa_code
+  timestamp: period_end
+  value: average_price
+
+features:
+  - price_lag_1m
+  - price_lag_3m
+  - price_rolling_mean_3m
+  - price_rolling_std_3m
+  - price_growth_1m
+  - price_growth_3m
+  - transaction_count
+  - transaction_lag_1m
+  - transaction_rolling_mean_3m
+
+horizons:
+  - 3
+  - 6
+  - 12
+  - 24
+
+feasibility:
+  minimum_train_months: 12
+  minimum_validation_months: 3
+  minimum_test_months: 3
+
+split:
+  train_fraction: 0.70
+  validation_fraction: 0.15
+  test_fraction: 0.15
+
+models:
+  mean_baseline:
+    enabled: true
+    parameters: {}
+
+  naive_last_value:
+    enabled: true
+    parameters: {}
+
+  linear_regression:
+    enabled: true
+    parameters: {}
+
+  ridge_regression:
+    enabled: true
+    parameters:
+      alpha: 1.0
+
+  random_forest:
+    enabled: true
+    parameters:
+      n_estimators: 100
+      max_depth: 16
+      min_samples_leaf: 5
+      n_jobs: -1
+
+selection:
+  metric: rmse
+
+runtime:
+  random_state: 42
+
+output:
+  dataset_directory: phase10/data/forecasting
+  model_directory: phase10/artifacts/models/forecasting
+  prediction_directory: phase10/data/predictions/forecasting
+  report_directory: phase10/reports/forecasting

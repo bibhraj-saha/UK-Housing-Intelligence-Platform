@@ -1,0 +1,80 @@
+{
+  "task_name": "housing_market_forecasting",
+  "generated_at_utc": "2026-07-10T14:20:46.111558+00:00",
+  "status": "trained",
+  "horizon_months": 3,
+  "target_column": "future_average_price_3m",
+  "feature_columns": [
+    "price_lag_1m",
+    "price_lag_3m",
+    "price_rolling_mean_3m",
+    "price_rolling_std_3m",
+    "price_growth_1m",
+    "price_growth_3m",
+    "transaction_count",
+    "transaction_lag_1m",
+    "transaction_rolling_mean_3m"
+  ],
+  "best_model_name": "random_forest",
+  "validation_results": {
+    "mean_baseline": {
+      "metrics": {
+        "mae": 208740.58372221695,
+        "rmse": 944416.1691575662,
+        "r2": -7.45270980750945e-05,
+        "mape": 93.58455991623056,
+        "evaluated_rows": 139971
+      }
+    },
+    "naive_last_value": {
+      "metrics": {
+        "mae": 176891.49383889372,
+        "rmse": 1061482.5863867628,
+        "r2": -0.2633721108799114,
+        "mape": 60.0229148936969,
+        "evaluated_rows": 139971
+      }
+    },
+    "linear_regression": {
+      "metrics": {
+        "mae": 142967.42376563064,
+        "rmse": 997216.3302721652,
+        "r2": -0.11502422071710194,
+        "mape": 56.98733482199122,
+        "evaluated_rows": 139971
+      }
+    },
+    "ridge_regression": {
+      "metrics": {
+        "mae": 142911.75717497576,
+        "rmse": 996935.067857069,
+        "r2": -0.1143953297360687,
+        "mape": 56.97790037392144,
+        "evaluated_rows": 139971
+      }
+    },
+    "random_forest": {
+      "metrics": {
+        "mae": 138853.00571968115,
+        "rmse": 914125.3200541093,
+        "r2": 0.06304870757482761,
+        "mape": 53.62228024914091,
+        "evaluated_rows": 139971
+      }
+    }
+  },
+  "test_metrics": {
+    "mae": 128011.2965302343,
+    "rmse": 498140.726070813,
+    "r2": 0.09603827717622482,
+    "mape": 54.960765710438096,
+    "evaluated_rows": 118334
+  },
+  "row_counts": {
+    "train": 634155,
+    "validation": 139971,
+    "test": 118334
+  },
+  "model_path": "phase10/artifacts/models/forecasting/3_months/best_model.joblib",
+  "prediction_path": "phase10/data/predictions/forecasting/3_months/test_predictions.parquet"
+}

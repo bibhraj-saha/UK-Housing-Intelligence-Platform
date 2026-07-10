@@ -1,0 +1,108 @@
+{
+  "generated_at_utc": "2026-07-10T14:20:31.066992+00:00",
+  "task_name": "housing_market_forecasting",
+  "source_path": "phase10/data/feature_store/lsoa_monthly_features.parquet",
+  "detected_history_months": 38.93223819301848,
+  "horizons": {
+    "3": {
+      "status": "dataset_built",
+      "target_column": "future_average_price_3m",
+      "row_count": 892460,
+      "train_rows": 634155,
+      "validation_rows": 139971,
+      "test_rows": 118334,
+      "feature_columns": [
+        "price_lag_1m",
+        "price_lag_3m",
+        "price_rolling_mean_3m",
+        "price_rolling_std_3m",
+        "price_growth_1m",
+        "price_growth_3m",
+        "transaction_count",
+        "transaction_lag_1m",
+        "transaction_rolling_mean_3m"
+      ],
+      "paths": {
+        "full": "phase10/data/forecasting/3_months/full.parquet",
+        "train": "phase10/data/forecasting/3_months/train.parquet",
+        "validation": "phase10/data/forecasting/3_months/validation.parquet",
+        "test": "phase10/data/forecasting/3_months/test.parquet"
+      }
+    },
+    "6": {
+      "status": "dataset_built",
+      "target_column": "future_average_price_6m",
+      "row_count": 785624,
+      "train_rows": 575068,
+      "validation_rows": 134118,
+      "test_rows": 76438,
+      "feature_columns": [
+        "price_lag_1m",
+        "price_lag_3m",
+        "price_rolling_mean_3m",
+        "price_rolling_std_3m",
+        "price_growth_1m",
+        "price_growth_3m",
+        "transaction_count",
+        "transaction_lag_1m",
+        "transaction_rolling_mean_3m"
+      ],
+      "paths": {
+        "full": "phase10/data/forecasting/6_months/full.parquet",
+        "train": "phase10/data/forecasting/6_months/train.parquet",
+        "validation": "phase10/data/forecasting/6_months/validation.parquet",
+        "test": "phase10/data/forecasting/6_months/test.parquet"
+      }
+    },
+    "12": {
+      "status": "dataset_built",
+      "target_column": "future_average_price_12m",
+      "row_count": 573290,
+      "train_rows": 446010,
+      "validation_rows": 93457,
+      "test_rows": 33823,
+      "feature_columns": [
+        "price_lag_1m",
+        "price_lag_3m",
+        "price_rolling_mean_3m",
+        "price_rolling_std_3m",
+        "price_growth_1m",
+        "price_growth_3m",
+        "transaction_count",
+        "transaction_lag_1m",
+        "transaction_rolling_mean_3m"
+      ],
+      "paths": {
+        "full": "phase10/data/forecasting/12_months/full.parquet",
+        "train": "phase10/data/forecasting/12_months/train.parquet",
+        "validation": "phase10/data/forecasting/12_months/validation.parquet",
+        "test": "phase10/data/forecasting/12_months/test.parquet"
+      }
+    },
+    "24": {
+      "status": "dataset_built",
+      "target_column": "future_average_price_24m",
+      "row_count": 177710,
+      "train_rows": 158949,
+      "validation_rows": 14546,
+      "test_rows": 4215,
+      "feature_columns": [
+        "price_lag_1m",
+        "price_lag_3m",
+        "price_rolling_mean_3m",
+        "price_rolling_std_3m",
+        "price_growth_1m",
+        "price_growth_3m",
+        "transaction_count",
+        "transaction_lag_1m",
+        "transaction_rolling_mean_3m"
+      ],
+      "paths": {
+        "full": "phase10/data/forecasting/24_months/full.parquet",
+        "train": "phase10/data/forecasting/24_months/train.parquet",
+        "validation": "phase10/data/forecasting/24_months/validation.parquet",
+        "test": "phase10/data/forecasting/24_months/test.parquet"
+      }
+    }
+  }
+}

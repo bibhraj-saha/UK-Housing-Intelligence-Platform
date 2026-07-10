@@ -1,0 +1,19 @@
+{
+  "generated_at_utc": "2026-07-10T13:14:56.958373+00:00",
+  "entity_column": "lsoa_code",
+  "timestamp_column": "timestamp",
+  "row_count": 35671,
+  "feature_columns": [
+    "price_growth_3m",
+    "price_rolling_mean_3m",
+    "transaction_count",
+    "transaction_rolling_mean_3m"
+  ],
+  "weights": {
+    "price_growth_3m": 0.35,
+    "price_rolling_mean_3m": 0.25,
+    "transaction_count": 0.2,
+    "transaction_rolling_mean_3m": 0.2
+  },
+  "output_path": "phase10/data/recommendations/area_recommendation/area_recommendations.parquet"
+}

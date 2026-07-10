@@ -1,0 +1,75 @@
+{
+  "task_name": "investment_opportunity_prediction",
+  "generated_at_utc": "2026-07-10T11:55:41.823866+00:00",
+  "selection_metric": "roc_auc",
+  "target_column": "investment_opportunity",
+  "target_definition": {
+    "source_column": "future_price_growth",
+    "minimum_growth": 0.0,
+    "positive_class_rule": "future_price_growth > 0.0"
+  },
+  "feature_columns": [
+    "price_growth_1m",
+    "price_growth_3m",
+    "price_lag_1m",
+    "price_lag_3m",
+    "price_rolling_mean_3m",
+    "price_rolling_std_3m",
+    "transaction_count",
+    "transaction_lag_1m",
+    "transaction_rolling_mean_3m"
+  ],
+  "best_model_name": "random_forest",
+  "validation_results": {
+    "majority_baseline": {
+      "metrics": {
+        "accuracy": 0.5128991005279665,
+        "precision": 0.5128991005279665,
+        "recall": 1.0,
+        "f1": 0.6780347748887903,
+        "roc_auc": 0.5,
+        "evaluated_rows": 139971
+      }
+    },
+    "logistic_regression": {
+      "metrics": {
+        "accuracy": 0.6013888591208179,
+        "precision": 0.5922772528524787,
+        "recall": 0.7151035645136578,
+        "f1": 0.6479207420962958,
+        "roc_auc": 0.6554214637720812,
+        "evaluated_rows": 139971
+      }
+    },
+    "random_forest": {
+      "metrics": {
+        "accuracy": 0.6991948332154517,
+        "precision": 0.711980349313797,
+        "recall": 0.6944463790725857,
+        "f1": 0.7031040658891223,
+        "roc_auc": 0.7752071837598694,
+        "evaluated_rows": 139971
+      }
+    }
+  },
+  "test_metrics": {
+    "accuracy": 0.6947453817161593,
+    "precision": 0.6733754835631146,
+    "recall": 0.6997290548796685,
+    "f1": 0.6862993712439643,
+    "roc_auc": 0.7688271262061612,
+    "evaluated_rows": 118334
+  },
+  "row_counts": {
+    "train": 634155,
+    "validation": 139971,
+    "test": 118334
+  },
+  "class_balance": {
+    "train_positive_rate": 0.502957478849808,
+    "validation_positive_rate": 0.5128991005279665,
+    "test_positive_rate": 0.47720012844998055
+  },
+  "model_path": "phase10/artifacts/models/investment_opportunity_prediction/best_model.joblib",
+  "prediction_path": "phase10/data/predictions/investment_opportunity_prediction/test_predictions.parquet"
+}

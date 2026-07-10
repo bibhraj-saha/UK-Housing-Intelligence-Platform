@@ -1,0 +1,43 @@
+task_name: investment_opportunity_prediction
+
+target:
+  source_column: future_price_growth
+  target_column: investment_opportunity
+  minimum_growth: 0.0
+
+features:
+  - price_growth_1m
+  - price_growth_3m
+  - price_lag_1m
+  - price_lag_3m
+  - price_rolling_mean_3m
+  - price_rolling_std_3m
+  - transaction_count
+  - transaction_lag_1m
+  - transaction_rolling_mean_3m
+
+models:
+  majority_baseline:
+    parameters: {}
+
+  logistic_regression:
+    parameters:
+      class_weight: balanced
+
+  random_forest:
+    parameters:
+      n_estimators: 100
+      max_depth: 12
+      min_samples_leaf: 5
+      class_weight: balanced
+      n_jobs: -1
+
+selection_metric: roc_auc
+random_state: 42
+
+paths:
+  training_directory: phase10/data/training/growth_prediction
+  model_path: phase10/artifacts/models/investment_opportunity_prediction/best_model.joblib
+  manifest_path: phase10/artifacts/models/investment_opportunity_prediction/model_manifest.json
+  prediction_path: phase10/data/predictions/investment_opportunity_prediction/test_predictions.parquet
+  evaluation_report_path: phase10/reports/model_evaluation/investment_opportunity_prediction/evaluation_report.json

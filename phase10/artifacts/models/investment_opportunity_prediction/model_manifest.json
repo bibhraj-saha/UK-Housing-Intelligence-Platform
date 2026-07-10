@@ -1,0 +1,35 @@
+{
+  "task_name": "investment_opportunity_prediction",
+  "generated_at_utc": "2026-07-10T11:55:41.823866+00:00",
+  "model_name": "random_forest",
+  "target_column": "investment_opportunity",
+  "feature_columns": [
+    "price_growth_1m",
+    "price_growth_3m",
+    "price_lag_1m",
+    "price_lag_3m",
+    "price_rolling_mean_3m",
+    "price_rolling_std_3m",
+    "transaction_count",
+    "transaction_lag_1m",
+    "transaction_rolling_mean_3m"
+  ],
+  "selection_metric": "roc_auc",
+  "validation_metrics": {
+    "accuracy": 0.6991948332154517,
+    "precision": 0.711980349313797,
+    "recall": 0.6944463790725857,
+    "f1": 0.7031040658891223,
+    "roc_auc": 0.7752071837598694,
+    "evaluated_rows": 139971
+  },
+  "test_metrics": {
+    "accuracy": 0.6947453817161593,
+    "precision": 0.6733754835631146,
+    "recall": 0.6997290548796685,
+    "f1": 0.6862993712439643,
+    "roc_auc": 0.7688271262061612,
+    "evaluated_rows": 118334
+  },
+  "artifact": "phase10/artifacts/models/investment_opportunity_prediction/best_model.joblib"
+}

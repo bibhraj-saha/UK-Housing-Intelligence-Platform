@@ -1,0 +1,36 @@
+registry:
+  path: phase10/artifacts/registry/model_registry.json
+  default_stage: candidate
+
+tasks:
+  price_prediction:
+    evaluation_report:
+      phase10/reports/model_evaluation/price_prediction/evaluation_report.json
+
+  growth_prediction:
+    evaluation_report:
+      phase10/reports/model_evaluation/growth_prediction/evaluation_report.json
+
+  investment_opportunity_prediction:
+    evaluation_report:
+      phase10/reports/model_evaluation/investment_opportunity_prediction/evaluation_report.json
+
+  forecasting_3_months:
+    forecasting_report:
+      phase10/reports/forecasting/forecasting_evaluation_report.json
+    horizon: 3
+
+  forecasting_6_months:
+    forecasting_report:
+      phase10/reports/forecasting/forecasting_evaluation_report.json
+    horizon: 6
+
+  forecasting_12_months:
+    forecasting_report:
+      phase10/reports/forecasting/forecasting_evaluation_report.json
+    horizon: 12
+
+  forecasting_24_months:
+    forecasting_report:
+      phase10/reports/forecasting/forecasting_evaluation_report.json
+    horizon: 24

@@ -1,0 +1,25 @@
+{
+  "generated_at_utc": "2026-07-17T06:17:31.556983+00:00",
+  "row_count": 35671,
+  "column_count": 16,
+  "columns": [
+    "lsoa_code",
+    "timestamp",
+    "recommendation_rank",
+    "recommendation_score",
+    "recommendation_percentile",
+    "price_growth_3m",
+    "price_rolling_mean_3m",
+    "transaction_count",
+    "transaction_rolling_mean_3m",
+    "price_growth_3m_component_score",
+    "price_rolling_mean_3m_component_score",
+    "transaction_count_component_score",
+    "transaction_rolling_mean_3m_component_score",
+    "opportunity_probability",
+    "predicted_future_price",
+    "predicted_future_growth"
+  ],
+  "output_path": "phase10/data/serving/area_ml_serving.parquet",
+  "purpose": "Dashboard-ready Phase 10 ML serving dataset"
+}

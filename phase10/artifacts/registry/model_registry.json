@@ -1,0 +1,154 @@
+{
+  "models": {
+    "price_prediction": [
+      {
+        "task_name": "price_prediction",
+        "model_name": "random_forest",
+        "version": 1,
+        "stage": "candidate",
+        "registered_at_utc": "2026-07-17T06:16:52.337123+00:00",
+        "artifact_path": "phase10/artifacts/models/price_prediction/best_model.joblib",
+        "metrics": {
+          "mae": 127549.26752306047,
+          "rmse": 496938.1613554248,
+          "r2": 0.10039752853150807,
+          "evaluated_rows": 118334
+        },
+        "metadata": {
+          "selection_metric": "validation_rmse",
+          "source_report": "phase10/reports/model_evaluation/price_prediction/evaluation_report.json"
+        }
+      }
+    ],
+    "growth_prediction": [
+      {
+        "task_name": "growth_prediction",
+        "model_name": "random_forest",
+        "version": 1,
+        "stage": "candidate",
+        "registered_at_utc": "2026-07-17T06:16:52.337723+00:00",
+        "artifact_path": "phase10/artifacts/models/growth_prediction/best_model.joblib",
+        "metrics": {
+          "mae": 0.42578754492110227,
+          "rmse": 4.2694610349332045,
+          "r2": 0.858932192945403,
+          "evaluated_rows": 118334
+        },
+        "metadata": {
+          "selection_metric": "validation_rmse",
+          "source_report": "phase10/reports/model_evaluation/growth_prediction/evaluation_report.json"
+        }
+      }
+    ],
+    "investment_opportunity_prediction": [
+      {
+        "task_name": "investment_opportunity_prediction",
+        "model_name": "random_forest",
+        "version": 1,
+        "stage": "candidate",
+        "registered_at_utc": "2026-07-17T06:16:52.338044+00:00",
+        "artifact_path": "phase10/artifacts/models/investment_opportunity_prediction/best_model.joblib",
+        "metrics": {
+          "accuracy": 0.6947453817161593,
+          "precision": 0.6733754835631146,
+          "recall": 0.6997290548796685,
+          "f1": 0.6862993712439643,
+          "roc_auc": 0.7688271262061612,
+          "evaluated_rows": 118334
+        },
+        "metadata": {
+          "selection_metric": "roc_auc",
+          "source_report": "phase10/reports/model_evaluation/investment_opportunity_prediction/evaluation_report.json"
+        }
+      }
+    ],
+    "forecasting_3_months": [
+      {
+        "task_name": "forecasting_3_months",
+        "model_name": "random_forest",
+        "version": 1,
+        "stage": "candidate",
+        "registered_at_utc": "2026-07-17T06:16:52.338616+00:00",
+        "artifact_path": "phase10/artifacts/models/forecasting/3_months/best_model.joblib",
+        "metrics": {
+          "mae": 128011.2965302343,
+          "rmse": 498140.726070813,
+          "r2": 0.09603827717622482,
+          "mape": 54.960765710438096,
+          "evaluated_rows": 118334
+        },
+        "metadata": {
+          "horizon_months": 3,
+          "selection_metric": "rmse",
+          "source_report": "phase10/reports/forecasting/forecasting_evaluation_report.json"
+        }
+      }
+    ],
+    "forecasting_6_months": [
+      {
+        "task_name": "forecasting_6_months",
+        "model_name": "random_forest",
+        "version": 1,
+        "stage": "candidate",
+        "registered_at_utc": "2026-07-17T06:16:52.338879+00:00",
+        "artifact_path": "phase10/artifacts/models/forecasting/6_months/best_model.joblib",
+        "metrics": {
+          "mae": 125555.15751209458,
+          "rmse": 492601.8579519538,
+          "r2": 0.08676550703011732,
+          "mape": 56.815533302334046,
+          "evaluated_rows": 76438
+        },
+        "metadata": {
+          "horizon_months": 6,
+          "selection_metric": "rmse",
+          "source_report": "phase10/reports/forecasting/forecasting_evaluation_report.json"
+        }
+      }
+    ],
+    "forecasting_12_months": [
+      {
+        "task_name": "forecasting_12_months",
+        "model_name": "ridge_regression",
+        "version": 1,
+        "stage": "candidate",
+        "registered_at_utc": "2026-07-17T06:16:52.339144+00:00",
+        "artifact_path": "phase10/artifacts/models/forecasting/12_months/best_model.joblib",
+        "metrics": {
+          "mae": 120944.26851372022,
+          "rmse": 303904.4087799886,
+          "r2": 0.21111565682758693,
+          "mape": 55.967749280452836,
+          "evaluated_rows": 33823
+        },
+        "metadata": {
+          "horizon_months": 12,
+          "selection_metric": "rmse",
+          "source_report": "phase10/reports/forecasting/forecasting_evaluation_report.json"
+        }
+      }
+    ],
+    "forecasting_24_months": [
+      {
+        "task_name": "forecasting_24_months",
+        "model_name": "linear_regression",
+        "version": 1,
+        "stage": "candidate",
+        "registered_at_utc": "2026-07-17T06:16:52.339714+00:00",
+        "artifact_path": "phase10/artifacts/models/forecasting/24_months/best_model.joblib",
+        "metrics": {
+          "mae": 105605.7864649127,
+          "rmse": 172606.4954617531,
+          "r2": 0.30900469534179487,
+          "mape": 48.75672423986608,
+          "evaluated_rows": 4215
+        },
+        "metadata": {
+          "horizon_months": 24,
+          "selection_metric": "rmse",
+          "source_report": "phase10/reports/forecasting/forecasting_evaluation_report.json"
+        }
+      }
+    ]
+  }
+}

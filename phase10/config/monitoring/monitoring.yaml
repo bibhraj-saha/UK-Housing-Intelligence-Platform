@@ -1,0 +1,24 @@
+monitoring:
+  drift_threshold: 0.25
+
+  feature_columns:
+    - price_lag_1m
+    - price_lag_3m
+    - price_rolling_mean_3m
+    - price_rolling_std_3m
+    - price_growth_1m
+    - price_growth_3m
+    - transaction_count
+    - transaction_lag_1m
+    - transaction_rolling_mean_3m
+
+datasets:
+  reference:
+    phase10/data/training/price_prediction/train.parquet
+
+  current:
+    phase10/data/training/price_prediction/test.parquet
+
+output:
+  report:
+    phase10/reports/monitoring/feature_drift_report.json

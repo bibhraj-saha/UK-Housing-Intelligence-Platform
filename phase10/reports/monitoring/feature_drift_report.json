@@ -1,0 +1,76 @@
+{
+  "task_name": "phase10_feature_monitoring",
+  "generated_at_utc": "2026-07-17T06:17:10.963524+00:00",
+  "reference_rows": 634155,
+  "current_rows": 118334,
+  "drift_threshold": 0.25,
+  "monitored_feature_count": 9,
+  "drifted_feature_count": 0,
+  "drifted_features": [],
+  "overall_status": "healthy",
+  "feature_results": {
+    "price_lag_1m": {
+      "reference_mean": 394679.22695741977,
+      "current_mean": 375228.92449764075,
+      "reference_std": 858617.365245104,
+      "standardized_mean_shift": 0.02265305041230638,
+      "drift_detected": false
+    },
+    "price_lag_3m": {
+      "reference_mean": 394579.0360523989,
+      "current_mean": 375063.92553631373,
+      "reference_std": 896287.2632115328,
+      "standardized_mean_shift": 0.02177327662356774,
+      "drift_detected": false
+    },
+    "price_rolling_mean_3m": {
+      "reference_mean": 394689.6228077605,
+      "current_mean": 376225.3173766087,
+      "reference_std": 571546.9358924655,
+      "standardized_mean_shift": 0.03230584274294098,
+      "drift_detected": false
+    },
+    "price_rolling_std_3m": {
+      "reference_mean": 164378.41310552089,
+      "current_mean": 135502.63301051428,
+      "reference_std": 807331.6276082442,
+      "standardized_mean_shift": 0.03576693778311694,
+      "drift_detected": false
+    },
+    "price_growth_1m": {
+      "reference_mean": 0.6624210713360654,
+      "current_mean": 0.29803575199916665,
+      "reference_std": 50.001545760076155,
+      "standardized_mean_shift": 0.007287481092791396,
+      "drift_detected": false
+    },
+    "price_growth_3m": {
+      "reference_mean": 0.6471624072231678,
+      "current_mean": 0.49813251687730886,
+      "reference_std": 28.058608021019438,
+      "standardized_mean_shift": 0.005311378605603553,
+      "drift_detected": false
+    },
+    "transaction_count": {
+      "reference_mean": 2.645367457482792,
+      "current_mean": 2.449481974749438,
+      "reference_std": 2.452820255197768,
+      "standardized_mean_shift": 0.07986132792170693,
+      "drift_detected": false
+    },
+    "transaction_lag_1m": {
+      "reference_mean": 2.644629467559193,
+      "current_mean": 2.568796795511011,
+      "reference_std": 2.4870614551627503,
+      "standardized_mean_shift": 0.030490871824162172,
+      "drift_detected": false
+    },
+    "transaction_rolling_mean_3m": {
+      "reference_mean": 2.6315227875414267,
+      "current_mean": 2.617720463546684,
+      "reference_std": 1.8543285954666355,
+      "standardized_mean_shift": 0.0074432999784859455,
+      "drift_detected": false
+    }
+  }
+}

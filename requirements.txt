@@ -24,3 +24,5 @@ dbt-snowflake
 
 apache-airflow
 apache-airflow-providers-snowflake
+
+requests

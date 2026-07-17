@@ -5,16 +5,27 @@ from phase11.services.preprocessing import DataPreprocessor
 class PredictionService:
 
     def __init__(self):
+
         self.model_loader = ModelLoader()
+
         self.preprocessor = DataPreprocessor()
 
-    def predict(self, features: dict):
+    def predict(
+        self,
+        features: dict,
+    ):
 
-        processed_features = self.preprocessor.preprocess(features)
+        processed = self.preprocessor.preprocess(
+            features
+        )
 
         return {
             "service": "prediction",
             "status": "ready",
-            "features": processed_features,
+            "message": (
+                "ML model integration "
+                "will be completed in Step 5."
+            ),
+            "input_features": processed,
             "prediction": None,
         }

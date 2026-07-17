@@ -1,4 +1,5 @@
 from fastapi import APIRouter
+from pydantic import BaseModel
 
 from phase11.services import PredictionService
 
@@ -8,16 +9,22 @@ router = APIRouter(
     tags=["Prediction"],
 )
 
+
 prediction_service = PredictionService()
 
 
+class PredictionRequest(BaseModel):
+
+    average_price: float
+
+    average_crime: float
+
+    average_income: float
+
+
 @router.post("")
-def predict():
+def predict(request: PredictionRequest):
 
-    sample_features = {
-        "average_price": 300000,
-        "average_crime": 45,
-        "average_income": 50000,
-    }
-
-    return prediction_service.predict(sample_features)
+    return prediction_service.predict(
+        request.model_dump()
+    )

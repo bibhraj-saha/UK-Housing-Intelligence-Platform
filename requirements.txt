@@ -6,14 +6,21 @@ openpyxl
 plotly
 streamlit
 
+matplotlib
+
+scikit-learn
+joblib
+
+fastapi
+uvicorn
+python-dotenv
+
 snowflake-connector-python
 
 boto3
 
-matplotlib
-
 dbt-core
 dbt-snowflake
 
+apache-airflow
 apache-airflow-providers-snowflake
-snowflake-connector-python

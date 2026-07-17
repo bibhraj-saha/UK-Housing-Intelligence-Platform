@@ -43,11 +43,11 @@ Future releases will incorporate:
 
 ## Dashboard Screenshots
 
-![Housing_Intelligence_Map](docs/screenshots/Housing_Intelligence_Map.png)
+![Housing_Intelligence_Map](docs/screenshots/dashboard_screenshots/Housing_Intelligence_Map.png)
 
-![Income_Intelligence_2](docs/screenshots/Income_Intelligence_2.png)
+![Income_Intelligence_2](docs/screenshots/dashboard_screenshots/Income_Intelligence_2.png)
 
-![Area_Comparision_2](docs/screenshots/Area_Comparision_2.png)
+![Area_Comparision_2](docs/screenshots/dashboard_screenshots/Area_Comparision_2.png)
 
 For all dashboard screenshots, see:
 

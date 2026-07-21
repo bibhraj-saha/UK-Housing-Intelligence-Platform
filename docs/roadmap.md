@@ -221,7 +221,7 @@ Deliverables:
 
 Production Platform & Application Integration
 
-Status: Pending
+Status: Completed
 
 Deliverables:
 

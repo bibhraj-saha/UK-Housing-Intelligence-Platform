@@ -86,3 +86,39 @@ The platform will implement:
 - Auditability and traceability
 
 These governance capabilities will ensure that data remains accurate, trusted, and explainable throughout the platform lifecycle.
+
+---
+
+## End-to-End Platform
+
+The platform provides:
+
+- Automated data engineering pipelines
+
+- Cloud data lake architecture
+
+- Snowflake data warehouse
+
+- Machine learning prediction services
+
+- FastAPI REST APIs
+
+- Interactive Streamlit dashboards
+
+- End-to-end production-style ML serving
+
+---
+
+## Machine Learning Dashboards
+
+- Price Prediction
+
+- Growth Prediction
+
+- Investment Intelligence
+
+- Area Recommendation
+
+- Housing Forecast
+
+---

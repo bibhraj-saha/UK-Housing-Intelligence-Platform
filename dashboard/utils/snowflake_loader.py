@@ -1,18 +1,24 @@
 import pandas as pd
 import snowflake.connector
+import streamlit as st
 
-conn = snowflake.connector.connect(
-    user="BIBHRAJSAHA",
-    password="IntoTheWild@123",
-    account="UGLGPMY-FW39691",
-    warehouse="COMPUTE_WH",
-    database="UK_HOUSING_DW",
-    schema="MARTS",
-    role="ACCOUNTADMIN",
-)
+
+def get_connection():
+
+    return snowflake.connector.connect(
+        user=st.secrets["snowflake"]["user"],
+        password=st.secrets["snowflake"]["password"],
+        account=st.secrets["snowflake"]["account"],
+        warehouse=st.secrets["snowflake"]["warehouse"],
+        database=st.secrets["snowflake"]["database"],
+        schema=st.secrets["snowflake"]["schema"],
+        role=st.secrets["snowflake"]["role"],
+    )
 
 
 def load_housing_data():
+
+    conn = get_connection()
 
     query = """
     SELECT *
@@ -21,7 +27,8 @@ def load_housing_data():
 
     df = pd.read_sql(query, conn)
 
-    # Convert Snowflake column names to lowercase
     df.columns = df.columns.str.lower()
+
+    conn.close()
 
     return df

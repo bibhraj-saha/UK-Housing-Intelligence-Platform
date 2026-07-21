@@ -4,6 +4,12 @@ import streamlit as st
 
 
 def get_connection():
+    """
+    Create a brand-new Snowflake connection.
+
+    A new connection is created for every request to avoid
+    expired authentication tokens on Streamlit Cloud.
+    """
 
     return snowflake.connector.connect(
         user=st.secrets["snowflake"]["user"],
@@ -16,19 +22,31 @@ def get_connection():
     )
 
 
+@st.cache_data(ttl=3600)
 def load_housing_data():
+    """
+    Load the housing mart from Snowflake.
 
-    conn = get_connection()
+    The result is cached for one hour to minimise
+    database queries while ensuring a fresh
+    authenticated connection whenever the cache expires.
+    """
 
     query = """
     SELECT *
     FROM MART_AREA_PROFILE
     """
 
-    df = pd.read_sql(query, conn)
+    conn = get_connection()
 
-    df.columns = df.columns.str.lower()
+    try:
 
-    conn.close()
+        df = pd.read_sql(query, conn)
 
-    return df
+        df.columns = df.columns.str.lower()
+
+        return df
+
+    finally:
+
+        conn.close()

@@ -46,7 +46,7 @@ api_online = check_api_connection()
 
 st.title(
 
-    "📈 Growth Prediction"
+    "Growth Prediction"
 
 )
 
